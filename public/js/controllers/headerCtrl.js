@@ -1,8 +1,12 @@
-angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '$scope', '$location', '$route', function($rootScope, $scope, $location, $route) {
+angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '$scope', '$location', '$route', 'ConfigService', function($rootScope, $scope, $location, $route, ConfigService) {
 
     $scope.$on('$routeChangeSuccess', function() {
         // not in use but could be handy
     });
+
+    this.test = function(msg) {
+        alert(msg);
+    }
 
     // We're having to override the class on navbar elements to make sure tabs for unpermitted routes don't look active. 
     // This is because we are blocking inaccessable routes with $q.reject and redirecting back to home.
@@ -12,8 +16,27 @@ angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '
         if (active) { 
             return 'active';
         } else {
-            return 'disabled';
+            return 'inactive';
         };
     };
+
+    // Determine which login buttons to display based on the active flows configured in the ConfigService
+    $scope.displayFlow = function(tabFlow) {
+        var activeFlow = ConfigService.config.oAuthFlow;
+        var isActive =  tabFlow === activeFlow;
+        return isActive;
+    }
+
+    // Handle logout
+    $scope.logout = function() {
+
+        $rootScope.oktaAuth.signOut()
+        .then(function() {
+            console.log('successfully logged out');
+          })
+          .fail(function(err) {
+            console.error(err);
+          });
+    }
 
 }]);

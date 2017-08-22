@@ -12,7 +12,11 @@ angular.module('routerService', [])
 				sessionRequired: false,
 				scopesRequired: ''
 			},
-			'/login': {
+			'/loginImplicit': {
+				sessionRequired: false,
+				scopesRequired: ''				
+			},
+			'/loginCode': {
 				sessionRequired: false,
 				scopesRequired: ''				
 			},

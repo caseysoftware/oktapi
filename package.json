@@ -2,9 +2,13 @@
   "name": "starter-node-angular",
   "main": "server.js",
   "dependencies": {
-    "express": "~4.5.1",
+    "@okta/okta-auth-js": "^1.8.0",
     "body-parser": "~1.4.2",
-    "method-override": "~2.0.2"
+    "express": "~4.5.1",
+    "jws": "^3.1.4",
+    "method-override": "~2.0.2",
+    "pem-jwk": "^1.5.1",
+    "request": "^2.81.0"
   },
   "devDependencies": {
     "less": "^2.7.2"

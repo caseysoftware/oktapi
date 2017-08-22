@@ -17,11 +17,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				  }
 			}
 		})
-
-		.when('/login', {
-			templateUrl: 'views/login.html',
+		// Login page with Implicit Flow
+		.when('/loginImplicit', {
+			templateUrl: 'views/loginImplicit.html',
 			controller: 'LoginController',
-			activeTab: '/login',
+			activeTab: '/loginImplicit',
 			resolve: {
 				routePermitted: function(RouterService){
 					var chk = RouterService.checkAccess('');
@@ -32,7 +32,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				  }
 			}
 		})
-
+		// Login page with Authorization Code Flow
+		.when('/loginCode', {
+			templateUrl: 'views/loginCode.html',
+			controller: 'LoginController',
+			activeTab: '/loginCode',
+			resolve: {
+				routePermitted: function(RouterService){
+					var chk = RouterService.checkAccess('');
+					if (chk.$$state.value.type === 'ACCESS_DENIED') {
+						activeTab: '/home';
+					}
+					return chk;
+				  }
+			}
+		})
+		// This is where you are redirected after a successful login
 		.when('/landing', {
 			templateUrl: 'views/landing.html',
 			controller: 'LandingController',
@@ -47,7 +62,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				  }
 			}
 		})
-		
+		// Administrative functions (CRUD, Factors, etc.)
 		.when('/admin', {
 			templateUrl: 'views/admin.html',
 			controller: 'AdminController',
@@ -62,7 +77,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				  }
 			}
 		})
-
+		// callback for Implicit flow
+		.when('/implicit-callback', {
+			templateUrl: 'views/implicitCallback.html',
+			controller: 'ImplicitCallbackController'
+		})
 		.otherwise({ redirectTo: '/' });
 
 	$locationProvider.html5Mode(true);
