@@ -1,0 +1,14 @@
+/*
+ * Styles for GroupPicker in Groups tab on app instance home page
+ */
+form.standalone-grouppicker ul.as-selections {
+	width: 350px;
+	padding-top: 4px;
+	padding-bottom: 5px;
+	min-height: 19px;
+}
+
+form.standalone-grouppicker ul.as-selections li {
+	margin-top: 0;
+	margin-bottom: 0;
+}

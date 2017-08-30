@@ -1,12 +1,86 @@
 /* color scheme variables */
 
-@background-color:      #646464;
-@primary-font-color:	#428bca; // sea blue
-@darker-font-color: 	darken(@primary-font-color, 10%);
+@background-color:          #7c7c7c;
+@primary-font-color:	    #fafafa; // sea blue
+@darker-font-color: 	    darken(@primary-font-color, 10%);
+
+@modal-background-color:    #c6c6c6;
+@modal-font-color:          #000;
 
 body { 
     background-color: @background-color;
-    color: @primary-font-color !important;
+    //color: @primary-font-color !important;
     padding-top:30px; 
 }
 
+/* typography */
+
+h5 {
+    white-space: nowrap !important;
+}
+
+h6 {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Bootstrap jumbotron */
+
+.jumbotron {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    width: 95%;
+    max-width: 900px;
+    padding: 5px;
+}
+
+/* Bootstrap navbar */
+
+.nav {
+    bottom:0;
+}
+
+.nav>li>a {
+    position: relative;
+    display: block;
+}
+
+.navbar-right {
+    margin-right: 0px; 
+}
+
+/* Inspector modal */
+
+.modal-dialog {
+    opacity: .8;
+    background: @modal-background-color;
+    border-radius: 5px;
+    width: 85%; 
+    margin-left: auto; 
+  }
+  
+  .modal-header {
+    color: @modal-font-color;
+  }
+  
+  .modal-body {
+    color: @modal-font-color;
+    border: none;
+    white-space: pre-wrap;
+    padding: 5px;
+  }
+  
+  .modal-content {
+    background: @modal-background-color;
+    opacity: 98%;
+    border: none;
+    border-radius: 5px;  
+  }
+  
+  .modal-backdrop {
+    opacity:0; transition:opacity .1s;
+  }
+  
+  .modal-backdrop.in {
+    opacity: 0.7;
+  }

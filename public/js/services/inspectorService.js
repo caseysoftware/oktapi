@@ -9,7 +9,7 @@ angular.module('inspectorService', [])
 
     return {
         pushTokenInspector: function(key, value) {
-            tokenInspector[key] = JSON.stringify(value, undefined, 2);
+            tokenInspector[key] = value;
         },
         pushSessionInspector: function(key, value) {
             sessionInspector[key] = value;
@@ -22,6 +22,10 @@ angular.module('inspectorService', [])
         },
         getTokenInspector: function() {
             return tokenInspector;
+        },
+        getTokenInspectorKeys: function() {
+            var obj = tokenInspector;
+            return Object.keys(obj);
         },
         getSessionInspector: function() {
             return sessionInspector;

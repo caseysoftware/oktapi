@@ -1,14 +1,17 @@
 var app = angular.module('OKTAPI', ['ngRoute', 'appRoutes', 'homeCtrl', 'loginCtrl', 'landingCtrl', 'headerCtrl', 'adminCtrl', 'configService','routerService', 
     'oktaAuthService', 'implicitCallbackCtrl', 'inspectorService', 'inspectorCtrl']);
 
-app.run(['$rootScope', '$location', '$http', 'ConfigService', function($rootScope, $location, $http, ConfigService){
+loadConfig().then(bootstrapApplication);
 
-    $rootScope.appConfig = ConfigService.config;
-
-    $http.get('/config')
+function loadConfig() {
+    var initInjector = angular.injector(["ng"]);
+    var $http = initInjector.get("$http");
+    
+    return $http.get('/config')
         .then(function(res) {
             if (res.status == 200) {
-                $rootScope.oktaConfig = res.data;
+            //$rootScope.oktaConfig = res.data;
+            app.constant("OKTA_CONFIG", res.data);
             } else {
                 console.error('Error retrieving Okta config info from /config');
             }
@@ -16,12 +19,23 @@ app.run(['$rootScope', '$location', '$http', 'ConfigService', function($rootScop
         .catch(function(err) {
             console.error('Unable to access /config service');
         });
+}
 
-    $rootScope.$on("$routeChangeError", function(event, current, previous, rejection) {
-        console.error('$routeChangeError: ' + JSON.stringify(rejection));
-        $location.path('/');
+function bootstrapApplication() {
+    angular.element(document).ready(function() {
+        angular.bootstrap(document, ["OKTAPI"]);
     });
-    $rootScope.$on("$routeChangeSuccess", function(event, current, previous, rejection) {
-        console.log('$routeChangeSuccess: ' + ' --> ' + current.loadedTemplateUrl);
-    });
+}
+    
+app.run(['$rootScope', '$location', '$http', 'ConfigService', function($rootScope, $location, $http, ConfigService){
+        
+        $rootScope.appConfig = ConfigService.config;
+
+        $rootScope.$on("$routeChangeError", function(event, current, previous, rejection) {
+            console.error('$routeChangeError: ' + rejection.type);
+            $location.path('/');
+        });
+        $rootScope.$on("$routeChangeSuccess", function(event, current, previous, rejection) {
+            //console.log('$routeChangeSuccess');
+        });
 }]);

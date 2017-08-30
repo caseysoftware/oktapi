@@ -1,0 +1,1173 @@
+/* Common styles between app home and add app wizard */
+.app-home-common .tab-content {
+    padding: 27px 0 0;
+    position: relative;
+    min-height: 300px;
+}
+
+.app-home-common .conversion-feature-wrap {
+    float: left;
+}
+
+.app-home-common .help-wrap {
+    float: right;
+}
+
+.app-home-common .tab-content.bulk-assign-app-home {
+    border-top: 1px solid #dadada;
+}
+
+.admin-app .app-home-common .help-sidebar .form-group-wrap {
+    background: transparent;
+}
+
+.app-home-common .help-sidebar .bulk-assign .form-wrap {
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.app-home-common .form-content-wrap kbd.s-link {
+    display: block;
+    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid #d1d1d1;
+}
+
+.app-home-common .button-bar.x-wizard-nav,
+.app-home-common .tab-content .button-bar {
+    border-bottom-left-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+    box-sizing: border-box;
+    clear: both;
+    float: left;
+    margin: 0;
+    width: 100%;
+}
+
+.app-home-common .bulk-assign .button-bar,
+.app-home-common .bulk-assign-app-home .button-bar {
+    border-radius: 4px !important;
+}
+
+.app-home-common .bulk-assign .button-bar.button-bar-subtle,
+.app-home-common .bulk-assign-app-home .button-bar.button-bar-subtle {
+    border-radius: 0 !important;
+}
+
+.app-home-common .button-bar-outside.x-wizard-nav,
+.confirmation-wrap .form-wrap {
+    box-sizing: border-box;
+    width: 72% !important;
+}
+
+.app-home-common .bulk-assign .button-bar-top,
+.app-home-common .bulk-assign-app-home .button-bar-top {
+    margin-bottom: 15px;
+}
+
+.app-home-common .bulk-assign .button-bar-bottom,
+.app-home-common .bulk-assign-app-home .button-bar-bottom {
+    margin-top: 15px;
+}
+
+.app-home-common .bulk-assign.confirm-assignments .button-bar-bottom,
+.app-home-common .bulk-assign-app-home .confirm-assignments .button-bar-bottom {
+    margin-top: 0;
+}
+
+.app-home-common .tab-content-wrap {
+
+}
+
+.app-home-common dd .checkbox-wrap .explain-text {
+    margin-left: 22px;
+}
+
+.app-home-common .explain-text strong {
+    font-family: 'anonymous-pro', 'Andale Mono', 'Courier New', Courier, monospace;
+    color: #5e5e5e;
+}
+
+.app-home-common .explain-text-hdr {
+    padding: 0;
+    margin: 0 0 10px;
+}
+
+.app-home-common .tab-content-wrap .infobox-error,
+.app-home-common .tab-content-wrap .infobox.app-setup-success {
+    border-radius: 4px;
+    margin: 20px 20px 0 !important;
+}
+
+.app-home-common .android-instance-icon {
+    right: 2px;
+    bottom: 2px;
+}
+
+.app-home-common .o-form-input-name-client_secret{
+  display: inline-block;
+  line-height: 28px;
+}
+
+.app-home-common .secret-text-button{
+  margin-left: 15px;
+  display: inline-block;
+  float: right;
+  user-select: none;
+  -moz-user-select: none;
+}
+
+/* App setup wizard */
+.x-prev, .x-cancel {
+    float: left;
+}
+
+.x-next, .x-done {
+    float: right;
+}
+
+.pre-setup-checklist {
+    margin: 10px 0 !important;
+    border-width: 5px !important;
+    display: none;
+}
+
+.pre-setup-checklist ul.bullets li {
+    margin-bottom: 10px !important;
+    line-height: 1.4em;
+}
+
+.pre-setup-checklist h3 {
+    font-size: 14px;
+}
+
+#add-app-header {
+    height: 35px;
+    padding: 0 10px 12px 0;
+}
+
+#add-app-header h1.icon-24 {
+    margin-bottom: 10px !important;
+}
+
+#add-app-wiz .help-sidebar .link-bar.hdr-layout {
+    display: none;
+}
+
+#app-logo-img.app-logo-wizard {
+    height: auto !important;
+    margin-top: 0 !important;
+    max-height: 40px;
+    width: auto !important;
+}
+
+.app-home-common .app-header{
+    position: relative;
+}
+.app-home-common.app-home-infobox-header .header-custom-warning-container {
+    margin-bottom: 30px;
+}
+.app-home-common .infobox-info h3 {
+    padding-bottom: 10px;
+}
+
+/* App home common */
+#app-details {
+  margin: 8px 0 20px;
+}
+
+#app-details h1 {
+    line-height: 34px;
+}
+
+#app-details #app-instance-status {
+    padding: 5px 6px;
+}
+
+#app-details #app-activate-error {
+    margin-left: 5px;
+}
+
+#app-home .app-logo-wrap {
+    float: left;
+    margin: 0 15px 0 0;
+}
+
+#app-home .app-logo-wrap .app-logo {
+  height: 70px;
+  margin-bottom: 0;
+}
+
+#app-home .app-logo-bg {
+  border: 1px solid #d1d1d1;
+  padding: 4px 0;
+}
+
+#app-home .app-logo-edit {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+
+#app-home .app-logo-edit .icon-wrap {
+  border-bottom-left-radius: 4px;
+  border-color: #DADADA;
+  border-style: solid;
+  border-width: 0 0 1px 1px;
+  display: block;
+  height: 16px;
+  padding: 3px;
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  width: 16px;
+}
+
+#app-home .app-logo-edit:hover .icon-wrap {
+  border-color: #d1d1d1;
+}
+
+#app-home .app-logo-edit:hover .edit-16-disabled {
+  background-position: -16px -272px;
+}
+
+#app-home .app-status-bar {
+    padding: 6px 0 0;
+}
+
+#app-home .icon-list-16 {
+    float: left;
+    margin: 0 0 0 20px;
+}
+
+#app-home .icon-list-16 li {
+    border-radius: 3px;
+    background-color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ddd;
+    padding: 6px;
+    color: #a7a7a7;
+}
+
+#app-home .icon-list-16 li.active {
+    background-color: #fff;
+    border-color: #46b090;
+    color: #46b090;
+}
+
+#app-home .icon-list-16 li.active > a.app-setting-indicator:before, #app-home .icon-list-16 li.active > a.app-setting-indicator:after {
+  color: #46b090;
+}
+
+#app-home .icon-list-16 li a {
+    display: block;
+    height: 16px;
+    width: 16px;
+}
+
+.app-log-link {
+  display: block;
+  float: left;
+  margin: 0 10px;
+  padding: 0 10px;
+  line-height: 30px;
+}
+
+#tabs {
+    position: relative;
+}
+
+/*
+ *  Multi link apps
+ */
+
+#multi-link-app {
+  margin-top: -7px;
+}
+
+.edit-form #multi-link-app {
+  margin-top: 0;
+}
+
+#multi-link-app li {
+    background-color: transparent;
+    margin-bottom: 10px;
+}
+
+#multi-link-app li.selection-confirmed {
+    background: transparent !important;
+}
+
+#multi-link-app .app-link-image {
+  display: block;
+  height: 40px;
+  width: 70px;
+  position: relative;
+  float: left;
+}
+
+#multi-link-app .app-link-image .app-icon-mini {
+  position: relative;
+  top: 7px;
+}
+
+#multi-link-app li input {
+    margin: 0 3px 0 0;
+}
+
+#multi-link-app .app-icon-mini img {
+    height: 15px;
+    margin: 0 0 10px;
+    width: auto;
+}
+
+/**
+ *  Logo customizer
+ */
+.app-logo-preview {
+    padding: 30px;
+}
+
+.app-logo-preview .app-logo-wrap {
+    margin: 0 30px 0 0;
+}
+
+.app-logo-preview .app-logo {
+    margin: 0;
+}
+
+
+.app-logo-picker {
+    padding: 30px 0 0;
+    margin: 21px 0 0 -15px;
+    background: url("/assets/img/ui/backgrounds/arrow-box-001.9c74f2454651d3fc12bf28e1ccb2f169.png") no-repeat scroll -15px 0 transparent;
+}
+
+.app-logo-picker li {
+    float: left;
+    margin: 10px 0 0 15px;
+}
+
+.app-logo-picker li.selected .app-icon-mini,
+.app-logo-picker li.selected:hover .app-icon-mini {
+    border-color: #888;
+}
+
+.app-logo-picker li:hover .app-icon-mini {
+    border-color: #a1a1a1;
+    cursor: pointer;
+}
+
+.app-logo-picker .app-icon-mini {
+    padding: 5px;
+    background: url("/assets/img/ui/backgrounds/app-button-sprite-002.367da57c63608ca6c01ad8bf3e03c08d.png") no-repeat scroll -1px -1px #fff;
+    border: 1px solid #dadada;
+}
+
+.app-logo-upload-form {
+    float: left;
+    width: 299px
+}
+
+.app-logo-file-browse {
+    margin-top: 15px;
+
+}
+
+.app-logo-form-controls {
+    width: 100%;
+}
+
+.infobox-error + .app-logo-upload-form {
+    margin-top: 10px;
+}
+
+.app-logo-preview .infobox-error {
+    border-radius: 4px;
+}
+
+.app-logo-picker-info {
+    border-top: 1px solid #e1e1e1;
+    margin-top: 30px;
+    padding-top: 30px;
+}
+
+.app-logo-picker-info .column {
+    float: left;
+    width: 50%;
+}
+
+.app-logo-picker-info .bullets {
+    margin: 0 15px;
+}
+
+.app-logo-picker-info .bullets li {
+    color: #a7a7a7;
+    font-size: 13px;
+    margin: 0 0 6px !important;
+}
+
+/*
+ * Provisioning
+ */
+#provisioning-form-wrap .read-only-form-override .read-only-form {
+    padding: 0;
+    margin: 0 10px;
+}
+
+.provisioning-feature,
+.ud-feature {
+  margin-bottom: 30px;
+}
+
+.provisioning-feature li {
+    margin: 0;
+}
+
+.provisioning-feature li + li {
+    margin-top: 40px;
+}
+
+.provisioning-feature label {
+    display: block;
+    padding: 0;
+    font-weight: bold;
+}
+
+.provisioning-feature .form-cb-wrap label {
+    font-weight: normal;
+}
+
+.provisioning-feature label:hover {
+    cursor: pointer;
+}
+
+.provisioning-feature .form-cb-wrap + div .explain-text {
+  padding: 0 0 0 20px;
+}
+
+.provisioning-feature .explain-text {
+  margin: 0;
+
+}
+
+.provisioning-feature dd .explain-text {
+    width: auto;
+}
+
+.provisioning-feature .explain-text + .explain-text {
+  margin-top: 12px;
+}
+
+.provisioning-feature-icon-wrap {
+  border-top: 1px solid #eee;
+  height: 52px;
+  line-height: 52px;
+  margin-bottom: 10px;
+  padding: 30px 0 0 56px;
+  position: relative;
+  width: auto;
+}
+
+.provisioning-feature-icon-wrap h4,
+.ud-feature h4 {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.provisioning-feature-icon-wrap .checkbox-wrap {
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 34px;
+}
+
+.provisioning-feature-icon-wrap .checkbox-wrap .option,
+.provisioning-feature-icon-wrap .checkbox-wrap .option-text {
+  width: 75px;
+}
+
+.read-only-form .provisioning-feature-icon-wrap .form-cb-wrap:first-child {
+  margin: 0;
+}
+
+/* Provisioning icons */
+.provisioning-feature-icon {
+  display: block;
+  height: 52px;
+  width: 48px;
+  position: absolute;
+  left: 0;
+  top: 30px;
+  background-image: url("/assets/img/icons/provisioning/provisioning-features-sprite-002.89d86f414fda935e677cb400edf8c1f6.png");
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.okta-push {
+  background-position: 0 -60px;
+}
+
+.okta-push.feature-enabled {
+  background-position: 0 0;
+}
+
+.okta-pull {
+  background-position: -60px -60px;
+}
+
+.okta-pull.feature-enabled {
+  background-position: -60px 0;
+}
+
+.help-sidebar .form-wrap .form-content-wrap .provisioning-feature .edit-form,
+.help-sidebar .form-wrap .form-content-wrap .provisioning-feature .read-only-form {
+  padding: 20px 0;
+}
+
+.help-sidebar .provisioning-feature dl.read-only-form dd,
+.help-sidebar .provisioning-feature dl.edit-form dd {
+    width: 61%;
+}
+
+.help-sidebar .option-explain .provisioning-feature dl.read-only-form dd,
+.help-sidebar .option-explain .provisioning-feature dl.edit-form dd {
+    width: 61%;
+}
+
+#provisioning-form-wrap .edit-form-button-wrap {
+    clear: left;
+}
+
+#provisioning-form-wrap .edit-form-button-wrap a.link-button,
+#provisioning-form-wrap .edit-form-button-wrap input[type="button"] {
+    margin: 0 0 0 39% !important;
+}
+
+.user-import-matching-rules {
+  border-top: 1px solid #e1e1e1;
+  margin-top: 20px;
+}
+
+.user-import-matching-rules .m-form-section-heading,
+.ad-user-import-matching-rules .m-form-section-heading {
+  font-size: 13px;
+  color: #a7a7a7;
+}
+
+/*
+*  Specific overrides
+*/
+.seat-count {
+    width: 60px !important;
+}
+
+.helpInstructionWrap {
+    display: block;
+}
+
+.helpInstructionWrap a {
+    margin-top: 5px;
+}
+
+.helpInstructionWrap.infobox-compact a,
+.helpInstructionWrap.infobox-compact a * {
+    color: #0a74b5 !important;
+}
+
+.app-home-common dl.edit-form-custom-sso-props {
+    padding: 10px 0 !important;
+}
+
+#app-home .ui-tabs .ui-tabs-nav li.external-link {
+    margin: 0 0 -1px 0;
+    border: none !important;
+}
+
+#app-home .ui-tabs .ui-tabs-nav li.external-link a {
+    background: transparent;
+}
+
+.signon-mode-options .show-instructions-onload {
+    margin-bottom: 18px;
+}
+
+/* bulk assign from app contexts */
+.app-home-common .bulk-assign .form-content-wrap {
+    padding: 5px 0 0 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.app-home-common .bulk-assign #app-assignment .widget-container {
+    background: transparent !important;
+    border: none;
+    padding: 0;
+}
+
+.app-home-common .two-col-assignment-wrap .user-search {
+    top: 8px;
+    right: 5px;
+}
+
+.app-home-common .bulk-assign #app-assignment .two-col-assignment {
+    margin: 0;
+    position: relative;
+}
+
+.app-home-common .bulk-assign #app-assignment .widget-container h2.instruction-hdr,
+.app-home-common .bulk-assign #app-assignment .widget-container p.explain-text-hdr,
+.app-home-common .bulk-assign #apps,
+.app-home-common .bulk-assign #apps-hdr,
+.app-home-common .bulk-assign h1.icon-24,
+.app-home-common .select-assignments .confirm-assignments-explain,
+.app-home-common .confirm-assignments .select-assignments-explain,
+.app-home-common .confirm-assignments .help-wrap,
+.app-home-common .bulk-assign-app-home #bulk-assign-tabs,
+.app-home-common .bulk-assign-app-home #mainPeopleSection,
+.app-home-common .bulk-assign-app-home .page-toolbar,
+.app-home-common .bulk-assign-help,
+.app-home-common .bulk-assign-hdr-help,
+.app-home-common .bulk-assign-app-home .people-help,
+.app-home-common .bulk-assign-app-home .people-hdr-help,
+.app-home-common .bulk-assign-app-home.tab-content h2.instruction-hdr .header-explain {
+    display: none !important;
+}
+
+/*.app-home-common .confirm-assignments .wrap-1 .button-bar-bottom*/
+.app-home-common .bulk-assign-app-home .bulk-assign-help,
+.app-home-common .bulk-assign-app-home .bulk-assign-hdr-help,
+.app-home-common .people-help,
+.app-home-common .people-hdr-help {
+    display: block !important;
+}
+
+.app-home-common .bulk-assign #people {
+    float: none;
+    width: auto;
+}
+
+
+.app-home-common #people-tab-content .data-grid-container th.check-col-hdr,
+.app-home-common .bulk-assign-app-home #people-tab-content .data-grid-container.user-specific-settings th.remove-column {
+    width: 20px !important;
+}
+
+.app-home-common .bulk-assign.confirm-assignments .help-wrap {
+    display: none;
+}
+
+.app-home-common .bulk-assign.confirm-assignments #assign-confirm-sidebar {
+    margin: 0 -270px 0 0;
+}
+
+.app-home-common .bulk-assign.confirm-assignments #assign-confirm-content,
+.app-home-common .help-sidebar .confirm-assignments .form-wrap {
+    width: 100%;
+}
+
+.app-home-common .help-sidebar .confirm-assignments .form-wrap .infobox-no-border {
+    margin: 0;
+    clear: left;
+}
+
+.app-home-common .select-assignments-explain,
+
+.app-home-common .confirm-assignments-explain  {
+    margin: 5px 0 15px !important;
+    font-size: 13px !important;
+}
+
+/* bulk assign from app home */
+.bulk-assign-app-home #people-tab-content {
+    background: transparent;
+    padding: 0 !important;
+    border: none;
+}
+
+.bulk-assign-app-home #people-tab-content .spinner-wrap {
+    width: 660px;
+    min-height: 200px;
+}
+
+.bulk-assign-app-home #people-tab-content .spinner-wrap img {
+    top: 100px;
+}
+
+.app-home-common .bulk-assign-app-home #people-tab-content .button-bar {
+    float: none;
+}
+
+.app-home-common .bulk-assign-app-home #assign-confirm-content {
+    margin-right: 18px;
+}
+
+.app-home-common .bulk-assign-app-home.tab-content h2.instruction-hdr {
+    margin: 7px 10px 5px !important;
+}
+
+.app-home-common .bulk-assign .wrap-1 h2,
+.app-home-common .bulk-assign-app-home .wrap-1 h2 {
+    font-size: 16px;
+    margin: 0 0 5px;
+}
+
+.app-home-common .bulk-assign-app-home .ui-tabs-content-error {
+    background: transparent;
+}
+
+.app-home-common .bulk-assign-app-home #assign-confirm-content .wrap-1 .infobox-no-border {
+    margin: 0 0 15px !important;
+}
+
+.app-home-common .bulk-assign-app-home #assign-confirm-content .wrap-1 .infobox-no-border.margin-btm-0 {
+    margin-bottom: 0 !important;
+}
+
+.app-home-common .bulk-assign-app-home #assign-confirm-content .button-bar-bottom {
+    margin-top: 5px;
+}
+
+.app-home-common .bulk-assign-app-home #assign-confirm-sidebar {
+    margin: 0 -270px 0 0;
+}
+
+#csvUploadFrame {
+    width: 100%;
+    height: 300px;
+}
+
+#csvUploadFrame.csv-parsed {
+    height: 500px;
+}
+
+#csvUploadFrame.csv-errors {
+    height: 400px;
+}
+
+#csv-errors {
+    height: 90px;
+    overflow-y: scroll;
+}
+
+#csv-import-modal-content {
+    height: 100%;
+    background: #f9f9f9;
+    padding: 30px;
+    margin: 0;
+}
+
+#csv-import-modal-content h3 {
+    margin: 0;
+}
+
+#csv-import-modal-content h4 {
+    margin-bottom: 9px;
+}
+
+#csv-import-modal-content .file-upload {
+    padding-top: 18px;
+}
+
+/* groups tab */
+.add-app-to-group-modal {
+  padding: 0 20px 20px;
+}
+
+.add-app-to-group-modal h4 {
+  border-top: 1px solid #e8e8e8;
+  padding-top: 20px;
+}
+
+#group-app-assignment-table .link-button-icon {
+    margin: 1px 0 0 0;
+}
+
+
+/* App home, groups tab - table styles"  */
+/* TODO: refactor this CSS and respective JSP (non-standard) */
+
+.convert-fullname {
+    font-size: 13px;
+}
+
+.convert-username {
+    color: #777777 !important;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+table .conversion-dropdown-table {
+    width: 600px;
+    margin: 10px !important;
+
+}
+
+#grouptab-appusers .width-30 {
+    width: 20px !important;
+}
+
+.background-608906 {
+    background-color: #608906 !important;
+    color: white !important;
+}
+
+.background-e1efc4 {
+    background-color: #e1efc4 !important;
+
+}
+
+.background-666666 {
+    background-color: #666666 !important;
+    color: white !important;
+}
+
+.help-sidebar .form-wrap .data-grid-container table .conversion-dropdown-table {
+    border: none !important;
+}
+
+.convert-table-grey-background {
+    background-color: #c4c4c4 !important;
+}
+
+table.conversion-dropdown-table thead th {
+    border: none !important;
+    background: none;
+    line-height: 14px !important;
+    font-size: 12px !important;
+
+}
+
+table.conversion-dropdown-table thead th + th {
+    border: none !important;
+    background: none;
+}
+
+.span-for-table {
+    display: block;
+    width: auto;
+    margin: 4px;
+    padding: 5px;
+
+}
+
+.conversion-dropdown-table thead th {
+    padding: 0px !important;
+}
+
+.conversion-dropdown-table td {
+    font-size: 11px !important;
+}
+
+.tip-header {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.tip-text {
+    text-align: left;
+    font-size: 11px;
+}
+
+
+/* Universal Directory call outs */
+
+.ud-feature li {
+  width: 50%;
+  margin: 30px 0 0;
+  padding: 0 40px;
+  float: left;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.ud-feature li + li {
+  border-left: 1px solid #e1e1e1;
+}
+
+.ud-feature .link-button-icon {
+  width: 61%;
+  float: none;
+  margin: 20px auto 10px;
+}
+
+.ud-feature h4 {
+    line-height: 27px;
+}
+
+/* Universal Directory icons */
+.ud-feature-icon {
+  display: block;
+  height: 52px;
+  width: 52px;
+  margin: 5px auto 8px;
+  background-image: url("/assets/img/icons/provisioning/provisioning-features-sprite-001.f3966724bdfbb4d593fd73207cd4f51b.png");
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.ud-attribute-editor {
+  background-position: -180px 0;
+}
+
+.ud-mappings {
+  background-position: -180px -60px;
+}
+
+/* Mobile tab */
+
+.mobile-sync-container .data-list-content {
+  min-height: 180px;
+  background-color: #f9f9f9;
+  padding-bottom: 0;
+}
+
+.mobile-sync-container .data-list-empty-msg {
+  padding: 30px 0 20px;
+}
+
+.mobile-sync-container .data-list-table tr {
+  height: 90px;
+}
+
+.mobile-sync-container .data-list-table td {
+  padding: 16px 0;
+}
+
+.mobile-sync-container .data-list-table tbody:last-child td {
+  border-bottom: none;
+}
+
+.mobile-sync-container .data-list-table .mobile-app-details {
+  width: 25%;
+  padding-left: 20px;
+}
+
+.mobile-sync-container .data-list-table .mobile-app-platform {
+  color: #a3a3a3;
+  margin-top: 4px;
+}
+
+.mobile-sync-container .data-list-table .mobile-app-preferences ul {
+  list-style-type: disc;
+  color: #a3a3a3;
+  margin-left: 38px;
+}
+
+.mobile-sync-container .data-list-table .mobile-app-preferences li {
+  padding-top: 7px;
+}
+
+.mobile-sync-container .data-list-table .mobile-app-preferences li:first-child {
+  padding-top: 3px;
+}
+
+.mobile-sync-container .data-list-table .mobile-app-actions {
+  width: 14%;
+}
+
+.mobile-sync-container .data-list-table .mobile-app-actions > div {
+  float: right;
+  padding-right: 20px;
+}
+
+.mobile-app-preferences .active-deploy-status {
+  margin-bottom: 10px;
+}
+
+.mobile-app-preferences .active-deploy-status .icon {
+  width: 16px;
+  height: 16px;
+  margin: 0 6px 0 0;
+  display: block;
+  float: left;
+}
+
+.mobile-app-preferences .inactive-deploy-status {
+  margin-left: 22px;
+}
+
+.mobile-sync-container .dropdown.more-actions .options-wrap {
+  left: 0;
+}
+
+.mobile-app-preferences .inactive-deploy-status,
+.mobile-sync-container .dropdown-disabled .option-selected-text {
+  color: #a3a3a3;
+}
+
+.mobile-sync-container .o-form-title-bar .dropdown {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+.mobile-sync-container .o-form-title-bar .dropdown a span {
+  font-size: 13px;
+  height: 26px;
+  line-height: 26px;
+}
+
+.mobile-sync-container .data-list-toolbar {
+  padding: 10px 20px;
+}
+
+.mobile-sync-container .data-list-toolbar .header {
+  display: inline-block;
+}
+
+.mobile-sync-container .data-list-toolbar .dropdown {
+  float: right !important;
+}
+
+.mobile-sync-container .dropdown.more-actions .options-wrap {
+  width: 275px;
+}
+
+.mobile-settings-dialog .o-form {
+  position: relative;
+}
+
+.mobile-settings-dialog .iframe-div {
+  border: 1px solid #cacaca;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(160, 160, 160, 0.2) inset;
+  -moz-box-shadow: 0 1px 1px rgba(160, 160, 160, 0.2) inset;
+  -webkit-box-shadow: 0 1px 1px rgba(160, 160, 160, 0.2) inset;
+}
+
+.mobile-settings-dialog .iframe-input iframe {
+  width: 97%;
+  padding: 10px 0 10px 10px;
+  background-color: #fff;
+}
+
+.runtime-permissions-section .okta-form-label.o-form-label {
+    text-transform: capitalize;
+}
+
+.mobile-settings-dialog .mobile-upload-spin-wrapper {
+  position: absolute;
+  background-color: #fff;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.mobile-settings-dialog .mobile-upload-spin-wrapper div[role="progressbar"] {
+  margin: 120px auto;
+}
+
+.mobile-settings-dialog .mobile-upload-spin-wrapper h3 {
+  text-align: center;
+  padding-top: 135px;
+}
+
+.mobile-settings-dialog .blankbox {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.mobile-settings-dialog .blankbox h3,
+.mobile-settings-dialog .blankbox .name,
+.mobile-settings-dialog .blankbox .version {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.mobile-settings-dialog .blankbox h3,
+.mobile-settings-dialog .blankbox .name {
+  font-weight: bold;
+}
+
+.mobile-settings-dialog .blankbox .version {
+  font-style: italic;
+}
+
+.mobile-settings-dialog .edit-app-package-id {
+  float: left;
+}
+/*
+bg:  #f9f9f9;
+light: #a3a3a3;
+ */
+
+/* ======= VPN Notification content ======= */
+
+.vpn-message .textarea-fix textarea {
+    min-height: 100px;
+}
+
+.vpn-message .o-form-pre {
+    white-space: pre-line;
+}
+
+/* Sign on settings */
+.saml-settings {
+    padding-bottom: 15px;
+}
+
+.saml-settings .saml-setting-label {
+    width: 30%;
+}
+
+.saml-settings .saml-setting-value {
+    padding: 0 1%;
+    width: 66%;
+}
+
+.saml-settings .saml-setting-value .saml-group-filter {
+    width: 73.5%;
+    margin-left: 1.5%;
+}
+
+.saml-settings iframe {
+    width: 100%;
+    height: 80px;
+}
+
+.read-only-form .saml-settings .saml-setting-value {
+    line-height: 29px;
+}
+
+.read-only-form .saml-settings .saml-setting-value input[type='text'] {
+    padding: 0;
+}
+
+.sidebar-application-username {
+    margin-top: 1.33em;
+}
+
+/* Open ID Connect Settings */
+.oidc-redirect-uri-container {
+    float: none;
+    width: auto;
+    display: block;
+    overflow: hidden;
+}
+
+.oidc-redirect-uri {
+    width: 100%;
+}
+
+.oidc-redirect-uri-delete {
+    float: right;
+}

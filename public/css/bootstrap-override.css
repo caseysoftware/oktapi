@@ -1,6 +1,66 @@
 /* color scheme variables */
 body {
-  background-color: #646464;
-  color: #428bca !important;
+  background-color: #7c7c7c;
   padding-top: 30px;
+}
+/* typography */
+h5 {
+  white-space: nowrap !important;
+}
+h6 {
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+/* Bootstrap jumbotron */
+.jumbotron {
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  width: 95%;
+  max-width: 900px;
+  padding: 5px;
+}
+/* Bootstrap navbar */
+.nav {
+  bottom: 0;
+}
+.nav > li > a {
+  position: relative;
+  display: block;
+}
+.navbar-right {
+  margin-right: 0px;
+}
+.nav > li > a:hover,
+.nav > li > a:focus {
+  text-decoration: none;
+}
+/* Inspector modal */
+.modal-dialog {
+  opacity: .8;
+  background: #c6c6c6;
+  border-radius: 5px;
+  width: 85%;
+  margin-left: auto;
+}
+.modal-header {
+  color: #000;
+}
+.modal-body {
+  color: #000;
+  border: none;
+  white-space: pre-wrap;
+  padding: 5px;
+}
+.modal-content {
+  background: #c6c6c6;
+  opacity: 98%;
+  border: none;
+  border-radius: 5px;
+}
+.modal-backdrop {
+  opacity: 0;
+  transition: opacity .1s;
+}
+.modal-backdrop.in {
+  opacity: 0.7;
 }

@@ -25,7 +25,8 @@ module.exports = {
     oktaAuthnApiEndpoint: '/api/v1/authn',
     scopes: 'openid&email&profile&address&phone&groups',
     loginRedirectUri_code: 'http://localhost:8000/authorization-code/callback',
-    loginRedirectUri_implicit: 'http://localhost:8000/implicit-callback',
+    loginRedirectUri_implicit: 'http://localhost:8000/implicit-callback', // this was when I was redirecting to an angular page
+    //loginRedirectUri_implicit: 'http://localhost:8000/implicit/callback',
 
     // Okta sign-in widget customziation
 

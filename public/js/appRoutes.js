@@ -1,35 +1,42 @@
 angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
-	$routeProvider
+	var sessionValid = false;
+	var scopeValid = false;
+	var permitted = false;
 
+	$routeProvider
 		// home page
 		.when('/', {
 			templateUrl: 'views/home.html',
 			controller: 'HomeController',
 			activeTab: '/home',
 			resolve: {
-				routePermitted: function(RouterService){
-					var chk = RouterService.checkAccess('');
-					if (chk.$$state.value.type === 'ACCESS_DENIED') {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /home successful.');
+					})
+					.catch(function(err) {
 						activeTab: '/home';
-					}
-					return chk;
-				  }
+						throw(err);
+					})
+				}]
 			}
-		})
+		}) 
 		// Login page with Implicit Flow
 		.when('/loginImplicit', {
 			templateUrl: 'views/loginImplicit.html',
 			controller: 'LoginController',
 			activeTab: '/loginImplicit',
 			resolve: {
-				routePermitted: function(RouterService){
-					var chk = RouterService.checkAccess('');
-					if (chk.$$state.value.type === 'ACCESS_DENIED') {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /loginImplicit successful.');
+					})
+					.catch(function(err) {
 						activeTab: '/home';
-					}
-					return chk;
-				  }
+						throw(err);
+					})
+				}]
 			}
 		})
 		// Login page with Authorization Code Flow
@@ -38,13 +45,15 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 			controller: 'LoginController',
 			activeTab: '/loginCode',
 			resolve: {
-				routePermitted: function(RouterService){
-					var chk = RouterService.checkAccess('');
-					if (chk.$$state.value.type === 'ACCESS_DENIED') {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /loginCode successful');
+					})
+					.catch(function(err) {
 						activeTab: '/home';
-					}
-					return chk;
-				  }
+						throw(err);
+					})
+				}]
 			}
 		})
 		// This is where you are redirected after a successful login
@@ -53,13 +62,15 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 			controller: 'LandingController',
 			activeTab: '/landing',
 			resolve: {
-				routePermitted: function(RouterService){
-					var chk = RouterService.checkAccess('');
-					if (chk.$$state.value.type === 'ACCESS_DENIED') {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /landing successful.');
+					})
+					.catch(function(err) {
 						activeTab: '/home';
-					}
-					return chk;
-				  }
+						throw(err);
+					})
+				}]
 			}
 		})
 		// Administrative functions (CRUD, Factors, etc.)
@@ -68,13 +79,15 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 			controller: 'AdminController',
 			activeTab: '/admin',
 			resolve: {
-				routePermitted: function(RouterService){
-					var chk = RouterService.checkAccess('');
-					if (chk.$$state.value.type === 'ACCESS_DENIED') {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /admin successful.');
+					})
+					.catch(function(err) {
 						activeTab: '/home';
-					}
-					return chk;
-				  }
+						throw(err);
+					})
+				}]
 			}
 		})
 		// callback for Implicit flow
@@ -82,7 +95,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 			templateUrl: 'views/implicitCallback.html',
 			controller: 'ImplicitCallbackController'
 		})
-		.otherwise({ redirectTo: '/' });
+		//.otherwise({ redirectTo: '/' });
 
 	$locationProvider.html5Mode(true);
 

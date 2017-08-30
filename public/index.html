@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<base href="/">
 
-	<title>Starter Node and Angular</title>
+	<title>OKTAPI</title>
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
@@ -42,24 +42,26 @@
 	<script src="js/app.js"></script>
 
 </head>
-<body ng-app="OKTAPI">
+<!-- <body ng-app="OKTAPI"> -->
+<body>
 <div class="container">
 	
 <!-- HEADER -->
 <div ng-controller="HeaderController" id="headerController">
-	<nav class="navbar navbar-light">
+	<nav class="navbar navbar-inverse">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="/" class="pull-left">OKTAPI</a> 
 		</div>
-		<ul class="nav navbar-nav">
+		<ul class="nav navbar-nav ">
 			<li ng-class="getClass('/home')"><a href="/home">Home</a></li>
 			<li ng-class="getClass('/loginImplicit')" ng-if="displayFlow('implicit')"><a href="/loginImplicit">Login (implicit)</a></li>
 			<li ng-class="getClass('/loginCode')" ng-if="displayFlow('authorization_code')"><a href="/loginCode">Login (code)</a></li>
 			<li ng-class="getClass('/landing')"><a href="/landing">Landing</a></li>
+			<li ng-class="getClass('/admin')"><a href="/admin">Admin</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li ng-class=""><a href="" ng-click="logout()" ng-if="true">Logout</a></li>
-			<li><a href=""><span class="glyphicon glyphicon-info-sign" ng-click="test('hi')" data-toggle="modal" data-target="#infoModal" data-keyboard="true" data-backdrop="true"></span></a></li>
+			<li><a href=""><span class="glyphicon glyphicon-info-sign" ng-click="" data-toggle="modal" data-target="#infoModal" data-keyboard="true" data-backdrop="true"></span></a></li>
 		</ul>
 	</nav>
 </div>
@@ -79,7 +81,7 @@
 							<thead><p class="h4">Token Inspector</p></thead>
 							<tbody>
 								<tr ng-repeat="(key, value) in tokenInspector">
-									<td><h6>{{ key }}</h6></td><td><h6><pre>{{ value | json }}</pre></h6></td>
+									<td><h5>{{ key }}</h5></td><td><div class="jumbotron"><h6>{{ value }}</h6></div></td>
 								</tr>
 							</tbody>
 						</table>
@@ -115,9 +117,9 @@
 				</div> <!-- end of modal-body -->					
 			</div> <!-- end of modeal-content -->
 		</div> <!-- end of modal-dialog -->
+
 	</div> <!-- end of modal -->
 
-	
 	<!-- ANGULAR DYNAMIC CONTENT -->
 	<div ng-view></div>
 

@@ -1,12 +1,14 @@
 angular.module('loginCtrl', [])
     .controller('LoginController', ['$scope', '$http', 'OktaAuthService', function($scope, $http, OktaAuthService) {
-    
+          
     $scope.username = '';
     $scope.password = '';
 
+    document.getElementById("username").focus();
+
     // Implicit Flow
     $scope.loginImplicit = function() {    
-        OktaAuthService.loginImplicit();
+        OktaAuthService.loginImplicit(this.username, this.password);
     }
 
     // Authorization Code Flow

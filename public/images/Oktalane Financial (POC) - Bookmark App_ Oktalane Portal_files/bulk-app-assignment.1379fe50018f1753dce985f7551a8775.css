@@ -1,0 +1,380 @@
+#app-assignment th,
+#app-assignment td {
+    text-align: left;
+    vertical-align: middle;
+}
+
+#app-assignment th, #app-assignment .check-col,
+#app-assignment .data-grid th.sorted_asc, #app-assignment .data-grid th.sorted_desc {
+    font-weight: normal;
+    color: #444;
+    background: #f6f6f6; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y2ZjZmNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlYWVhZWEiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #f6f6f6 0%, #eaeaea 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f6f6), color-stop(100%,#eaeaea)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #f6f6f6 0%,#eaeaea 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #f6f6f6 0%,#eaeaea 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #f6f6f6 0%,#eaeaea 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #f6f6f6 0%,#eaeaea 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', endColorstr='#eaeaea',GradientType=0 ); /* IE6-8 */ /* csslint allow: known-properties */
+}
+
+#app-assignment td.check-col {
+    background: #f9f9f9;
+}
+
+#app-assignment tr:last-child td.warning,
+#app-assignment tr:last-child td.success,
+#app-assignment tr:last-child td.error {
+    border-bottom: none !important;
+ }
+
+#app-assignment .user-specific-settings th.check-col-hdr {
+    width: auto;
+}
+
+#app-assignment th p {
+    line-height: 15px;
+    float: left;
+    clear: left;
+}
+
+#app-assignment th p.s-txt {
+    color: #777;
+}
+
+#app-assignment th.sorted_asc p.s-txt,
+#app-assignment th.sorted_desc p.s-txt {
+    color: #ccc;
+}
+
+#app-assignment th.double-row-hdr p + p {
+    margin-top: -2px;
+}
+
+#app-assignment .details {
+    width: 180px;
+    margin: 0;
+    float: left;
+}
+
+.app-home-common #app-assignment .details {
+    width: 330px;
+    margin: 0;
+    float: left;
+}
+
+#app-assignment .details .explain-text {
+    margin-top: 0;
+}
+
+#app-assignment .details p,
+#app-assignment td.person-descr p {
+    line-height: 16px;
+}
+
+#app-assignment p.descr {
+    font-size: 12px;
+}
+
+#app-assignment table {
+    background: #fff;
+    min-height: 0;
+}
+
+#app-assignment input[type=checkbox] {
+    cursor: pointer;
+}
+
+#app-assignment .error tr.odd,
+#app-assignment .error tr.even,
+#app-assignment .error tr.gradeU {
+    background-color: transparent !important;
+}
+
+#app-assignment tr.header-row {
+    cursor: default;
+}
+
+#app-assignment th.app-display-name {
+    width: 340px;
+    line-height: 14px;
+}
+
+#app-assignment th.person-status {
+    text-align: center;
+}
+
+#app-assignment .person-status .infobox-compact {
+    display: block;
+    text-align: center;
+}
+
+#app-assignment .widget-container {
+    padding-top: 31px;
+}
+
+#app-assignment .button-bar .x-next,
+#app-assignment .button-bar .x-done {
+    float: right;
+}
+
+#app-assignment .button-bar .x-cancel,
+#app-assignment .button-bar .x-prev {
+    float: left;
+}
+
+#app-assignment .infobox-no-border.infobox-error {
+    margin: 0 0 10px;
+}
+
+#app-assignment #assign-confirm-content .infobox-no-border.infobox-error {
+    margin: 0 0 10px;
+}
+
+.two-col-assignment-wrap {
+    clear: left;
+    margin: 0 0 20px 0;
+}
+
+.app-home-common .two-col-assignment-wrap {
+    margin: 0;
+}
+
+.two-col-assignment .column-list {
+    background: #f2f2f2;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ddd #ddd #d2d2d2 #ddd;
+    box-shadow: 0 1px 1px rgba(175, 175, 175, 0.16);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.two-col-assignment .two_col_left,
+.two-col-assignment .two_col_right {
+    width: 48.5%;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.two-col-assignment .two_col_right {
+    float: right;
+}
+
+.two-col-assignment .dataTables_filter {
+    float: left;
+}
+
+.two-col-assignment table,
+#people-tab-content table {
+    border-bottom: 1px solid #e1e1e1 !important;
+}
+
+.two-col-assignment .user-search {
+    position: static;
+    width: auto;
+}
+
+.instruction-hdr {
+    font-size: 17px;
+    font-weight: normal;
+    margin: 0 0 30px 0;
+    padding: 0;
+}
+
+.instruction-hdr + .infobox {
+    margin: 0 0 27px 0;
+}
+
+.two-col-assignment-wrap h3 {
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: normal;
+    height: 30px;
+    margin: 5px 0 10px;
+    padding-left: 5px;
+    position: relative;
+    width: 48.5%;
+}
+
+.two-col-assignment-wrap h3:first-child {
+    margin-right: 25px;
+}
+
+.two-col-assignment-wrap h3 .header-explain {
+    color: #444;
+    font-size: 13px;
+    font-weight: normal;
+    display: inline;
+    padding: 2px 4px;
+    background-color: #e1e1e1;
+}
+
+.two-col-assignment-wrap h3.icon-24 span.icon {
+    left: 3px;
+}
+
+.two-col-assignment .dataTables_length,
+.two-col-assignment .dataTables_filter {
+    padding: 0;
+}
+
+.two-col-assignment .data-grid-container .ui-widget-header {
+    background: transparent;
+}
+
+.two-col-assignment-search {
+    margin: 10px 12px;
+}
+
+#apps .two-col-assignment-search label.inline-label {
+     top: 19px;
+     left: 25px;
+ }
+
+.two-col-assignment-search .text-field-default {
+    width: 300px;
+    height: 14px;
+}
+
+#apps {
+    position: relative;
+}
+
+/* confirm assignments */
+#assign-confirm-content .toggle-control-all {
+    right: 11px;
+    top: 14px;
+}
+
+#assign-confirm-sidebar h3 {
+  margin-bottom: 15px;
+  padding: 0;
+}
+
+#assign-confirm-sidebar div + h4 {
+    margin-top: 15px;
+}
+
+#assign-confirm-sidebar ul {
+    margin: 0 0 0 20px;
+}
+
+.user-default-settings {
+    padding: 26px 0 20px;
+    background: #fff;
+    border: 1px solid #dadada;
+}
+
+.user-default-settings div.checkbox-group {
+    padding-top: 7px;
+}
+
+.user-default-settings div.checkbox-group label {
+    margin: 0;
+    display: block;
+}
+
+.user-default-settings div.checkbox-group label:hover {
+  cursor: pointer;
+  background: #f9f9f9;
+}
+
+.user-default-settings div.checkbox-group li + li label {
+    margin: 4px 0 0;
+}
+
+.user-specific-settings table.display tr {
+    background: transparent !important;
+}
+
+.user-specific-settings table.display tr.removed td + td {
+    opacity: 0.2;
+    filter: Alpha(Opacity = 20); /* csslint allow: known-properties */
+    background: #dadada !important;
+}
+
+.user-specific-settings table.display td.check-col {
+    padding: 7px 3px 3px;
+}
+
+.user-specific-settings table.display td .api-error {
+    clear: left;
+}
+
+.user-specific-settings table.display td .api-error + label {
+    margin: 12px 0 0;
+}
+
+.user-specific-settings .api-error + .ajax-form-editor {
+    margin-top: 5px;
+}
+
+.app-data-wrap .datatable-search-box .input-fix {
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: 5;
+}
+
+.app-data-wrap .datatable-search-box .text-field-default {
+    width: 210px;
+}
+
+.username-default-msg {
+    color: #a7a7a7;
+    line-height: 30px;
+    right: 14px;
+    text-align: right;
+    z-index: 1;
+}
+
+.app-data-wrap table.display {
+    border-left: 1px solid #dadada;
+    border-right: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+    min-height: 0;
+}
+
+.app-data-wrap .data-grid-container .fg-toolbar {
+    background: transparent;
+}
+
+.app-data-wrap .data-grid-container .dataTables_info {
+  height: auto;
+  line-height: 20px;
+  padding: 10px 0 0;
+}
+
+.app-data-wrap .data-grid-container table.display thead th span.ui-icon {
+    right: 0;
+    top: -5px;
+}
+
+.add-remove-toggle-all-wrap,
+.add-remove-toggle-wrap {
+  left: 50%;
+  margin-left: -8px;
+  position: relative;
+}
+
+.add-remove-toggle-wrap .remove-explain {
+    display: block;
+    position: absolute;
+    left: 19px;
+    top: -5px;
+    z-index: 5;
+    width: 369px;
+    font-size: 12px;
+    padding: 8px;
+    overflow: hidden;
+}
+
+#people-table_info, #people-table_length {
+    display: none;
+}
+

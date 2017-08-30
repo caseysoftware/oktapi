@@ -1,4 +1,4 @@
-angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '$scope', '$location', '$route', 'ConfigService', function($rootScope, $scope, $location, $route, ConfigService) {
+angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '$scope', '$location', '$route', 'ConfigService', 'Inspector', function($rootScope, $scope, $location, $route, ConfigService, Inspector) {
 
     $scope.$on('$routeChangeSuccess', function() {
         // not in use but could be handy
@@ -29,10 +29,13 @@ angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '
 
     // Handle logout
     $scope.logout = function() {
-
+        console.log('Active session? ' + $rootScope.oktaSessionToken);
+        Inspector.initInspectors();
         $rootScope.oktaAuth.signOut()
         .then(function() {
+            $rootScope.$broadcast('refreshInspectors', '');
             console.log('successfully logged out');
+            console.log('Active session? ' + $rootScope.oktaSessionToken);
           })
           .fail(function(err) {
             console.error(err);
