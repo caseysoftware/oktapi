@@ -1,5 +1,5 @@
 angular.module('routerService', [])
-	.service('RouterService', ['$rootScope', '$q', '$http', '$location', 'OktaAuthService', function($rootScope, $q, $http, $location, OktaAuthService) {
+	.service('RouterService', ['$rootScope', '$q', '$http', '$location', 'OktaAuthService', 'ConfigService', function($rootScope, $q, $http, $location, OktaAuthService, ConfigService) {
 
 		var sessionExempt = true;
 		var sessionValid = true;
@@ -8,6 +8,8 @@ angular.module('routerService', [])
 
 		var token = '';
 		
+		var routes = ConfigService.routes;
+		/*
 		const routes = {
 			'/': {
 				sessionRequired: false,
@@ -34,11 +36,11 @@ angular.module('routerService', [])
 				scopesRequired: 'users:read, users:write'				
 			}
 		}
+		*/
 
 		// Check to see if there's an active Okta session
 		checkSession = function() {	
-			var currentPath = $location.$$path;
-			return $rootScope.oktaAuth.session.exists() 
+			return $rootScope.oktaAuth.session.exists();
 		}
 
 		// Check to see if the user has the necessary scopes
@@ -75,8 +77,11 @@ angular.module('routerService', [])
 			var permitted = false;
 			var deferred = $q.defer();
 
+			console.log('checkRoutePermissions');
+
 			checkSession()
 				.then(function(res) {
+					OktaAuthService.activeSession = res;						// set activeSession on OktaAuthService on every route change. That variable is used by the navbar.
 					sessionValid = res;
 					checkScopes() 
 						.then(function(res) {

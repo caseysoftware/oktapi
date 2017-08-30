@@ -32,8 +32,8 @@ module.exports = function(app) {
 			//console.log('Route ' + route + ' permitted.');
 			response = {route: route, routePermitted: true};
 		} else {
-			console.error('Route ' + route + ' not permitted.');
-			//response = {route: route, routePermitted: false}
+			//console.error('Route ' + route + ' not permitted.');
+			response = {route: route, routePermitted: false}
 		}
 		res.json(response);
 	});

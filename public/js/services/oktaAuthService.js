@@ -3,7 +3,9 @@ angular.module('oktaAuthService', [])
         function($rootScope, $q, $http, $location, Inspector, OKTA_CONFIG) {
 
     const oAuthFlow = $rootScope.appConfig.oAuthFlow;
-    
+
+    var activeSession = ''; //This variable will be used by the navbar to determine if we have an active session, so it needs to be updated on each route change.
+
     switch (oAuthFlow) {
         case 'implicit': {
             redirectUri = OKTA_CONFIG.loginRedirectUri_implicit;
@@ -50,9 +52,13 @@ angular.module('oktaAuthService', [])
 
     // Check for active session
     this.checkSession = function(req, res) {
-         return $rootScope.oktaAuth.session.exists()
+        $rootScope.oktaAuth.session.exists()
+            .then(function(res){
+                activeSession = res;
+                return activeSession;
+            })
     }
-
+   
     // Validate the token
     this.validateToken = function(token) {
         /* TODO: copy validation code from okta_express */

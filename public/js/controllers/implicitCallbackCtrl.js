@@ -8,8 +8,9 @@ angular.module('implicitCallbackCtrl', [])
         sessionToken: $rootScope.oktaAuth.session  
     })
     .then(function(tokenArray) {
-        Inspector.pushTokenInspector('access-token-jwt', tokenArray[1].accessToken);
         Inspector.pushTokenInspector('id-token-jwt', tokenArray[0].idToken);
+        Inspector.pushTokenInspector('access-token-jwt', tokenArray[1].accessToken);
+        
 
         $rootScope.oktaAuth.tokenManager.add('id-token', tokenArray[0]);
         $rootScope.oktaAuth.tokenManager.add('access-token', tokenArray[1]);
@@ -44,6 +45,7 @@ angular.module('implicitCallbackCtrl', [])
                 console.error('Error decoding access token: ' + err);  
             });
 
+            OktaAuthService.activeSession = true;
             $location.path('/landing');
 
     })

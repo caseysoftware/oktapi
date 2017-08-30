@@ -54,20 +54,46 @@
 		</div>
 		<ul class="nav navbar-nav ">
 			<li ng-class="getClass('/home')"><a href="/home">Home</a></li>
-			<li ng-class="getClass('/loginImplicit')" ng-if="displayFlow('implicit')"><a href="/loginImplicit">Login (implicit)</a></li>
-			<li ng-class="getClass('/loginCode')" ng-if="displayFlow('authorization_code')"><a href="/loginCode">Login (code)</a></li>
-			<li ng-class="getClass('/landing')"><a href="/landing">Landing</a></li>
-			<li ng-class="getClass('/admin')"><a href="/admin">Admin</a></li>
+			<li ng-class="getClass('/loginImplicit')" ng-if="displayFlow('implicit') && !loggedIn() "><a href="/loginImplicit">Login (implicit)</a></li>
+			<li ng-class="getClass('/loginCode')" ng-if="displayFlow('authorization_code') && !loggedIn()"><a href="/loginCode">Login (code)</a></li>
+			<li ng-class="getClass('/landing')" ng-if="checkSession('/landing')"><a href="/landing">Landing</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-			<li ng-class=""><a href="" ng-click="logout()" ng-if="true">Logout</a></li>
+			<li ng-class="getClass('/admin')" ng-if="checkSession('/admin')"><a href="/admin">Admin</a></li>
+			<li ng-class=""><a href="" ng-click="logout()" ng-if="loggedIn()">Logout</a></li>
 			<li><a href=""><span class="glyphicon glyphicon-info-sign" ng-click="" data-toggle="modal" data-target="#infoModal" data-keyboard="true" data-backdrop="true"></span></a></li>
 		</ul>
 	</nav>
 </div>
 
-<!-- Info Modal -->
+
 <div class="modal fade" id="infoModal" role="dialog" ng-controller="InspectorController" tabindex="-1">
+	<div class="modal-dialog">	
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<p class="h1">Inspectors</p>
+			</div> <!-- end of modal-header -->
+			<div class="modal-body">
+
+				<div class="row"><div class="col-sm-12"><p class="h4">Token Inspector</p></div></div>
+				<div class="row" ng-repeat="(key, value) in tokenInspector">
+					<div class="col-sm-4">{{ key }}</div><div class="col-sm-8"><div class="jumbotron"><h6>{{ value }}</h6></div></div>
+				</div>
+
+
+			</div> <!-- end of modal-body -->					
+			<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div> <!-- end of modal-footer -->
+		</div> <!-- end of modeal-content -->
+	</div> <!-- end of modal-dialog -->
+</div> <!-- end of modal -->
+
+
+
+<!-- Info Modal -->
+<div class="modal fade" id="xxxxinfoModal" role="dialog" ng-controller="InspectorController" tabindex="-1">
 		<div class="modal-dialog">	
 			<!-- Modal content-->
 			<div class="modal-content">

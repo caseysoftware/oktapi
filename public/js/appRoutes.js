@@ -22,6 +22,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				}]
 			}
 		}) 
+		.when('/home', {
+			templateUrl: 'views/home.html',
+			controller: 'HomeController',
+			activeTab: '/home',
+			resolve: {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /home successful.');
+					})
+					.catch(function(err) {
+						activeTab: '/home';
+						throw(err);
+					})
+				}]
+			}
+		}) 
 		// Login page with Implicit Flow
 		.when('/loginImplicit', {
 			templateUrl: 'views/loginImplicit.html',

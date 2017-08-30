@@ -1,5 +1,10 @@
 module.exports = {
     
+    /* TODO: 
+        - move secrets to separate config file. Since this config is shared with the client, we need to move any secrets stuff to a server-only config file
+    */
+
+
     // Okta tenant for Oktapi Platform
     oktaTenantName: 'oktalane',
     oktaDomain: 'okta.com',

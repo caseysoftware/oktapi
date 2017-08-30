@@ -1,11 +1,16 @@
-angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '$scope', '$location', '$route', 'ConfigService', 'Inspector', function($rootScope, $scope, $location, $route, ConfigService, Inspector) {
+angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '$scope', '$location', '$route', 'ConfigService', 'Inspector', 'OktaAuthService', function($rootScope, $scope, $location, $route, ConfigService, Inspector, OktaAuthService) {
 
     $scope.$on('$routeChangeSuccess', function() {
         // not in use but could be handy
     });
 
-    this.test = function(msg) {
-        alert(msg);
+    $scope.loggedIn = function() {
+        return OktaAuthService.activeSession;
+    }
+
+    // check to see if 1) we need an active session to see this tab, and 2) if we have an active session
+    $scope.checkSession = function(currentRoute) {
+        return ConfigService.routes[currentRoute].sessionRequired ? OktaAuthService.activeSession : true;
     }
 
     // We're having to override the class on navbar elements to make sure tabs for unpermitted routes don't look active. 
@@ -30,6 +35,7 @@ angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '
     // Handle logout
     $scope.logout = function() {
         console.log('Active session? ' + $rootScope.oktaSessionToken);
+        OktaAuthService.activeSession = false;
         Inspector.initInspectors();
         $rootScope.oktaAuth.signOut()
         .then(function() {
