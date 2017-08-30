@@ -1,5 +1,5 @@
 angular.module('routerService', [])
-	.service('RouterService', ['$rootScope', '$q', '$http', '$location', 'OktaAuthService', 'ConfigService', function($rootScope, $q, $http, $location, OktaAuthService, ConfigService) {
+	.service('RouterService', ['$rootScope', '$q', '$http', '$location', 'OktaAuthService', 'ConfigService', 'Inspector', function($rootScope, $q, $http, $location, OktaAuthService, ConfigService, Inspector) {
 
 		var sessionExempt = true;
 		var sessionValid = true;
@@ -7,36 +7,7 @@ angular.module('routerService', [])
 		var scopeValid = true;
 
 		var token = '';
-		
-		var routes = ConfigService.routes;
-		/*
-		const routes = {
-			'/': {
-				sessionRequired: false,
-				scopesRequired: ''
-			},
-			'/home': {
-				sessionRequired: false,
-				scopesRequired: ''
-			},
-			'/loginImplicit': {
-				sessionRequired: false,
-				scopesRequired: ''				
-			},
-			'/loginCode': {
-				sessionRequired: false,
-				scopesRequired: ''				
-			},
-			'/landing': {
-				sessionRequired: true,
-				scopesRequired: ''				
-			},			
-			'/admin': {
-				sessionRequired: true,
-				scopesRequired: 'users:read, users:write'				
-			}
-		}
-		*/
+		var routes = ConfigService.routes;					// get the route session/scope config from the ConfigService
 
 		// Check to see if there's an active Okta session
 		checkSession = function() {	
@@ -75,9 +46,9 @@ angular.module('routerService', [])
 			var sessionValid = false;
 			var scopeValid = false;
 			var permitted = false;
+			var idToken = {};
+			var accessToken = {};
 			var deferred = $q.defer();
-
-			console.log('checkRoutePermissions');
 
 			checkSession()
 				.then(function(res) {
@@ -86,7 +57,31 @@ angular.module('routerService', [])
 					checkScopes() 
 						.then(function(res) {
 							scopeValid = res.data.routePermitted;
-							checkAccess(sessionValid, scopeValid)
+							var session = OktaAuthService.getSession()
+								.then(function(session) {
+									Inspector.pushTokenInspector('okta-session-token', JSON.stringify(session, undefined, 2));
+								})
+								.then(function(err) {
+									console.log('Unable to get current session from OktaAuthService.');
+								});
+
+								// This section is just here to refresh the Inspector with the current session and token info - no other purpose
+								// ----------------------------------------------------------------
+								idToken = OktaAuthService.getToken('id-token');
+								accessToken = OktaAuthService.getToken('access-token');
+								Inspector.pushTokenInspector('id-token-jwt', idToken.idToken);
+								Inspector.pushTokenInspector('access-token-jwt', accessToken.accessToken);
+								OktaAuthService.decodePrettyToken(idToken.idToken)
+									.then(function(pretty) {
+										Inspector.pushTokenInspector('id-token', pretty);
+									});
+								OktaAuthService.decodePrettyToken(accessToken.accessToken)
+								.then(function(pretty) {
+									Inspector.pushTokenInspector('access-token', pretty);
+								});
+								// ----------------------------------------------------------------
+
+								checkAccess(sessionValid, scopeValid)
 								.then(function(res) {
 									permitted = res;
 									if (permitted) {

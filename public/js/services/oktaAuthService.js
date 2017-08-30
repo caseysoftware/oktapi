@@ -26,6 +26,8 @@ angular.module('oktaAuthService', [])
         authorizeUrl: OKTA_CONFIG.authServerAuthUrl
     });
 
+    // Login Flows ------------------------------
+
     // Login entry point for implicit flow
     this.loginImplicit = function(username, password) {
 
@@ -50,6 +52,12 @@ angular.module('oktaAuthService', [])
 
     }
 
+    // Session utlilities -----------------------
+
+    this.getSession = function() {
+         return $rootScope.oktaAuth.session.get();
+    }
+
     // Check for active session
     this.checkSession = function(req, res) {
         $rootScope.oktaAuth.session.exists()
@@ -59,6 +67,32 @@ angular.module('oktaAuthService', [])
             })
     }
    
+    // Token utilities --------------------------
+
+    // Add token to tokenManager - avoid calling $rootScope if possible
+    this.putToken = function(tokenKey, token) {
+        $rootScope.oAuth.tokenManager.add(tokenKey, token);
+    }
+
+    // Return token to client
+    this.getToken = function(tokenKey) {
+        return $rootScope.oktaAuth.tokenManager.get(tokenKey);
+    }
+
+    // Return prettified, decoded token to client
+    this.decodePrettyToken = function(token) {
+        var deferred = $q.defer();
+        this.decodeToken(token)
+            .then(function(decoded) {
+                var pretty = prettifyToken(decoded);
+                deferred.resolve(pretty);
+            })
+            .catch(function(err) {
+                deferred.reject(err);
+            });
+        return deferred.promise;
+      }
+
     // Validate the token
     this.validateToken = function(token) {
         /* TODO: copy validation code from okta_express */
@@ -70,13 +104,24 @@ angular.module('oktaAuthService', [])
         return $http.get('/decodeToken/' + token);
     }
 
+    // private copy of prettifyToken
+    function prettifyToken(token) {
+        var tokenJSON = JSON.stringify(token, undefined, 2);
+        var prettyJSON = tokenJSON.replace(/\\/g, '');
+        prettyJSON = prettyJSON.replace(/"{"/g, '"{\n\t"');
+        //prettyJSON = prettyJSON.replace(/,/g, ',\n\t');
+        //prettyJSON = prettyJSON.replace(/}/g, ',\n  }');
+
+        return prettyJSON;
+    }
+
     // format JSON tokens for display in Inspector
     this.prettifyToken = function(token) {
         var tokenJSON = JSON.stringify(token, undefined, 2);
         var prettyJSON = tokenJSON.replace(/\\/g, '');
         prettyJSON = prettyJSON.replace(/"{"/g, '"{\n\t"');
-        prettyJSON = prettyJSON.replace(/,/g, ',\n\t');
-        prettyJSON = prettyJSON.replace(/}/g, ',\n  }');
+        //prettyJSON = prettyJSON.replace(/,/g, ',\n\t');
+        //prettyJSON = prettyJSON.replace(/}/g, ',\n  }');
 
         return prettyJSON;
     }

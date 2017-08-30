@@ -51,63 +51,30 @@ h6 {
 
 /* Inspector modal */
 
-.modal-dialog,
+.modal-dialog {
+    opacity: .8;
+    background: @modal-background-color;
+    border-radius: 5px;
+    width: 75%;
+    margin-left: auto;
+    overflow-y: initial !important;
+}
+
 .modal-content {
-    /* 80% of window height */
     height: 90%;
 }
 
 .modal-body {
     /* 100% = dialog height, 120px = header + footer */
-    height: 80%;
-    max-height: calc(80% - 10px);
-    overflow-y: scroll;
+    height: 500px;
+    //max-height: calc(80% - 10px);
+    overflow-y: auto;
 }
 
-/*
-.modal-dialog {
-    opacity: .8;
-    background: @modal-background-color;
-    border-radius: 5px;
-    width: 85%; 
-    margin-left: auto; 
-  }
-  
-  .modal-header {
-    color: @modal-font-color;
-    padding: 5px;
-    margin: 5px;
- }
-
-.modal-dialog,
-    .modal-content {
-        background: @modal-background-color;
-        opacity: 98%;
-        border: none;
-        border-radius: 5px; 
-        height: 80%; 
-    }
-
-  .modal-body {
-    color: @modal-font-color;
-    border: none;
-    white-space: pre-wrap;
-    //padding: 5px;
-    //margin: 5px;
-    max-height: calc(100% - 200px);
-    overflow-y: scroll;
-  }
-  
-  .modal-footer {
-    margin: 5px;
-    padding: 5px;
-}
-  
-  .modal-backdrop {
+.modal-backdrop {
     opacity:0; transition:opacity .1s;
-  }
+}
   
-  .modal-backdrop.in {
+.modal-backdrop.in {
     opacity: 0.7;
-  }
-  */
+}

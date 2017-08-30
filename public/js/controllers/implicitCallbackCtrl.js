@@ -15,6 +15,9 @@ angular.module('implicitCallbackCtrl', [])
         $rootScope.oktaAuth.tokenManager.add('id-token', tokenArray[0]);
         $rootScope.oktaAuth.tokenManager.add('access-token', tokenArray[1]);
 
+        //OktaAuthService.putToken('id-token', tokenArray[0]);
+        //OktaAuthService.putToken('access-token', tokenArray[1]);
+
         OktaAuthService.decodeToken(tokenArray[1].accessToken)
             .then(function(res) {
                 if (res.status == 200) {
