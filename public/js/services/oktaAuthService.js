@@ -43,9 +43,17 @@ angular.module('oktaAuthService', [])
             }
           })
           .fail(function(err) {
-            console.error(err);
+            return 'FAILED';
           });
     }
+
+    this.loginImplicitCallback = function(username, password) {
+        return $rootScope.oktaAuth.signIn({
+                    username: username,
+                    password: password
+                });
+    }
+
 
     // Login entry point for authorization code flow
     this.loginCode = function(username, password) {
@@ -77,6 +85,11 @@ angular.module('oktaAuthService', [])
     // Return token to client
     this.getToken = function(tokenKey) {
         return $rootScope.oktaAuth.tokenManager.get(tokenKey);
+    }
+
+    // Clear out the token manager
+    this.clearTokenManager = function() {
+        return $rootScope.oktaAuth.tokenManager.clear();
     }
 
     // Return prettified, decoded token to client

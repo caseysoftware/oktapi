@@ -54,6 +54,7 @@ angular.module('routerService', [])
 				.then(function(res) {
 					OktaAuthService.activeSession = res;						// set activeSession on OktaAuthService on every route change. That variable is used by the navbar.
 					sessionValid = res;
+					if (!sessionValid) OktaAuthService.clearTokenManager();
 					checkScopes() 
 						.then(function(res) {
 							scopeValid = res.data.routePermitted;
@@ -69,16 +70,21 @@ angular.module('routerService', [])
 								// ----------------------------------------------------------------
 								idToken = OktaAuthService.getToken('id-token');
 								accessToken = OktaAuthService.getToken('access-token');
-								Inspector.pushTokenInspector('id-token-jwt', idToken.idToken);
-								Inspector.pushTokenInspector('access-token-jwt', accessToken.accessToken);
-								OktaAuthService.decodePrettyToken(idToken.idToken)
+								if (idToken) {
+									Inspector.pushTokenInspector('id-token-jwt', idToken.idToken);
+									OktaAuthService.decodePrettyToken(idToken.idToken)
 									.then(function(pretty) {
 										Inspector.pushTokenInspector('id-token', pretty);
 									});
-								OktaAuthService.decodePrettyToken(accessToken.accessToken)
-								.then(function(pretty) {
-									Inspector.pushTokenInspector('access-token', pretty);
-								});
+								}
+								if (accessToken) {
+									Inspector.pushTokenInspector('access-token-jwt', accessToken.accessToken);
+									
+									OktaAuthService.decodePrettyToken(accessToken.accessToken)
+									.then(function(pretty) {
+										Inspector.pushTokenInspector('access-token', pretty);
+									});
+								}
 								// ----------------------------------------------------------------
 
 								checkAccess(sessionValid, scopeValid)

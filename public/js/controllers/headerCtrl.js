@@ -1,5 +1,11 @@
 angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '$scope', '$location', '$route', 'ConfigService', 'Inspector', 'OktaAuthService', function($rootScope, $scope, $location, $route, ConfigService, Inspector, OktaAuthService) {
 
+    /* TODO
+        - stop using $rootScope, use OktaAuthService instead
+        - signout should call OktaAuth Service, not $rootScope directly
+        - signout should redirect to /home and refresh the nav bar
+    */
+
     $scope.$on('$routeChangeSuccess', function() {
         // not in use but could be handy
     });
@@ -46,6 +52,8 @@ angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '
           .fail(function(err) {
             console.error(err);
           });
+        $rootScope.oktaAuth.tokenManager.clear();
+        $location.path('/home');
     }
 
 }]);
