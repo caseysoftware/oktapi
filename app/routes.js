@@ -7,6 +7,7 @@ const jwk2pem = require('pem-jwk').jwk2pem;
 const path = require('path');
 const fs = require('fs');
 const cachedJwks = {};
+const request = require('request');
 
 
 module.exports = function(app) {
@@ -14,6 +15,41 @@ module.exports = function(app) {
 	// server routes ===========================================================
 	// handle things like api calls
 	// authentication routes
+
+
+	// Okta API proxy routes
+
+	app.get('/users/me/:mode', function(req, res) {
+		
+		var mode = req.params.mode;
+		var requestUrl = 'http://localhost:5000' + '/users/me/' + mode;
+
+		const options = {
+			uri: requestUrl,
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache'
+			}
+		};
+	
+		request(options, function(error, response, body) {
+			if (response.statusCode == 200) {
+				res.send(body);
+			} else {
+				if (error) {
+					console.log(error);
+					res.json(error);
+				} else {
+					res.json('Unexpected error in /users/me');
+				}
+			} 
+		})
+
+	});
+
+	// App support routes ======================================================
 
 	// return app configuration info to client app
 	app.get('/config', function(req, res) {

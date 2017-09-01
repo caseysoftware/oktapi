@@ -8,7 +8,10 @@
     "jws": "^3.1.4",
     "method-override": "~2.0.2",
     "pem-jwk": "^1.5.1",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "passport-oauth2-jwt-bearer": "https://github.com/mcguinness/passport-okta-oidc-bearer",
+    "passport-restify": "1.0.1",
+    "restify": "^5.2.0"
   },
   "devDependencies": {
     "less": "^2.7.2"
