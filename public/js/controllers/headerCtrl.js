@@ -42,6 +42,7 @@ angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '
     $scope.logout = function() {
         console.log('Active session? ' + $rootScope.oktaSessionToken);
         OktaAuthService.activeSession = false;
+        $rootScope.currentUser = '';
         Inspector.initInspectors();
         $rootScope.oktaAuth.signOut()
         .then(function() {

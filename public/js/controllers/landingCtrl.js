@@ -1,17 +1,20 @@
 angular.module('landingCtrl', [])
-    .controller('LandingController', ['$scope','$route', '$http', 'OktaAuthService', 'Inspector', function($scope, $route, $http, OktaAuthService, Inspector) {
+    .controller('LandingController', ['$rootScope', '$scope','$route', '$http', 'OktaAuthService', 'Inspector', function($rootScope, $scope, $route, $http, OktaAuthService, Inspector) {
 
-    $scope.user = {};
-    $scope.userApiam = {};
+    // Intialization routines based on newly logged-in user
+    $rootScope.currentUser = {};
 
-    function testUser(mode) {
-        $http.get('/users/me:' + mode)
-            .then(function(res) {
-                $scope.user = JSON.stringify(res.data, undefined, 2);
-            });
-        }
+    function updateCurrentUser() {
+        var token = $rootScope.oktaAuth.tokenManager.get('access-token').accessToken;
+        $http.get('/users/me/' + token)
+        .then(function(res) {
+            Inspector.pushGeneralInspector('user_me', JSON.stringify(res.data, undefined, 2))
+            $rootScope.currentUser = res.data.profile.firstName + ' ' + res.data.profile.lastName;
+        });
+    }
 
-testUser('default');
-testUser('apiam');
+    updateCurrentUser();
+
+    
 
 }]);

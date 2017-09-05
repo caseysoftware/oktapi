@@ -59,6 +59,7 @@
 			<li ng-class="getClass('/landing')" ng-if="checkSession('/landing') && loggedIn()"><a href="/landing">Landing</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
+			<li ng-class="navbar-text" ng-if="currentUser.length > 0"><span class="navbar-text">{{currentUser}}</span></li>
 			<li ng-class="getClass('/admin')" ng-if="checkSession('/admin')"><a href="/admin">Admin</a></li>
 			<li ng-class=""><a href="" ng-click="logout()" ng-if="loggedIn()">Logout</a></li>
 			<li><a href=""><span class="glyphicon glyphicon-info-sign" ng-click="" data-toggle="modal" data-target="#infoModal" data-keyboard="true" data-backdrop="true"></span></a></li>

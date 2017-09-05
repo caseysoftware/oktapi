@@ -133,7 +133,7 @@ angular.module('oktaAuthService', [])
         var tokenJSON = JSON.stringify(token, undefined, 2);
         var prettyJSON = tokenJSON.replace(/\\/g, '');
         prettyJSON = prettyJSON.replace(/"{"/g, '"{\n\t"');
-        //prettyJSON = prettyJSON.replace(/,/g, ',\n\t');
+        prettyJSON = prettyJSON.replace(/,/g, ',\n\t');
         //prettyJSON = prettyJSON.replace(/}/g, ',\n  }');
 
         return prettyJSON;

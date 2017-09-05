@@ -16,13 +16,12 @@ module.exports = function(app) {
 	// handle things like api calls
 	// authentication routes
 
-
-	// Okta API proxy routes
-
-	app.get('/users/me/:mode', function(req, res) {
+	
+	// Okta API proxy routes 
+	app.get('/users/me/:token', function(req, res) {
 		
-		var mode = req.params.mode;
-		var requestUrl = 'http://localhost:5000' + '/users/me/' + mode;
+		var token = req.params.token;
+		var requestUrl = 'http://localhost:5000' + '/users/me';
 
 		const options = {
 			uri: requestUrl,
@@ -30,21 +29,24 @@ module.exports = function(app) {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'Cache-Control': 'no-cache'
+				'Cache-Control': 'no-cache',
+ 				'Authorization': 'Bearer ' + token
 			}
 		};
 	
 		request(options, function(error, response, body) {
-			if (response.statusCode == 200) {
-				res.send(body);
-			} else {
-				if (error) {
-					console.log(error);
-					res.json(error);
+			if (error) {
+				console.error('/users/me/:token ' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
 				} else {
-					res.json('Unexpected error in /users/me');
+					console.log('/users/me/:token ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
 				}
-			} 
+			}
 		})
 
 	});
