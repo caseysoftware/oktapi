@@ -30,7 +30,7 @@ angular
         },			
         '/admin': {
             sessionRequired: true,
-            scopesRequired: 'users:read, users:write'				
+            scopesRequired: ['OKTAPI role - user administrator']		
         }
     }
 });

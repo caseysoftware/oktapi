@@ -31,6 +31,9 @@ angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '
         };
     };
 
+    /* TODO: check roles and stuff them into an array on OktaAuthService for reference. Here, match the required claims against the users */
+    // Check to see if the user has the appropriate claims for this route. Don't display the nav control if not */
+
     // Determine which login buttons to display based on the active flows configured in the ConfigService
     $scope.displayFlow = function(tabFlow) {
         var activeFlow = ConfigService.config.oAuthFlow;
@@ -40,21 +43,23 @@ angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '
 
     // Handle logout
     $scope.logout = function() {
-        console.log('Active session? ' + $rootScope.oktaSessionToken);
-        OktaAuthService.activeSession = false;
-        $rootScope.currentUser = '';
-        Inspector.initInspectors();
         $rootScope.oktaAuth.signOut()
         .then(function() {
-            $rootScope.$broadcast('refreshInspectors', '');
+            $rootScope.oktaAuth.tokenManager.clear();
+            $rootScope.oktaSessionToken = {};
+            OktaAuthService.activeSession = false;
+            $rootScope.currentUser = '';
+            Inspector.initInspectors();
             console.log('successfully logged out');
-            console.log('Active session? ' + $rootScope.oktaSessionToken);
+            $rootScope.$broadcast('refreshInspectors', '');
+            $location.path('/home');
+            $scope.$apply();
           })
           .fail(function(err) {
             console.error(err);
+            $location.path('/home');
+            $scope.$apply();
           });
-        $rootScope.oktaAuth.tokenManager.clear();
-        $location.path('/home');
     }
 
 }]);

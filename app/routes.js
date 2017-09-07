@@ -21,7 +21,8 @@ module.exports = function(app) {
 	app.get('/users/me/:token', function(req, res) {
 		
 		var token = req.params.token;
-		var requestUrl = 'http://localhost:5000' + '/users/me';
+		//var requestUrl = 'http://localhost:5000' + '/users/me';
+		var requestUrl = 'https://okta-api-proxy.herokuapp.com' + '/users/me';
 
 		const options = {
 			uri: requestUrl,
@@ -58,20 +59,52 @@ module.exports = function(app) {
 		res.json(oktaConfig);
 	});
 
-	/* TODO: this is a dummy function now. It should really be called "checkScopes" */
+	/* TODO: this is a dummy function now. It should really be called "checkClaims" */
 	// check that the user has permission to access the current route
 	app.post('/checkRoutePermissions', function(req, res) {
 
-		var route = req.body.route;
-		var allowed = false;
+		var token = req.body.accessToken;
+		var requiredClaims = req.body.requiredClaims;
+		var allowed = true;
 		var response = {};
+
+		if (requiredClaims.length < 1) {
+			allowed = true; 
+			res.json({routePermitted: true});
+			return;
+		} 
+
+		const decoded = jws.decode(token);
+		if (!decoded) {	
+			allowed = false;
+			console.log('Token could not be decoded.');
+			res.send({routePermitted: false});
+			return;
+		}
+		var roles = JSON.parse(decoded.payload).roles;
+		
+		if (!roles) {
+			allowed = false;
+			console.log('Token has no \' roles \' claim.');
+			res.send({routePermitted: false});
+			return;
+		}
+		
+		var hits = 0;
+		var missingClaims = [];
+		for (i=0;i<requiredClaims.length;i++) {
+			if (!roles.includes(requiredClaims[i])) {
+				allowed = false;
+				missingClaims.push(requiredClaims[i]);
+			}
+		}
 
 		if (allowed) {
 			//console.log('Route ' + route + ' permitted.');
-			response = {route: route, routePermitted: true};
+			response = {routePermitted: true};
 		} else {
 			//console.error('Route ' + route + ' not permitted.');
-			response = {route: route, routePermitted: false}
+			response = {routePermitted: false, missingClaims: missingClaims}
 		}
 		res.json(response);
 	});

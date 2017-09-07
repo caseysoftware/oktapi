@@ -26,6 +26,7 @@ function bootstrapApplication() {
         angular.bootstrap(document, ["OKTAPI"]);
     });
 }
+
     
 app.run(['$rootScope', '$location', '$http', 'ConfigService', function($rootScope, $location, $http, ConfigService){
         
@@ -39,3 +40,4 @@ app.run(['$rootScope', '$location', '$http', 'ConfigService', function($rootScop
             //console.log('$routeChangeSuccess');
         });
 }]);
+

@@ -13,7 +13,7 @@ angular.module('landingCtrl', [])
         });
     }
 
-    updateCurrentUser();
+    //updateCurrentUser();
 
     
 

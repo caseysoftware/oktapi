@@ -92,6 +92,30 @@ angular.module('oktaAuthService', [])
         return $rootScope.oktaAuth.tokenManager.clear();
     }
 
+    // Utilities
+
+
+    // Event listeners
+    $rootScope.$on('rootScope:handleActiveSession', function(event, data) {
+        getCurrentUser()
+            .then(function(res) {
+                Inspector.pushGeneralInspector('user_me', JSON.stringify(res.data, undefined, 2))
+                $rootScope.currentUser = res.data.profile.firstName + ' ' + res.data.profile.lastName;
+                activeSession = true;
+            });
+    }); 
+
+    $rootScope.$on('rootScope:handleNoActiveSession', function(event, data) {
+        activeSession = false;
+        clearTokenManager();
+        Inspector.initInspectors();
+    })
+
+    function getCurrentUser() {
+        var token = $rootScope.oktaAuth.tokenManager.get('access-token').accessToken;
+        return $http.get('/users/me/' + token);
+    }
+
     // Return prettified, decoded token to client
     this.decodePrettyToken = function(token) {
         var deferred = $q.defer();
@@ -122,7 +146,7 @@ angular.module('oktaAuthService', [])
         var tokenJSON = JSON.stringify(token, undefined, 2);
         var prettyJSON = tokenJSON.replace(/\\/g, '');
         prettyJSON = prettyJSON.replace(/"{"/g, '"{\n\t"');
-        //prettyJSON = prettyJSON.replace(/,/g, ',\n\t');
+        prettyJSON = prettyJSON.replace(/,(?!\n)/g, ',\n\t');
         //prettyJSON = prettyJSON.replace(/}/g, ',\n  }');
 
         return prettyJSON;
@@ -133,7 +157,7 @@ angular.module('oktaAuthService', [])
         var tokenJSON = JSON.stringify(token, undefined, 2);
         var prettyJSON = tokenJSON.replace(/\\/g, '');
         prettyJSON = prettyJSON.replace(/"{"/g, '"{\n\t"');
-        prettyJSON = prettyJSON.replace(/,/g, ',\n\t');
+        prettyJSON = prettyJSON.replace(/,(?!\n)/g, ',\n\t');
         //prettyJSON = prettyJSON.replace(/}/g, ',\n  }');
 
         return prettyJSON;

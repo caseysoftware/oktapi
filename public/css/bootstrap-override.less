@@ -10,8 +10,20 @@
 body { 
     background-color: @background-color;
     //color: @primary-font-color !important;
-    padding-top:30px; 
+    padding:50px; 
 }
+
+.page-bg {
+    background: url('http://www.wallpaperup.com/uploads/wallpapers/2012/10/21/20181/cad2441dd3252cf53f12154412286ba0.jpg');
+    filter: blur(30px);
+    filter:sepia(85%);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
 
 /* typography */
 
@@ -31,7 +43,8 @@ h6 {
     overflow-wrap: break-word !important;
     width: 95%;
     max-width: 900px;
-    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 /* Bootstrap navbar */
@@ -49,19 +62,71 @@ h6 {
     margin-right: 0px; 
 }
 
+/* Login dropdown */
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px    
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0    
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc 
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+
 /* Inspector modal */
 
 .modal-dialog {
     opacity: .8;
     background: @modal-background-color;
     border-radius: 5px;
-    width: 75%;
+    width: 85%;
     margin-left: auto;
     overflow-y: initial !important;
 }
 
 .modal-content {
-    height: 90%;
+    height: 95%;
 }
 
 .modal-body {
