@@ -113,7 +113,15 @@
 				<li><a href=""><span class="glyphicon glyphicon-info-sign" ng-click="" data-toggle="modal" data-target="#infoModal" data-keyboard="true" data-backdrop="true"></span></a></li>
 			</ul>
 		</nav>
+		<div>navElements: {{JSON.stringify(navbarElements, undefined, 2)}}
 	</div>
+
+	<!-- test dynamic navbar -->
+	<ul>
+		<li ng-repeat="navElement in navbarElements">{{ navElement }}</li>
+	</ul>
+
+
 
 	<!-- Inspector modal window -->
 	<div class="modal fade" id="infoModal" role="dialog" ng-controller="InspectorController" tabindex="-1">

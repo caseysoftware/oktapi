@@ -1,13 +1,18 @@
-angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '$scope', '$location', '$route', 'ConfigService', 'Inspector', 'OktaAuthService', function($rootScope, $scope, $location, $route, ConfigService, Inspector, OktaAuthService) {
+angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '$scope', '$http', '$location', '$route', 'ConfigService', 'Inspector', 'OktaAuthService', function($rootScope, $scope, $http, $location, $route, ConfigService, Inspector, OktaAuthService) {
 
     /* TODO
         - stop using $rootScope, use OktaAuthService instead
         - signout should call OktaAuth Service, not $rootScope directly
         - signout should redirect to /home and refresh the nav bar
     */
+    $scope.navbarElements = {};
 
     $scope.$on('$routeChangeSuccess', function() {
         // not in use but could be handy
+    });
+
+    $rootScope.$on('rootScope:buildNav', function(event, data) {
+        $scope.getNavElements(data.activeSession, data.accessToken);
     });
 
     $scope.loggedIn = function() {
@@ -39,7 +44,15 @@ angular.module('headerCtrl', []).controller('HeaderController', ['$rootScope', '
         var activeFlow = ConfigService.config.oAuthFlow;
         var isActive =  tabFlow === activeFlow;
         return isActive;
-    }
+    };
+
+    // Generate navbar based on user claims 
+    $scope.getNavElements = function(activeSession, accessToken) {
+        $http.post('/navbar/', {activeSession: activeSession, accessToken: accessToken})
+            .then(function(res) {
+                $scope.navbarElements = res.data;
+            });
+    };
 
     // Handle logout
     $scope.logout = function() {

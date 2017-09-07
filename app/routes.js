@@ -1,4 +1,5 @@
 const oktaConfig = require('../config/oktaconfig');
+const clientRoutes = require('../config/clientRoutes');
 
 //const request = require('request');
 const querystring = require('querystring');
@@ -13,9 +14,6 @@ const request = require('request');
 module.exports = function(app) {
 
 	// server routes ===========================================================
-	// handle things like api calls
-	// authentication routes
-
 	
 	// Okta API proxy routes 
 	app.get('/users/me/:token', function(req, res) {
@@ -52,61 +50,138 @@ module.exports = function(app) {
 
 	});
 
-	// App support routes ======================================================
+	// Client app support routes ======================================================
 
-	// return app configuration info to client app
+	// return app configuration info to client app. We are sharing the config between server and client
 	app.get('/config', function(req, res) {
 		res.json(oktaConfig);
 	});
 
-	/* TODO: this is a dummy function now. It should really be called "checkClaims" */
-	// check that the user has permission to access the current route
-	app.post('/checkRoutePermissions', function(req, res) {
+	// Routing helper apps
+	
+	// Check to see if the current route is accessible to the user, based on session and claims in access token
+	function verifyRoute(route, routeParams, activeSession, token) {
+		var currentRoute = clientRoutes.routes[route];		// lookup the route criteria in clientRoutes
 
-		var token = req.body.accessToken;
-		var requiredClaims = req.body.requiredClaims;
-		var allowed = true;
-		var response = {};
+		// If a session is required and we don't have one, return false
+		if (currentRoute.sessionRequired && !activeSession) {
+			console.log('Route ' + route + ' requires an active session, and there is none.');
+			return false;
+		}
+		// Check the claims on the access token to see if they meet the requirements for this route		
+		return checkClaimsforRoute(route, routeParams.claimsRequired, token);;
+	};
+
+	// Check to see if the users access token has the claims required for this route 
+	function checkClaimsforRoute(route, requiredClaims, token) {
+		
+		/* TODO: add boolean for and vs or requirements on the claims */
+
+		var validClaim = true;
+		var roles = {};
+		var msg = '';
 
 		if (requiredClaims.length < 1) {
-			allowed = true; 
-			res.json({routePermitted: true});
-			return;
+			msg = 'No custom claims are required for route ' + route;
+			console.log(msg);
+			var res = {routePermitted: true, msg: msg};
+			return {routePermitted: true, msg: msg};
 		} 
 
-		const decoded = jws.decode(token);
-		if (!decoded) {	
-			allowed = false;
-			console.log('Token could not be decoded.');
-			res.send({routePermitted: false});
-			return;
+		if (token.length > 0) {
+			const decoded = jws.decode(token);
+			if (!decoded) {	
+				validClaim = false;
+				var msg = 'Token could not be decoded.'
+				console.log(msg);
+				return {routePermitted: false, msg: msg};
+			}
+			roles = JSON.parse(decoded.payload).roles;
 		}
-		var roles = JSON.parse(decoded.payload).roles;
 		
 		if (!roles) {
-			allowed = false;
-			console.log('Token has no \' roles \' claim.');
-			res.send({routePermitted: false});
-			return;
+			validClaim = false;
+			msg = 'Access token is missing the following claim(s) for ' + route + ': ' + JSON.stringify(requiredClaims);
+			console.log(msg);
+			return {routePermitted: false, msg: msg};
 		}
-		
+
 		var hits = 0;
 		var missingClaims = [];
 		for (i=0;i<requiredClaims.length;i++) {
 			if (!roles.includes(requiredClaims[i])) {
-				allowed = false;
+				validClaim = false;
 				missingClaims.push(requiredClaims[i]);
 			}
 		}
-
-		if (allowed) {
-			//console.log('Route ' + route + ' permitted.');
-			response = {routePermitted: true};
+		
+		if (validClaim) {
+			msg = 'Access token contains necessary claim(s) for ' + route + ': ' +  JSON.stringify(requiredClaims);
+			console.log(msg);
+			return {routePermitted: true, msg: msg};
 		} else {
-			//console.error('Route ' + route + ' not permitted.');
-			response = {routePermitted: false, missingClaims: missingClaims}
+			msg = 'Access token is missing the following claim(s) for ' + route + ': ' + JSON.stringify(missingClaims);
+			console.log(msg);
+			return {routePermitted: false, msg: msg};
 		}
-		res.json(response);
+	}	
+
+	// Return a JSON array of navbar routes available to the user based on session state and claims in their access token
+	app.post('/navbar', function(req, res) {
+
+		var activeSession = req.body.activeSession;
+		var token = req.body.accessToken;
+		var navbarRoutes = {};
+		var routes = clientRoutes.routes;
+
+		for (var route in routes) {
+			if (routes.hasOwnProperty(route)) {
+				var routeParams = routes[route];
+				var navRoute = route;
+				var routeVerification = verifyRoute(route, routeParams, activeSession, token);
+				var routePermitted = routeVerification.routePermitted;
+				console.log('/navbar for ' + route + ' ' + routePermitted);
+				if (routePermitted) {
+					var routeString = JSON.stringify(route);
+					navbarRoutes[routeString] = navRoute;
+				}
+			}
+		}
+		res.json(navbarRoutes);
+	});
+
+	// Check for appropriate claims (roles) in the users access token before granting access to the route.
+	// This is used by routerService to gate access to routes using route resolve in the Angular app.
+	app.post('/checkClaims', function(req, res) {
+		
+		var route = req.body.route;
+		var token = req.body.accessToken;
+		var requiredClaims = clientRoutes.routes[route].claimsRequired;
+		var routePermission = checkClaimsforRoute(route, requiredClaims, token);
+		res.json(routePermission);
+	});
+
+
+	// Final decision on route authorization
+	app.post('/routePermission', function(req, res) {
+
+		var activeSession = req.body.activeSession;
+		var claimsValid = req.body.claimsValid;
+		var route = req.body.route;
+		var token = req.body.accessToken;
+		var claimsRequired = clientRoutes.routes[route].claimsRequired;
+		var sessionRequired = clientRoutes.routes[route].sessionRequired
+		var sessionExempt = !sessionRequired;
+		var claimExempt =  claimsRequired.length < 1;
+
+		var sessionOk = sessionExempt ? sessionExempt : activeSession;
+		var claimsOk = claimExempt ? claimExempt : claimsValid;
+
+		permitted = sessionOk && claimsOk;
+
+		console.log('/routePermission for ' + route + ': ' + permitted);
+
+		res.json({routePermitted: permitted});
 	});
 
 	// decode JWT token

@@ -3,57 +3,57 @@ angular.module('routerService', [])
 
 		var sessionExempt = true;
 		var sessionValid = true;
-		var scopeExempt = true;
-		var scopeValid = true;
+		var claimExempt = true;
+		var claimValid = true;
 
-		var token = '';
-		var routes = ConfigService.routes;					// get the route session/scope config from the ConfigService
+		this.accessToken = '';
+		this.activeSession = false;
+
+		var token = ''; /*TODO: is this used? */
+		var routes = ConfigService.routes;					// get the route session/claim config from the ConfigService
 
 		// Check to see if there's an active Okta session
 		checkSession = function() {	
 			return $rootScope.oktaAuth.session.exists();
 		}
 
-		/* TODO: change references from scopes to claims */
-		/* TODO: move checkScopes (claims) and to oktaAuthService.
-			Check each route change, but then stuff them into an array on OktaAuthSErvice 
-			so other controllers (like headerController) can get to them.
-
-		*/
-
-		// Check to see if the user has the necessary scopes
-		function checkScopes(requiredClaims) {
+		// Check to see if the user has the necessary claims (roles) for this route
+		function checkClaims(requiredClaims) {
 			var currentPath = $location.$$path;
-			var token = $rootScope.oktaAuth.tokenManager.get('access-token').accessToken;
-			var requiredClaims = routes[currentPath]['scopesRequired'];
-			return $http.post("/checkRoutePermissions", { accessToken: token, requiredClaims: requiredClaims});
+			this.accessToken = this.activeSession ? $rootScope.oktaAuth.tokenManager.get('access-token').accessToken : '';
+
+			return $http.post("/checkClaims", { accessToken: this.accessToken, route: currentPath});
 		}
 
 		// Check to see if we have access to the route
-		function checkAccess(sessionValid, scopeValid) {
+		function checkAccess(sessionValid, claimsValid) {
 			
 			// check to see if the current route requires an active session and/or specific scopes
 			var currentPath = $location.$$path;
+			this.accessToken = this.activeSession ? $rootScope.oktaAuth.tokenManager.get('access-token').accessToken : '';
+			return $http.post('/routePermission', {activeSession: sessionValid, claimsValid: claimsValid, route: currentPath, accessToken: this.accessToken});
+			/*
 			var sessionExempt = !routes[currentPath]['sessionRequired'];
 			var scopesNeeded =  routes[currentPath]['scopesRequired'].length;
-			var scopeExempt =  (scopesNeeded <= 0);
+			var claimExempt =  (scopesNeeded <= 0);
 
 			var deferred = $q.defer();
 			var sessionOk = sessionExempt ? sessionExempt : sessionValid;
-			var scopeOk = scopeExempt ? scopeExempt : scopeValid;
+			var scopeOk = claimExempt ? claimExempt : claimValid;
 
 			permitted = sessionOk && scopeOk;
 		
-			console.log('Route decision: [Session required: ' + !sessionExempt + ' | active:  ' + sessionValid + '] [Scopes required: ' + !scopeExempt + ' | present: ' + scopeValid + ']');
+			console.log('Route decision: [Session required: ' + !sessionExempt + ' | active:  ' + sessionValid + '] [Scopes required: ' + !claimExempt + ' | present: ' + claimValid + ']');
 	
 			deferred.resolve(permitted);
 
 			return deferred.promise;
+			*/
 		}
 
 		this.checkRoutePermissions = function() {
 			var sessionValid = false;
-			var scopeValid = false;
+			var claimsValid = false;
 			var permitted = false;
 			var idToken = {};
 			var accessToken = {};
@@ -65,13 +65,17 @@ angular.module('routerService', [])
 					sessionValid = res;
 					if (sessionValid) {
 						$rootScope.$broadcast('rootScope:handleActiveSession');
+						this.activeSession = true;
 					} else { 
 						$rootScope.$broadcast('rootScope.handleNoActiveSession');
+						this.activeSession = false;
 					}
-					checkScopes() 
+					checkClaims() 
 						.then(function(res) {
-							scopeValid = res.data.routePermitted;
-							if (res.data.missingClaims) console.log('Missing claims: ' + JSON.stringify(res.data.missingClaims, undefined, 2));
+							// Generate the navbar
+							$rootScope.$broadcast('rootScope:buildNav', {activeSession: this.activeSession, accessToken: this.accessToken});
+							claimsValid = res.data.routePermitted;
+							console.log('Checking required claims: ' + res.data.msg);
 							var session = OktaAuthService.getSession()
 								.then(function(session) {
 									OktaAuthService.prettifyToken(session)
@@ -104,9 +108,9 @@ angular.module('routerService', [])
 								}
 								// ----------------------------------------------------------------
 
-								checkAccess(sessionValid, scopeValid)
+								checkAccess(sessionValid, claimsValid)
 								.then(function(res) {
-									permitted = res;
+									permitted = res.data.routePermitted;
 									if (permitted) {
 										deferred.resolve(true);
 									} else {
