@@ -32,15 +32,32 @@ h6 {
   padding-right: 5px;
 }
 /* Bootstrap navbar */
+/*
 .nav {
-  bottom: 0;
+    bottom:0;
 }
-.nav > li > a {
-  position: relative;
-  display: block;
+
+.nav>li>a {
+    position: relative;
+    display: block;
 }
+
 .navbar-right {
-  margin-right: 0px;
+    margin-right: 0px; 
+}
+*/
+.navbar-default {
+  background-color: #F8F8F8;
+  border-color: #E7E7E7;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #777777;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  background-color: #E7E7E7;
+  color: #555555;
 }
 /* Login dropdown */
 #login-dp {
