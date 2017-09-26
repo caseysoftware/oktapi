@@ -1,5 +1,4 @@
 angular.module('homeCtrl', [])
-    .controller('HomeController', ['$scope','$route', function($scope, $route) {
-
+    .controller('HomeController', ['$scope','$route', '$http', function($scope, $route, $http) {
 
 }]);

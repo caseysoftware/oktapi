@@ -12,12 +12,8 @@ angular.module('implicitCallbackCtrl', [])
         Inspector.pushTokenInspector('id-token-jwt', tokenArray[0].idToken);
         Inspector.pushTokenInspector('access-token-jwt', tokenArray[1].accessToken);
         
-
         $rootScope.oktaAuth.tokenManager.add('id-token', tokenArray[0]);
         $rootScope.oktaAuth.tokenManager.add('access-token', tokenArray[1]);
-
-        //OktaAuthService.putToken('id-token', tokenArray[0]);
-        //OktaAuthService.putToken('access-token', tokenArray[1]);
 
         OktaAuthService.decodeToken(tokenArray[1].accessToken)
             .then(function(res) {
@@ -39,7 +35,7 @@ angular.module('implicitCallbackCtrl', [])
             .catch(function(err) {
                 console.error('Error decoding ID token: ' + err);  
             });
-
+        /* TODO: remove session token from $rootScope. Ask for it when you need it */
         $rootScope.oktaAuth.session.get() 
             .then(function(session) {
                 $rootScope.oktaSessionToken = session;

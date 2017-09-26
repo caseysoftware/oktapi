@@ -1,28 +1,73 @@
 module.exports = {
     routes : {
         '/': {
+            visible: false,
+            displayName: '',
             sessionRequired: false,
+            hideIfSession: false,
             claimsRequired: ''
         },
         '/home': {
+            visible: true,
+            displayName: 'Home',
             sessionRequired: false,
+            hideIfSession: false,
             claimsRequired: ''
         },
-        '/loginImplicit': {
+        '/register': {
+            visible: true,
+            displayName: 'Register',
             sessionRequired: false,
-            claimsRequired: ''				
+            hideIfSession: true,
+            claimsRequired: '',
+        },
+        '/loginImplicit': {
+            visible: false,
+            displayName: 'Login (implicit)',
+            sessionRequired: false,
+            hideIfSession: true,
+            claimsRequired: '',
         },
         '/loginCode': {
+            visible: false,
+            displayName: 'Login (code)',
             sessionRequired: false,
-            claimsRequired: ''				
+            hideIfSession: true,
+            claimsRequired: ''	
         },
         '/landing': {
+            visible: true,
+            displayName: 'Landing',
             sessionRequired: true,
-            claimsRequired: ''				
+            hideIfSession: false,
+            claimsRequired: ''
         },			
         '/admin': {
+            visible: true,
+            displayName: 'Admin',
             sessionRequired: true,
-            claimsRequired: ['OKTAPI role - user administrator']		
+            hideIfSession: false,
+            claimsRequired: [''],
+            children: {
+                '/users': {
+                    visible: true,
+                    displayName: 'Users',
+                    sessionRequired: true,
+                    claimsRequired: ['OKTAPI role - user administrator'],
+                },
+                '/groups': {
+                    visible: true,
+                    displayName: 'Groups',
+                    sessionRequired: true,
+                    claimsRequired: ['OKTAPI role - group administrator'],
+                },
+                '/test': {
+                    visible: true,
+                    displayName: 'Test',
+                    sessionRequired: true,
+                    claimsRequired: ''
+                }
+            }
         }
     }
 };

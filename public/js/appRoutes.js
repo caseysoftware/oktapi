@@ -38,6 +38,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				}]
 			}
 		}) 
+		.when('/register', {
+			templateUrl: 'views/register.html',
+			controller: 'RegisterController',
+			activeTab: '/register',
+			resolve: {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /register successful.');
+					})
+					.catch(function(err) {
+						activeTab: '/home';
+						throw(err);
+					})
+				}]
+			}
+		}) 
 		// Login page with Implicit Flow
 		.when('/loginImplicit', {
 			templateUrl: 'views/loginImplicit.html',
@@ -98,6 +114,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				routePermitted: ['RouterService', function(RouterService) {
 					return RouterService.checkRoutePermissions().then(function(res) {
 						console.log('Route change to /admin successful.');
+					})
+					.catch(function(err) {
+						activeTab: '/home';
+						throw(err);
+					})
+				}]
+			}
+		})
+		.when('/users', {
+			templateUrl: 'views/users.html',
+			controller: 'UsersController',
+			activeTab: '/users',
+			resolve: {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /users successful.');
 					})
 					.catch(function(err) {
 						activeTab: '/home';

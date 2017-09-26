@@ -9,46 +9,54 @@ const path = require('path');
 const fs = require('fs');
 const cachedJwks = {};
 const request = require('request');
+const mode = oktaConfig.mode;
 
+const oktaOrg = oktaConfig.oktaOrgUrl;
+const oktaApiProxyUrl = oktaConfig.oktaApiProxyUrl;
+const authServerId = oktaConfig.authServerId;
 
 module.exports = function(app) {
 
 	// server routes ===========================================================
 	
+	/* TODO: move Okta stuff into a different controller */
 	// Okta API proxy routes 
-	app.get('/users/me/:token', function(req, res) {
+
+	// userinfo
+	app.post('/userinfo', function(req, res) {
 		
-		var token = req.params.token;
-		//var requestUrl = 'http://localhost:5000' + '/users/me';
-		var requestUrl = 'https://okta-api-proxy.herokuapp.com' + '/users/me';
+		var token = req.body.accessToken;
+		var attribute = req.body.attribute;
+		var requestUrl = oktaOrg + '/oauth2/' + authServerId + '/v1/userinfo';
 
 		const options = {
 			uri: requestUrl,
-			method: 'GET',
+			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 				'Cache-Control': 'no-cache',
- 				'Authorization': 'Bearer ' + token
+				'Authorization': 'Bearer ' + token
 			}
 		};
-	
+
 		request(options, function(error, response, body) {
 			if (error) {
-				console.error('/users/me/:token ' + error);
+				console.error('/userinfo ' + error);
 				res.send(error);
 			}
 			if (response) {
 				if (response.statusCode == 200) {
 					res.send(body);
 				} else {
-					console.log('/users/me/:token ' + response.statusCode + ' ' + response.statusMessage);
+					console.log('/userinfo ' + response.statusCode + ' ' + response.statusMessage);
 					res.send(response.statusCode + ' ' + response.statusMessage);
 				}
 			}
 		})
-
+		
 	});
+
 
 	// Client app support routes ======================================================
 
@@ -60,16 +68,30 @@ module.exports = function(app) {
 	// Routing helper apps
 	
 	// Check to see if the current route is accessible to the user, based on session and claims in access token
-	function verifyRoute(route, routeParams, activeSession, token) {
-		var currentRoute = clientRoutes.routes[route];		// lookup the route criteria in clientRoutes
+	function verifyRoute(route, parent, routeParams, activeSession, token) {
+
+		var currentRoute = {};
+
+		if (parent) {
+			currentRoute = clientRoutes.routes[parent].children[route];
+		} else {
+			currentRoute = clientRoutes.routes[route];		// lookup the route criteria in clientRoutes
+		}
 
 		// If a session is required and we don't have one, return false
 		if (currentRoute.sessionRequired && !activeSession) {
-			console.log('Route ' + route + ' requires an active session, and there is none.');
+			console.log('Route ' + currentRoute.displayName + ' requires an active session, and there is none.');
 			return false;
 		}
+
+		// If the route shoud be hidden when there is an active session, return false. For example, register and login pages
+		if (currentRoute.hideIfSession && activeSession) {
+			console.log('Route ' + currentRoute.displayName + ' should be hidden if there is an active session, and there is one.');
+			return false;
+		}
+
 		// Check the claims on the access token to see if they meet the requirements for this route		
-		return checkClaimsforRoute(route, routeParams.claimsRequired, token);;
+		return checkClaimsforRoute(currentRoute, routeParams.claimsRequired, token);;
 	};
 
 	// Check to see if the users access token has the claims required for this route 
@@ -82,7 +104,7 @@ module.exports = function(app) {
 		var msg = '';
 
 		if (requiredClaims.length < 1) {
-			msg = 'No custom claims are required for route ' + route;
+			msg = 'No custom claims are required for route ' + route.displayName;
 			console.log(msg);
 			var res = {routePermitted: true, msg: msg};
 			return {routePermitted: true, msg: msg};
@@ -101,7 +123,7 @@ module.exports = function(app) {
 		
 		if (!roles) {
 			validClaim = false;
-			msg = 'Access token is missing the following claim(s) for ' + route + ': ' + JSON.stringify(requiredClaims);
+			msg = 'Access token is missing the following claim(s) for ' + route.displayName + ': ' + JSON.stringify(requiredClaims);
 			console.log(msg);
 			return {routePermitted: false, msg: msg};
 		}
@@ -116,16 +138,69 @@ module.exports = function(app) {
 		}
 		
 		if (validClaim) {
-			msg = 'Access token contains necessary claim(s) for ' + route + ': ' +  JSON.stringify(requiredClaims);
+			msg = 'Access token contains necessary claim(s) for ' + route.displayName + ': ' +  JSON.stringify(requiredClaims);
 			console.log(msg);
 			return {routePermitted: true, msg: msg};
 		} else {
-			msg = 'Access token is missing the following claim(s) for ' + route + ': ' + JSON.stringify(missingClaims);
+			msg = 'Access token is missing the following claim(s) for ' + route.displayName + ': ' + JSON.stringify(missingClaims);
 			console.log(msg);
 			return {routePermitted: false, msg: msg};
 		}
 	}	
 
+	function parseNavElements(routes, parsedRoutes, parent, parentParams, token, activeSession) {
+
+		// {route: route, visible: routeParams.visible, displayName: routeParams.displayName, children: routeParams.children};
+
+		if (routes) {
+			for (route in routes) {
+				var routeParams = routes[route];
+				if (routes[route].hasOwnProperty('children')) {
+					//parsedRoutes[route] = {route: route, visible: routeParams.visible, displayName: routeParams.displayName , children: []};
+					parseNavElements(routes[route].children, parsedRoutes, route, routeParams, token, activeSession);
+				} else {
+					//console.log('current route: ' + route);
+					if (parent) {
+						routeVerification = verifyRoute(route, parent, routeParams, activeSession, token);
+						routePermitted = routeVerification.routePermitted;
+						if (routePermitted) {
+							if (!parsedRoutes[parent]) {
+								parsedRoutes[parent] = {route: parent, visible: parentParams.visible, displayName: parentParams.displayName , children: []};
+							}
+							parsedRoutes[parent].children.push({route: route, visible: routeParams.visible, displayName: routeParams.displayName});
+						}
+						//console.log('** parsedRoutes[parent] ' + parent + ' ' + JSON.stringify(parsedRoutes));
+					} else {
+						routeVerification = verifyRoute(route, '', routeParams, activeSession, token);
+						routePermitted = routeVerification.routePermitted;
+						if (routePermitted) parsedRoutes[route] = {route: route, visible: routeParams.visible, displayName: routeParams.displayName};
+					}
+					
+				}
+			}
+		} else {
+			console.log('current route: ' + route);
+		}
+
+		//console.log('Parsed Routes: ' + JSON.stringify(parsedRoutes));
+		return parsedRoutes;
+	}
+
+	// TODO: is this just a test function?
+	app.get('/recurse', function(req, res) {
+
+		var routes = clientRoutes.routes;
+		var parsedRoutes = {};
+		var parent = '';
+		var children = {};
+
+		var navRoutes = parseNavElements(routes, parsedRoutes, parent);
+
+		res.json(navRoutes);
+
+	});
+
+	/* TODO: this could be cleaner, probably recursive. */
 	// Return a JSON array of navbar routes available to the user based on session state and claims in their access token
 	app.post('/navbar', function(req, res) {
 
@@ -133,13 +208,44 @@ module.exports = function(app) {
 		var token = req.body.accessToken;
 		var navbarRoutes = {};
 		var routes = clientRoutes.routes;
+		var parsedRoutes = {};
+		var parent = '';
+		var parentParams = '';
+		var routePermitted = false;
+
+		var navRoutes = parseNavElements(routes, parsedRoutes, parent, parentParams, token, activeSession);
+
+
+		/* TODO: this is being replaced by the recursive stuff .......
 
 		for (var route in routes) {
+			routePermitted = false;
 			if (routes.hasOwnProperty(route)) {
 				var routeParams = routes[route];
-				var navRoute = route;
-				var routeVerification = verifyRoute(route, routeParams, activeSession, token);
-				var routePermitted = routeVerification.routePermitted;
+				var navRoute = {route: route, visible: routeParams.visible, displayName: routeParams.displayName, children: routeParams.children};
+				if (routeParams.children) {
+					var childRoutes = {};
+					for (var child in routeParams.children) {
+						if (routeParams.children.hasOwnProperty(child)) {
+							var childRouteParams = routeParams.children[child];
+							var childRoute = {route: child, visible: childRouteParams.visible, displayName: childRouteParams.displayName, children: childRouteParams.children};
+							var childRouteVerification = verifyRoute(route, child, childRouteParams, activeSession, token);
+							var childRoutePermitted = childRouteVerification.routePermitted;
+							if (childRoutePermitted) {
+								var routeString = JSON.stringify(child);
+								childRoutes[routeString] = childRoute;
+								routePermitted = true;
+							}
+						}
+					}
+					if (routePermitted) {
+						navRoute.children = childRoutes;
+					}
+				} else {
+					var routeVerification = verifyRoute(route, '', routeParams, activeSession, token);
+					routePermitted = routeVerification.routePermitted;
+				}
+
 				console.log('/navbar for ' + route + ' ' + routePermitted);
 				if (routePermitted) {
 					var routeString = JSON.stringify(route);
@@ -148,6 +254,9 @@ module.exports = function(app) {
 			}
 		}
 		res.json(navbarRoutes);
+		... end of stuff to be refactored with recursive algorithm */
+		res.json(navRoutes);
+
 	});
 
 	// Check for appropriate claims (roles) in the users access token before granting access to the route.
@@ -156,9 +265,32 @@ module.exports = function(app) {
 		
 		var route = req.body.route;
 		var token = req.body.accessToken;
-		var requiredClaims = clientRoutes.routes[route].claimsRequired;
-		var routePermission = checkClaimsforRoute(route, requiredClaims, token);
-		res.json(routePermission);
+		var currentRoute = {};
+
+		for (rte in clientRoutes.routes) {
+			if (rte == route) {
+				currentRoute = clientRoutes.routes[rte];
+				break;
+			} 
+			if (clientRoutes.routes[rte].children) {
+				for (child in clientRoutes.routes[rte].children) {
+					if (child == route) {
+						currentRoute = clientRoutes.routes[rte].children[child];
+						break;
+					}
+				}
+			}
+		}
+
+		if (currentRoute) {
+			requiredClaims = currentRoute.claimsRequired;
+			routePermission = checkClaimsforRoute(currentRoute, requiredClaims, token);
+			res.json(routePermission);
+		} else {
+			console.error('Unable to determine required claims for route ' + route);
+			res.send(false);
+		}
+
 	});
 
 
@@ -169,11 +301,37 @@ module.exports = function(app) {
 		var claimsValid = req.body.claimsValid;
 		var route = req.body.route;
 		var token = req.body.accessToken;
-		var claimsRequired = clientRoutes.routes[route].claimsRequired;
-		var sessionRequired = clientRoutes.routes[route].sessionRequired
+		var currentRoute = {};
+
+		for (rte in clientRoutes.routes) {
+			if (rte == route) {
+				currentRoute = clientRoutes.routes[rte];
+				break;
+			} 
+			if (clientRoutes.routes[rte].children) {
+				for (child in clientRoutes.routes[rte].children) {
+					if (child == route) {
+						currentRoute = clientRoutes.routes[rte].children[child];
+						break;
+					}
+				}
+			}
+		}
+
+		if (currentRoute) {
+			claimsRequired = currentRoute.claimsRequired;
+			sessionRequired = currentRoute.sessionRequired
+			routePermission = checkClaimsforRoute(currentRoute, requiredClaims, token);
+		} else {
+			console.error('Error reading required claims and session info for route ' + route);
+			res.send(false);
+		}
+
+		//var claimsRequired = clientRoutes.routes[route].claimsRequired;
+		//var sessionRequired = clientRoutes.routes[route].sessionRequired
+
 		var sessionExempt = !sessionRequired;
 		var claimExempt =  claimsRequired.length < 1;
-
 		var sessionOk = sessionExempt ? sessionExempt : activeSession;
 		var claimsOk = claimExempt ? claimExempt : claimsValid;
 

@@ -6,7 +6,9 @@ angular
         authEndpoint: '/auth',
         // allowable values: 'implicit', 'authorization_code'
         oAuthFlow: 'implicit'
-    },
+    }
+    /* this was moved to clientRoutes on the node app
+    ,
     routes : {
         '/': {
             sessionRequired: false,
@@ -32,5 +34,5 @@ angular
             sessionRequired: true,
             scopesRequired: ['OKTAPI role - user administrator']		
         }
-    }
+    } */
 });

@@ -26,29 +26,10 @@ angular.module('routerService', [])
 		}
 
 		// Check to see if we have access to the route
-		function checkAccess(sessionValid, claimsValid) {
-			
-			// check to see if the current route requires an active session and/or specific scopes
+		function checkAccess(sessionValid, claimsValid) {		
 			var currentPath = $location.$$path;
 			this.accessToken = this.activeSession ? $rootScope.oktaAuth.tokenManager.get('access-token').accessToken : '';
 			return $http.post('/routePermission', {activeSession: sessionValid, claimsValid: claimsValid, route: currentPath, accessToken: this.accessToken});
-			/*
-			var sessionExempt = !routes[currentPath]['sessionRequired'];
-			var scopesNeeded =  routes[currentPath]['scopesRequired'].length;
-			var claimExempt =  (scopesNeeded <= 0);
-
-			var deferred = $q.defer();
-			var sessionOk = sessionExempt ? sessionExempt : sessionValid;
-			var scopeOk = claimExempt ? claimExempt : claimValid;
-
-			permitted = sessionOk && scopeOk;
-		
-			console.log('Route decision: [Session required: ' + !sessionExempt + ' | active:  ' + sessionValid + '] [Scopes required: ' + !claimExempt + ' | present: ' + claimValid + ']');
-	
-			deferred.resolve(permitted);
-
-			return deferred.promise;
-			*/
 		}
 
 		this.checkRoutePermissions = function() {

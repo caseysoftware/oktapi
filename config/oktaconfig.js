@@ -4,6 +4,7 @@ module.exports = {
         - move secrets to separate config file. Since this config is shared with the client, we need to move any secrets stuff to a server-only config file
     */
 
+    mode: 'offline',
 
     // Okta tenant for Oktapi Platform
     oktaTenantName: 'oktalane',
@@ -35,5 +36,10 @@ module.exports = {
 
     // registration config
     activateOnRegister: true,
-    defaultSecondEmail: "oktabrent@gmail.com"
+    defaultSecondEmail: "oktabrent@gmail.com",
+
+    // okta-api-proxy settings
+    //oktaApiProxyUrl: 'https://okta-api-proxy.herokuapp.com'
+    oktaApiProxyUrl: 'http://localhost:5000'
+
 };

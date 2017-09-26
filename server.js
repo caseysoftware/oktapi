@@ -51,9 +51,14 @@ console.log('Oktapi server running on port: ' + port);
 exports = module.exports = app; // expose app
 */
 
+
+
 /**
  * Fetch metadata to obtain JWKS signing keys
  */
+
+
+/* offline mode 
 
 console.log('fetching issuer metadata configuration from %s...', metadataUrl);
 request({
@@ -66,9 +71,13 @@ request({
     return process.exit(1);
   }
 
+  end offline mode */
+
 /**
  * Configure JwtBearerStrategy with JWKS
  */
+
+ /* offline mode
 
  console.log('trusting tokens signed with keys from %s...', res.body.jwks_uri);
   passport.use(new JwtBearerStrategy({
@@ -80,6 +89,8 @@ request({
     // done(err, user, info)
     return done(null, token);
   }));
+
+  end offline mode */
 
 /**
  * Start Server
@@ -99,4 +110,8 @@ request({
     console.log();
   });
 
+/* offline mode
+
 });
+
+end offline mode*/

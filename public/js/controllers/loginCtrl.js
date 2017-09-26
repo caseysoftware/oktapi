@@ -35,7 +35,6 @@ angular.module('loginCtrl', [])
         $scope.$apply()
     });
 
-
     // Authorization Code Flow
     $scope.loginCode = function() {
 

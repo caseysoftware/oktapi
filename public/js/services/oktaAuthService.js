@@ -3,8 +3,7 @@ angular.module('oktaAuthService', [])
         function($rootScope, $q, $http, $location, Inspector, OKTA_CONFIG) {
 
     const oAuthFlow = $rootScope.appConfig.oAuthFlow;
-
-    var activeSession = ''; //This variable will be used by the navbar to determine if we have an active session, so it needs to be updated on each route change.
+    var activeSession = ''; //TODO: is this being used? : This variable will be used by the navbar to determine if we have an active session, so it needs to be updated on each route change.
 
     switch (oAuthFlow) {
         case 'implicit': {
@@ -47,6 +46,7 @@ angular.module('oktaAuthService', [])
           });
     }
 
+    // callback 
     this.loginImplicitCallback = function(username, password) {
         return $rootScope.oktaAuth.signIn({
                     username: username,
@@ -60,8 +60,17 @@ angular.module('oktaAuthService', [])
 
     }
 
+    this.clearSessions = function() {
+        var token = $rootScope.oktaAuth.tokenManager.get('id-token');
+        var uid = token.claims.sub;
+        $http.post('/users/' + uid + '/sessions');
+    }
+
     // Session utlilities -----------------------
 
+
+
+    // Get the current session
     this.getSession = function() {
          return $rootScope.oktaAuth.session.get();
     }
@@ -92,15 +101,14 @@ angular.module('oktaAuthService', [])
         return $rootScope.oktaAuth.tokenManager.clear();
     }
 
-    // Utilities
-
+    // Utilities ===========================================
 
     // Event listeners
     $rootScope.$on('rootScope:handleActiveSession', function(event, data) {
         getCurrentUser()
             .then(function(res) {
-                Inspector.pushGeneralInspector('user_me', JSON.stringify(res.data, undefined, 2))
-                $rootScope.currentUser = res.data.profile.firstName + ' ' + res.data.profile.lastName;
+                Inspector.pushGeneralInspector('current-user', JSON.stringify(res, undefined, 2));
+                $rootScope.currentUser = res.name;
                 activeSession = true;
             });
     }); 
@@ -112,8 +120,20 @@ angular.module('oktaAuthService', [])
     })
 
     function getCurrentUser() {
-        var token = $rootScope.oktaAuth.tokenManager.get('access-token').accessToken;
-        return $http.get('/users/me/' + token);
+        var deferred = $q.defer();
+        var token = $rootScope.oktaAuth.tokenManager.get('access-token');
+
+        if (!token) {
+            console.log('Unable to get access token for current session.');
+            deferred.reject('');
+        } else {
+            $http.post('/userinfo', token)
+                .then(function(res) {
+                    deferred.resolve(res.data);
+                });
+        }
+    
+        return deferred.promise;
     }
 
     // Return prettified, decoded token to client
