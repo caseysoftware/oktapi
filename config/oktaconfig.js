@@ -27,7 +27,8 @@ module.exports = {
         'openid',
         'email',
         'profile',
-        'me:read'
+        'me:read',
+        'users:read'
     ],
 
     oktaAuthnApiEndpoint: '/api/v1/authn',
@@ -40,6 +41,9 @@ module.exports = {
 
     // okta-api-proxy settings
     //oktaApiProxyUrl: 'https://okta-api-proxy.herokuapp.com'
-    oktaApiProxyUrl: 'http://localhost:5000'
+    oktaApiProxyUrl: 'http://localhost:5000',
+
+    // user page config
+    maxUserListSize: 10
 
 };

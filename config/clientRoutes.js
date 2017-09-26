@@ -60,12 +60,6 @@ module.exports = {
                     displayName: 'Groups',
                     sessionRequired: true,
                     claimsRequired: ['OKTAPI role - group administrator'],
-                },
-                '/test': {
-                    visible: true,
-                    displayName: 'Test',
-                    sessionRequired: true,
-                    claimsRequired: ''
                 }
             }
         }

@@ -1,5 +1,6 @@
-var app = angular.module('OKTAPI', ['ngRoute', 'appRoutes', 'homeCtrl', 'loginCtrl', 'landingCtrl', 'headerCtrl', 'adminCtrl', 'configService','routerService', 
-    'oktaAuthService', 'implicitCallbackCtrl', 'inspectorService', 'inspectorCtrl', 'registerCtrl', 'usersCtrl']);
+var app = angular.module('OKTAPI', ['ngRoute', 'appRoutes', 'homeCtrl', 'loginCtrl', 'landingCtrl', 'headerCtrl', 'adminCtrl', 
+    'configService','routerService', 'oktaAuthService', 'implicitCallbackCtrl', 'inspectorService', 'inspectorCtrl', 
+    'registerCtrl', 'usersCtrl', 'groupsCtrl']);
 
 loadConfig().then(bootstrapApplication);
 

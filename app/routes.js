@@ -22,6 +22,48 @@ module.exports = function(app) {
 	/* TODO: move Okta stuff into a different controller */
 	// Okta API proxy routes 
 
+	app.post('/users', function(req, res) {
+
+		var token = req.body.token.accessToken;
+		var activePage = req.body.activePage;
+		var requestUrl = oktaApiProxyUrl + '/users';
+
+		var link = '';
+
+		requestUrl += activePage;
+
+		const options = {
+			uri: requestUrl,
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache',
+				'Authorization': 'Bearer ' + token
+			}
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/users ' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					if (response.headers.link) {
+						link = response.headers.link;
+						res.set('link', link);
+					}
+					res.send(body);
+				} else {
+					console.log('/users ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
+
+	});
+
 	// userinfo
 	app.post('/userinfo', function(req, res) {
 		
@@ -148,6 +190,7 @@ module.exports = function(app) {
 		}
 	}	
 
+	// Recursively parse the clientRoutes JSON to build a dynamic navbar
 	function parseNavElements(routes, parsedRoutes, parent, parentParams, token, activeSession) {
 
 		// {route: route, visible: routeParams.visible, displayName: routeParams.displayName, children: routeParams.children};
@@ -181,7 +224,6 @@ module.exports = function(app) {
 		} else {
 			console.log('current route: ' + route);
 		}
-
 		//console.log('Parsed Routes: ' + JSON.stringify(parsedRoutes));
 		return parsedRoutes;
 	}
@@ -215,46 +257,6 @@ module.exports = function(app) {
 
 		var navRoutes = parseNavElements(routes, parsedRoutes, parent, parentParams, token, activeSession);
 
-
-		/* TODO: this is being replaced by the recursive stuff .......
-
-		for (var route in routes) {
-			routePermitted = false;
-			if (routes.hasOwnProperty(route)) {
-				var routeParams = routes[route];
-				var navRoute = {route: route, visible: routeParams.visible, displayName: routeParams.displayName, children: routeParams.children};
-				if (routeParams.children) {
-					var childRoutes = {};
-					for (var child in routeParams.children) {
-						if (routeParams.children.hasOwnProperty(child)) {
-							var childRouteParams = routeParams.children[child];
-							var childRoute = {route: child, visible: childRouteParams.visible, displayName: childRouteParams.displayName, children: childRouteParams.children};
-							var childRouteVerification = verifyRoute(route, child, childRouteParams, activeSession, token);
-							var childRoutePermitted = childRouteVerification.routePermitted;
-							if (childRoutePermitted) {
-								var routeString = JSON.stringify(child);
-								childRoutes[routeString] = childRoute;
-								routePermitted = true;
-							}
-						}
-					}
-					if (routePermitted) {
-						navRoute.children = childRoutes;
-					}
-				} else {
-					var routeVerification = verifyRoute(route, '', routeParams, activeSession, token);
-					routePermitted = routeVerification.routePermitted;
-				}
-
-				console.log('/navbar for ' + route + ' ' + routePermitted);
-				if (routePermitted) {
-					var routeString = JSON.stringify(route);
-					navbarRoutes[routeString] = navRoute;
-				}
-			}
-		}
-		res.json(navbarRoutes);
-		... end of stuff to be refactored with recursive algorithm */
 		res.json(navRoutes);
 
 	});

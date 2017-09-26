@@ -138,6 +138,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				}]
 			}
 		})
+		.when('/groups', {
+			templateUrl: 'views/groups.html',
+			controller: 'GroupsController',
+			activeTab: '/groups',
+			resolve: {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /groups successful.');
+					})
+					.catch(function(err) {
+						activeTab: '/home';
+						throw(err);
+					})
+				}]
+			}
+		})
 		// callback for Implicit flow
 		.when('/implicit-callback', {
 			templateUrl: 'views/implicitCallback.html',

@@ -1,2 +1,53 @@
 <h1>Users Page</h1>
 
+
+<div class="panel panel-default panel-table">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col col-xs-6">
+              <h3 class="panel-title">Users</h3>
+            </div>
+            <div class="col col-xs-1">Search:</div>
+            <div class="col col-xs-1"><input type="text" id="searchString" ng-model="searchString" placeholder="search" ng-change="handleSearch()"></div>
+            <div class="col col-xs-4 text-right">
+              <button type="button" class="btn btn-sm btn-primary btn-create">Create New</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover table-responsive table-sm">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in userList">
+                            <th scope="row">{{user.id}}</th>
+                            <td>{{user.profile.login}}</td>
+                            <td>{{user.profile.lastName}}</td>
+                            <td>{{user.profile.firstName}}</td>
+                        </tr>
+            </table>
+        </div>
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col col-xs-4">
+            </div>
+            <div class="col col-xs-8">
+              <ul class="pagination hidden-xs pull-right">
+                <li ng-if="true"><a href="#" ng-click="handlePrev()">Previous</a></li>
+                <li ng-if="links['self']"><a href="#" ng-click="handleSelf()">Self</a></li>
+                <li ng-if="links['next']"><a href="#" ng-click="handleNext()">Next</a></li>
+              </ul>
+              <ul class="pagination visible-xs pull-right">
+                  <li><a href="#">«</a></li>
+                  <li><a href="#">»</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
