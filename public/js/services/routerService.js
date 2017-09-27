@@ -18,6 +18,7 @@ angular.module('routerService', [])
 		}
 
 		// Check to see if the user has the necessary claims (roles) for this route
+		/* TODO: why are we passing requiredClaims to this function?? */
 		function checkClaims(requiredClaims) {
 			var currentPath = $location.$$path;
 			this.accessToken = this.activeSession ? $rootScope.oktaAuth.tokenManager.get('access-token').accessToken : '';

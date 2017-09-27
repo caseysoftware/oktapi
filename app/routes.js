@@ -98,6 +98,46 @@ module.exports = function(app) {
 		})
 	});
 
+	// /updateUser - update the user profile based on form submission by an administrative user
+	app.post('/updateUser', function(req, res) {
+		
+		var token = req.body.token.accessToken;
+		var user = req.body.user;
+		var requestUrl = oktaApiProxyUrl + '/updateUser';
+		var payload = {
+			'id': user.id,
+			'profile': user.profile
+		}
+
+		const options = {
+			uri: requestUrl,
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache',
+				'Authorization': 'Bearer ' + token,
+			},
+			json: payload
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/updateUser ' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
+				} else {
+					console.log('/updateUser ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
+	});
+	
+
 	// userinfo
 	app.post('/userinfo', function(req, res) {
 		

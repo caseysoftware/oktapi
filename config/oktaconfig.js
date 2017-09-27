@@ -28,7 +28,10 @@ module.exports = {
         'email',
         'profile',
         'me:read',
-        'users:read'
+        'users:read',
+        'users:edit',
+        'users:create',
+        'users:delete'
     ],
 
     oktaAuthnApiEndpoint: '/api/v1/authn',

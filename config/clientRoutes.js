@@ -53,13 +53,13 @@ module.exports = {
                     visible: true,
                     displayName: 'Users',
                     sessionRequired: true,
-                    claimsRequired: ['OKTAPI role - user administrator'],
+                    claimsRequired: ['OKTAPI role - user administrator (read)'],
                 },
                 '/userDetails': {
                     visible: false,
                     displayName: 'UserDetails',
                     sessionRequired: true,
-                    claimsRequired: ['OKTAPI role - user administrator'],
+                    claimsRequired: ['OKTAPI role - user administrator (read)'],
                 },
                 '/groups': {
                     visible: true,
@@ -68,6 +68,14 @@ module.exports = {
                     claimsRequired: ['OKTAPI role - group administrator'],
                 }
             }
-        }
+        },
+        // Below are non-route permissions. We'll use these to check permission for things like the edit form, etc.
+        'user-edit-form': {
+            visible: false,
+            displayName: '',
+            sessionRequired: true,
+            hideIfSession: false,
+            claimsRequired: ['OKTAPI role - user administrator (edit)']
+        },	
     }
 };
