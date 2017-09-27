@@ -22,6 +22,7 @@ module.exports = function(app) {
 	/* TODO: move Okta stuff into a different controller */
 	// Okta API proxy routes 
 
+	// /users - return user list
 	app.post('/users', function(req, res) {
 
 		var token = req.body.token.accessToken;
@@ -61,7 +62,40 @@ module.exports = function(app) {
 				}
 			}
 		})
+	});
 
+	// /user - get individual user by ID
+	app.post('/user', function(req, res) {
+		
+		var token = req.body.token.accessToken;
+		var uid = req.body.uid;
+		var requestUrl = oktaApiProxyUrl + '/user/' + uid;
+
+		const options = {
+			uri: requestUrl,
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache',
+				'Authorization': 'Bearer ' + token
+			}
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/user/:id ' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
+				} else {
+					console.log('/user/:id ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
 	});
 
 	// userinfo

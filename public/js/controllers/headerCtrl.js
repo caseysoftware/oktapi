@@ -63,7 +63,9 @@ angular.module('headerCtrl', ['ngSanitize']).controller('HeaderController', ['$r
                     for (child in navElements[nav].children) {
                         subNav = '';
                         //console.log('nav kids: ' + navElements[nav].children[child].route + ' ' + navElements[nav].children[child].displayName);
-                        subNav = '<li class="nav-item ' + getClass(navElements[nav].children[child]) + '" ng-class="nav-item"><a class="nav-link" href="' + navElements[nav].children[child].route + '">' + navElements[nav].children[child].displayName + '</a></li>';
+                        if (navElements[nav].children[child].visible) {
+                            subNav = '<li class="nav-item ' + getClass(navElements[nav].children[child]) + '" ng-class="nav-item"><a class="nav-link" href="' + navElements[nav].children[child].route + '">' + navElements[nav].children[child].displayName + '</a></li>';
+                        }
                         //console.log('subNav: ' + subNav);
                         navHtml += subNav;
                     }

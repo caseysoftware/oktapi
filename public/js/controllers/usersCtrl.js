@@ -1,6 +1,6 @@
 angular.module('usersCtrl', [])
-.controller('UsersController', ['$rootScope', '$scope','$route', '$http', 'Inspector', 'OktaAuthService', 'OKTA_CONFIG',
-    function($rootScope, $scope, $route, $http, Inspector, OktaAuthService, OKTA_CONFIG) {
+.controller('UsersController', ['$rootScope', '$scope','$route', '$location', '$http', 'Inspector', 'OktaAuthService', 'OKTA_CONFIG',
+    function($rootScope, $scope, $route, $location, $http, Inspector, OktaAuthService, OKTA_CONFIG) {
 
     var token = $rootScope.oktaAuth.tokenManager.get('access-token');
     var listSize = OKTA_CONFIG.maxUserListSize;
@@ -10,6 +10,15 @@ angular.module('usersCtrl', [])
     $scope.links = [];
     $scope.initialPage = '?limit=' + listSize;
     $scope.searchString = '';
+    $scope.selectedId = '';
+
+    // if we passed any parameters to this page (from userDetails probably)
+    var urlParams = $location.search();
+
+    // if we passed a user Id in the query string, use it to select the active table row.
+    if (urlParams.uid) {
+        $scope.selectedId = urlParams.uid;
+    }
 
     function parseHeader(header){
         // Split parts by comma
@@ -52,17 +61,24 @@ angular.module('usersCtrl', [])
                 if (res.status == 200) {
                     $scope.userList = res.data;
                     responseLinks = res.headers('link');
-                    $scope.links = parseHeader(responseLinks);
-                    console.log('Links ' + JSON.stringify($scope.links, undefined, 2));
+                    if (responseLinks) {
+                        $scope.links = parseHeader(responseLinks);
+                        console.log('Links ' + JSON.stringify($scope.links, undefined, 2));
+                    }
                 } else {
                     console.log('Unknown error getting user list: ' + res.data);
                 }
             });
     }
 
+    // Open user details page
+    $scope.handleUserDetails = function(uid) {
+        $location.path('/userDetails').search({uid: uid, link: $scope.links['self']});
+    }
+
     // Search
     $scope.handleSearch = function() {
-        console.log('Search string: ' + $scope.searchString);
+        //console.log('Search string: ' + $scope.searchString);
         loadUsers($scope.initialPage + '&q=' + $scope.searchString);
     }
 
@@ -81,13 +97,27 @@ angular.module('usersCtrl', [])
 
     // Prev
     $scope.handlePrev = function() {
-        var nextLink = $scope.links['self'];
-        var prevLink = nextLink.replace(RegExp('after', 'g'), 'before');
-        console.log('prevLink: ' + prevLink);
-        loadUsers(prevLink);
+        loadUsers($scope.links['prev']);
     }
 
-    // load users on page load
-    loadUsers($scope.initialPage);
+    // set the active row by clicking
+    $scope.setSelected = function(userId) {
+        console.log('setSelected: ' + userId);
+        $scope.selectedId = userId;
+    }
+
+    // set the selected row
+    $scope.getSelected = function(userId) {
+        if (userId === $scope.uid) return 'active';
+        return '';
+    }
+
+    // load users on page load - if we are returning from userDetails, we'll pass the link to where we were in the pagination, otherwise start at the beginning.
+    if (urlParams.link) { 
+        console.log('Returning to the spot we left...' + urlParams.link);
+        loadUsers(urlParams.link);
+    } else {
+        loadUsers($scope.initialPage);
+    }
 
 }]);

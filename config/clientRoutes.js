@@ -55,6 +55,12 @@ module.exports = {
                     sessionRequired: true,
                     claimsRequired: ['OKTAPI role - user administrator'],
                 },
+                '/userDetails': {
+                    visible: false,
+                    displayName: 'UserDetails',
+                    sessionRequired: true,
+                    claimsRequired: ['OKTAPI role - user administrator'],
+                },
                 '/groups': {
                     visible: true,
                     displayName: 'Groups',

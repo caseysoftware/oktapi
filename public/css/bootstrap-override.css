@@ -14,6 +14,31 @@ body {
   left: 0;
   z-index: -1;
 }
+/* Bootstrap panels */
+.panel-transparent {
+  background: none;
+}
+.panel-transparent .panel-heading {
+  background: rgba(45, 45, 45, 0.8) !important;
+}
+.panel-transparent .panel-body {
+  background: rgba(225, 225, 225, 0.9) !important;
+}
+.panel-transparent .panel-footer {
+  background: rgba(45, 45, 45, 0.8) !important;
+}
+.panel-transparent .panel-title {
+  color: #ffffff!important;
+  padding: 10px 15px;
+  margin-top: 8px;
+  font-size: 24px;
+}
+/* Bootstrap forms */
+.form-horizontal .control-label {
+  padding-top: 7px;
+  margin-bottom: 0;
+  text-align: left;
+}
 /* typography */
 h5 {
   white-space: nowrap !important;
@@ -106,6 +131,7 @@ h6 {
     border-top: 0 none;
   }
 }
+/* search control */
 /* Inspector modal */
 .modal-dialog {
   opacity: .8;
