@@ -49,7 +49,7 @@ angular.module('routerService', [])
 						$rootScope.$broadcast('rootScope:handleActiveSession');
 						this.activeSession = true;
 					} else { 
-						$rootScope.$broadcast('rootScope.handleNoActiveSession');
+						$rootScope.$broadcast('rootScope:handleNoActiveSession');
 						this.activeSession = false;
 					}
 					checkClaims() 
@@ -75,18 +75,33 @@ angular.module('routerService', [])
 								accessToken = OktaAuthService.getToken('access-token');
 								if (idToken) {
 									Inspector.pushTokenInspector('id-token-jwt', idToken.idToken);
+
+									// get a pretty format version of the ID Token for the Inspector
 									OktaAuthService.decodePrettyToken(idToken.idToken)
 									.then(function(pretty) {
-										Inspector.pushTokenInspector('id-token', pretty);
-									});
+											Inspector.pushTokenInspector('id-token', pretty);
+										});
+
+									// get the raw decoded token 
+									OktaAuthService.decodeToken(idToken.idToken)
+										.then(function(decoded) {
+											$rootScope.unsafeIdToken = decoded;
+										});
 								}
 								if (accessToken) {
 									Inspector.pushTokenInspector('access-token-jwt', accessToken.accessToken);
-									
+
+									// get a pretty format version of the Access Token for the Inspector	
 									OktaAuthService.decodePrettyToken(accessToken.accessToken)
-									.then(function(pretty) {
-										Inspector.pushTokenInspector('access-token', pretty);
-									});
+										.then(function(pretty) {
+											Inspector.pushTokenInspector('access-token', pretty);
+										});
+									
+										// get the raw decoded token 
+									OktaAuthService.decodeToken(accessToken.accessToken)
+										.then(function(decoded) {
+											$rootScope.unsafeAccessToken = decoded;
+										});
 								}
 								// ----------------------------------------------------------------
 

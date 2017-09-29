@@ -36,12 +36,19 @@ module.exports = {
             claimsRequired: ''	
         },
         '/landing': {
-            visible: true,
+            visible: false,
             displayName: 'Landing',
             sessionRequired: true,
             hideIfSession: false,
             claimsRequired: ''
-        },			
+        },	
+        '/apps': {
+            visible: true,
+            displayName: 'Your Apps',
+            sessionRequired: true,
+            hideIfSession: false,
+            claimsRequired: ['OKTAPI role - portal user']
+        },		
         '/admin': {
             visible: true,
             displayName: 'Admin',

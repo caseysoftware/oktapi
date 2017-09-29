@@ -154,6 +154,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				}]
 			}
 		})
+		.when('/apps', {
+			templateUrl: 'views/apps.html',
+			controller: 'AppsController',
+			activeTab: '/users',
+			resolve: {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /apps successful.');
+					})
+					.catch(function(err) {
+						activeTab: '/home';
+						throw(err);
+					})
+				}]
+			}
+		})
 		.when('/groups', {
 			templateUrl: 'views/groups.html',
 			controller: 'GroupsController',

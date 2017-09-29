@@ -28,9 +28,14 @@ body {
 }
 .panel-transparent .panel-title {
   color: #ffffff!important;
-  padding: 10px 15px;
   margin-top: 8px;
   font-size: 16px;
+}
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 0px 0;
+  border-radius: 4px;
 }
 /* Bootstrap forms */
 .form-horizontal .control-label {
@@ -45,6 +50,27 @@ h5 {
 h6 {
   word-wrap: break-word !important;
   overflow-wrap: break-word !important;
+}
+.headerText {
+  font-family: 'Monoton', cursive;
+  color: #f7f5f5;
+  font-size: 200px;
+  font-size: 15vw;
+}
+.headerTextSmall {
+  font-family: 'Muli', sans-serif;
+  color: #000000;
+  font-size: 24px;
+  font-size: 4vw;
+}
+.inverseText {
+  color: #c6c6c6;
+}
+.highlightedText {
+  padding: 4px;
+}
+.text-background {
+  background: rgba(35, 35, 35, 0.9) !important;
 }
 /* Bootstrap jumbotron */
 .jumbotron {
@@ -84,7 +110,7 @@ h6 {
   min-width: 250px;
   padding: 14px 14px 0;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(35, 35, 35, 0.8);
 }
 #login-dp .help-block {
   font-size: 12px;

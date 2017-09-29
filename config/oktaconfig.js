@@ -47,6 +47,9 @@ module.exports = {
     oktaApiProxyUrl: 'http://localhost:5000',
 
     // user page config
-    maxUserListSize: 10
+    maxUserListSize: 10,
+
+    // OIDC ID Token to SAML Assertion Service
+    oidcSamlServiceUrl: 'http://localhost:8080/service'
 
 };

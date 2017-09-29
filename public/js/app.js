@@ -1,6 +1,14 @@
 var app = angular.module('OKTAPI', ['ngRoute', 'appRoutes', 'homeCtrl', 'loginCtrl', 'landingCtrl', 'headerCtrl', 'adminCtrl', 
     'configService','routerService', 'oktaAuthService', 'implicitCallbackCtrl', 'inspectorService', 'inspectorCtrl', 
-    'registerCtrl', 'usersCtrl', 'userDetailsCtrl', 'groupsCtrl']);
+    'registerCtrl', 'usersCtrl', 'userDetailsCtrl', 'groupsCtrl', 'appsCtrl']);
+
+/**
+ * TODOs:
+ *      - support for password reset and MFA enroll in login
+ *      - add app chicklets to user portal
+ *      - registration page
+ *      - MFA factors from admin user details page
+ */
 
 loadConfig().then(bootstrapApplication);
 
@@ -32,6 +40,9 @@ function bootstrapApplication() {
 app.run(['$rootScope', '$location', '$http', 'ConfigService', function($rootScope, $location, $http, ConfigService){
         
         $rootScope.appConfig = ConfigService.config;
+
+        $rootScope.unsafeIdToken = {};
+        $rootScope.unsafeAccessToken = {};
 
         $rootScope.$on("$routeChangeError", function(event, current, previous, rejection) {
             console.error('$routeChangeError: ' + rejection.type);

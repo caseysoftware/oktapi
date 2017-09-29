@@ -1,0 +1,95 @@
+<div>
+    <span class="headerTextSmall">Your Applications</span>    
+</div>
+    
+<!--
+<div class="row">
+        <div class="col-sm-6">
+                Link to custom OIDC to SAML token conversion app
+            </div>
+        <div class="col-sm-6 pull-right">
+            <a href="" >SAML Target</a>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-sm-6">
+            Deep link to Sharepoint over inbound SAML to BGCO from Oktalane (where we are authenticated in now).
+        </div>
+    <div class="col-sm-8 pull-right">
+        <a href="https://bgoktademo.sharepoint.com/SitePages/Super%20Secret%20Project%20X%20internal%20wiki%20page.aspx" >Sharepoint Link</a>
+    </div>
+</div>
+-->
+
+<div class="row">
+    <div class="col col-xs-12">
+       <h4>You are currently logged in as <span class="highlightedText" style="background-color: #B6D3E6">{{idTokenPayload.name}}</span>. The subject of your OIDC ID Token is: <span class="highlightedText" style="background-color: #B6D3E6">{{idTokenPayload.sub}}</span>. </h4>
+    </div>
+</div>
+
+<div class="row"><div class="col col-xs-12"><span>&nbsp;</span></div></div>
+<div class="row"><div class="col col-xs-12"><span>&nbsp;</span></div></div>
+
+<div class="panel panel-transparent">
+
+    <!-- panel heading -->
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col col-xs-3">
+                <h2 class="panel-title">POC Application</h2>
+            </div>
+            <div class="col col-xs-4">
+                <h2 class="panel-title">What it does</h2>
+            </div>
+            <div class="col col-xs-5">
+                <h2 class="panel-title">How it works</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- panel body -->
+    <div class="panel-body">
+        <div class="row">
+            <div class="col col-xs-3">
+                <a href="#" ng-click="handleOIDCtoSAML()"><i class="glyphicon glyphicon-cloud"></i>&nbsp;OIDC to SAML SSO</a>
+            </div>
+            <div class="col col-xs-4">
+                
+            </div>
+            <div class="col col-xs-5">
+
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col col-xs-3">
+                <a href="" target="_blank"><i class="glyphicon glyphicon-cloud"></i>&nbsp;OIDC to SAML over inbound SAML federation</a>
+            </div>
+            <div class="col col-xs-4">
+                Oktalane users (authenticated by this portal app) can access a deep link to a Sharepoint document on BGCO over an inbound SAML trust.
+            </div>
+            <div class="col col-xs-5">
+                Oktalane is the IDP for this OKTAPI portal application. There is an inbound SAML trust established between Oktalane and BGCO, 
+                which allows Oktalane users to access certain applications on the BGCO org. In this case, we have allowed Oktalane users to have 
+                accounts on BGCO's O365 tenant. In this case, we are sharing a deep link to a Sharepoint document that BGCO and Oktalane users can collaborate on.
+            </div>
+        </div>
+    </div>
+
+    <!-- panel footer -->
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col col-xs-12" >
+                <div class="alert alert-success" ng-if="successMsg.length > 0" ng-click="handleClearMsg()">{{successMsg}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-xs-12" >
+                <div class="alert alert-danger" ng-if="errorMsg.length > 0" ng-click="handleClearMsg()">{{errorMsg}}</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

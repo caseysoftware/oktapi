@@ -137,7 +137,6 @@ module.exports = function(app) {
 		})
 	});
 	
-
 	// userinfo
 	app.post('/userinfo', function(req, res) {
 		
@@ -445,6 +444,45 @@ module.exports = function(app) {
             return;
         }
 	});
+
+
+	// utility service
+	app.post('/utils/oidc2saml', function(req, res) {
+
+		var payload = {sub: req.body.sub};
+		var requestUrl = oktaConfig.oidcSamlServiceUrl;
+
+		console.log('/utils/oidc2saml payload: ' + JSON.stringify(payload));
+
+		const options = {
+			uri: requestUrl,
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache'
+				//'Authorization': 'Bearer ' + token
+			}
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/utils/oidc2saml ' + error);
+				res.send(error);
+			}
+			/* TODO: I think we need to be checking for a 301, not a 200 */
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
+				} else {
+					console.log('/utils/oidc2saml ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
+
+	});
+
 
 	// callback for authorization code flow
 	app.get('/authorization-code/callback', function(req, res) {

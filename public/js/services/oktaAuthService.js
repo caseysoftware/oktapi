@@ -97,13 +97,15 @@ angular.module('oktaAuthService', [])
     }
 
     // Clear out the token manager
-    this.clearTokenManager = function() {
+    function clearTokenManager() {
         return $rootScope.oktaAuth.tokenManager.clear();
     }
 
     // Utilities ===========================================
 
     // Event listeners
+
+    // if we detect an active session
     $rootScope.$on('rootScope:handleActiveSession', function(event, data) {
         getCurrentUser()
             .then(function(res) {
@@ -113,9 +115,11 @@ angular.module('oktaAuthService', [])
             });
     }); 
 
+    // if we detect that there is no active session
     $rootScope.$on('rootScope:handleNoActiveSession', function(event, data) {
         activeSession = false;
         clearTokenManager();
+        $rootScope.currentUser = '';
         Inspector.initInspectors();
     })
 
