@@ -449,34 +449,38 @@ module.exports = function(app) {
 	// utility service
 	app.post('/utils/oidc2saml', function(req, res) {
 
-		var payload = {sub: req.body.sub};
-		var requestUrl = oktaConfig.oidcSamlServiceUrl;
+		var payload = {id_token: req.body.id_token};
+		var requestUrl = oktaConfig.oidcSamlServiceUrl + '?id_token=' + req.body.id_token;
 
 		console.log('/utils/oidc2saml payload: ' + JSON.stringify(payload));
 
 		const options = {
 			uri: requestUrl,
-			method: 'GET',
+			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 				'Cache-Control': 'no-cache'
 				//'Authorization': 'Bearer ' + token
 			}
+			//json: payload
 		};
+
+		console.log('request: ' + JSON.stringify(options));
 
 		request(options, function(error, response, body) {
 			if (error) {
 				console.error('/utils/oidc2saml ' + error);
 				res.send(error);
 			}
-			/* TODO: I think we need to be checking for a 301, not a 200 */
+
 			if (response) {
-				if (response.statusCode == 200) {
-					res.send(body);
+				console.log('/utils/oidc2saml ' + response.statusCode + ' ' + response.statusMessage);
+				if (response.statusCode == 302) {
+					res.send(response);
 				} else {
 					console.log('/utils/oidc2saml ' + response.statusCode + ' ' + response.statusMessage);
-					res.send(response.statusCode + ' ' + response.statusMessage);
+					res.send(response);
 				}
 			}
 		})

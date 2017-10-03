@@ -75,6 +75,7 @@ angular.module('routerService', [])
 								accessToken = OktaAuthService.getToken('access-token');
 								if (idToken) {
 									Inspector.pushTokenInspector('id-token-jwt', idToken.idToken);
+									
 
 									// get a pretty format version of the ID Token for the Inspector
 									OktaAuthService.decodePrettyToken(idToken.idToken)

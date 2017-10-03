@@ -50,6 +50,6 @@ module.exports = {
     maxUserListSize: 10,
 
     // OIDC ID Token to SAML Assertion Service
-    oidcSamlServiceUrl: 'http://localhost:8080/service'
+    oidcSamlServiceUrl: 'http://localhost:8080/OktaTokenService/TokenService'
 
 };
