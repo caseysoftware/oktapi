@@ -36,7 +36,8 @@ module.exports = {
 
     oktaAuthnApiEndpoint: '/api/v1/authn',
     loginRedirectUri_code: 'http://localhost:8000/authorization-code/callback',
-    loginRedirectUri_implicit: 'http://localhost:8000/implicit-callback', 
+    //loginRedirectUri_implicit: 'http://localhost:8000/implicit-callback',     //local
+    loginRedirectUri_implicit: 'https://oktapi.herokuapp.com/implicit-callback',       // Heroku
 
     // registration config
     activateOnRegister: true,
