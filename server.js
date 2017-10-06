@@ -30,6 +30,11 @@ console.log();
 
 app.set('port', port);
 
+app.use('/js', express.static(__dirname + '/js'));
+app.use('/bower_components', express.static(__dirname + '/../bower_components'));
+app.use('/css', express.static(__dirname + '/css'));
+app.use('/partials', express.static(__dirname + '/partials'));
+
 // get all data/stuff of the body (POST) parameters
 app.use(bodyParser.json()); // parse application/json 
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
@@ -39,6 +44,21 @@ app.use(express.static(__dirname + '/public')); // set the static files location
 app.use(passport.initialize());
 
 
+
+/*
+var express = require('express');
+var app = express();
+
+app.use('/js', express.static(__dirname + '/js'));
+app.use('/bower_components', express.static(__dirname + '/../bower_components'));
+app.use('/css', express.static(__dirname + '/css'));
+app.use('/partials', express.static(__dirname + '/partials'));
+
+app.all('/*', function(req, res, next) {
+    // Just send the index.html for other files to support HTML5Mode
+    res.sendFile('index.html', { root: __dirname });
+});
+*/
 
 // routes ==================================================
 require('./app/routes')(app);   // pass our application into our routes
