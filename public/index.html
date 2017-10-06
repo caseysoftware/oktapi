@@ -56,6 +56,27 @@
 <!-- <body ng-app="OKTAPI"> -->
 <body>
 
+<!-- Facebook SDK -->
+<script>
+	window.fbAsyncInit = function() {
+		FB.init({
+		appId      : '749808651894397',
+		xfbml      : true,
+		version    : 'v2.10'
+		});
+		FB.AppEvents.logPageView();
+	};
+	
+	(function(d, s, id){
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+
 <div class="page-bg"></div>
 
 <div class="container-fluid">
@@ -83,7 +104,7 @@
 									<div class="col-md-12">
 										<span class="inverseText"><h4>Login</h4></span>
 										<div class="social-buttons">
-											<a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+											<a href="https://oktalane.okta.com/oauth2/v1/authorize?idp=0oa48igqdpA0ViIwq1t7&client_id=rzLUkLk6WUTGkRe9IpkF&response_type=id_token&response_mode=fragment&scope=openid&redirect_uri=http://localhost:8000/landing&state=G0nzo&nonce=abracadabra" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
 											<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
 										</div>
 										or
