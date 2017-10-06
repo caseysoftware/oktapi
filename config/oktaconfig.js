@@ -44,8 +44,8 @@ module.exports = {
     defaultSecondEmail: "oktabrent@gmail.com",
 
     // okta-api-proxy settings
-    //oktaApiProxyUrl: 'https://okta-api-proxy.herokuapp.com'
-    oktaApiProxyUrl: 'http://localhost:5000',
+    oktaApiProxyUrl: 'https://okta-api-proxy.herokuapp.com',
+    //oktaApiProxyUrl: 'http://localhost:5000',
 
     // user page config
     maxUserListSize: 10,
