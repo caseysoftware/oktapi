@@ -38,7 +38,7 @@ module.exports = {
     loginRedirectUri_code: 'http://localhost:8000/authorization-code/callback',
     //loginRedirectUri_implicit: 'http://localhost:8000/implicit-callback',     //local
     //loginRedirectUri_implicit: 'https://oktapi.herokuapp.com/implicit-callback',       // Heroku
-    loginRedirectUri_implicit: 'https://oktapi.bgoktademo.com.com/implicit-callback',       // Heroku SSL on bgoktademo.com
+    loginRedirectUri_implicit: 'https://oktapi.bgoktademo.com/implicit-callback',       // Heroku SSL on bgoktademo.com
 
     // registration config
     activateOnRegister: true,
