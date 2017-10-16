@@ -157,7 +157,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 		.when('/apps', {
 			templateUrl: 'views/apps.html',
 			controller: 'AppsController',
-			activeTab: '/users',
+			activeTab: '/apps',
 			resolve: {
 				routePermitted: ['RouterService', function(RouterService) {
 					return RouterService.checkRoutePermissions().then(function(res) {

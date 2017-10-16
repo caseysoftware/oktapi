@@ -28,6 +28,12 @@
                 <form class="form-horizontal">
                     <fieldset id="formFieldset" name="formFieldset">
                         <div class="form-group">
+                                <label class="control-label col-sm-2" for="login">User Name:</label>
+                                <div class="col-sm-10">
+                                <input type="text" class="form-control" id="login" placeholder="User Name" ng-model="currentUser.profile.login">
+                                </div>
+                            </div>
+                        <div class="form-group">
                             <label class="control-label col-sm-2" for="firstName">First Name:</label>
                             <div class="col-sm-10">
                             <input type="text" class="form-control" id="firstName" placeholder="FirstName" ng-model="currentUser.profile.firstName">
@@ -46,14 +52,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                                <label class="control-label col-sm-2" for="secondaryEmail">Secondary Email:</label>
+                                <label class="control-label col-sm-2" for="secondEmail">Secondary Email:</label>
                                 <div class="col-sm-10"> 
-                                <input type="email" class="form-control" id="secondaryEmail" placeholder="Primary Email" ng-model="currentUser.profile.secondEmail">
+                                <input type="email" class="form-control" id="secondEmail" placeholder="Secondary Email" ng-model="currentUser.profile.secondEmail">
                                 </div>
                             </div>
                         <div class="form-group"> 
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button ng-if="!disabled" type="submit" class="btn btn-default" ng-click="handleUpdate()">Register!</button>
+                                <button ng-if="!disabled" type="submit" class="btn btn-default" ng-click="handleRegister()">Register!</button>
                             </div>
                         </div>
                     </fieldset>
@@ -61,6 +67,29 @@
 
             </div>
         </div>
+        <!-- status messages -->
+        <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-10">
+                    <div class="panel panel-success" ng-if="successMsg.length > 0">
+                        <div class="panel-heading">
+                            Almost there...
+                        </div>
+                        <div class="panel-body">
+                            {{successMsg}}
+                        </div>
+                    </div>
+                    <div class="panel panel-danger" ng-if="errorMsg.length > 0">
+                        <div class="panel-heading">
+                            Oops, somethign went wrong...
+                        </div>
+                        <div class="panel-body">
+                            {{errorMsg}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2"></div>
+            </div>
     </div>
 
     <!-- panel footer -->

@@ -5,9 +5,14 @@ angular.module('appsCtrl', [])
     var idToken = $rootScope.oktaAuth.tokenManager.get('id-token');
     $scope.idToken = idToken.idToken;
 
-    $scope.idTokenPayload = JSON.parse($rootScope.unsafeIdToken.data.payload);
+    $scope.idTokenPayload = JSON.parse($rootScope.unsafeIdToken.data.payload); 
+    var uid = $scope.idTokenPayload.sub;
+
     $scope.successMsg = '';
     $scope.errorMsg = '';
+
+    $scope.assignedApps = {};
+
 
     /* TODO: probably don't need target URL */
     // post to a route that will call Mike's OIDC ID Token to SAML assertion translation service
@@ -70,10 +75,34 @@ angular.module('appsCtrl', [])
             
         }
         
+        // Load apps assigned to user
+        loadAssignedApps = function() {
+
+        var data = { 
+            'token': accessToken,
+            'uid': uid
+        };
+
+        $http.post('/myapps', JSON.stringify(data))
+            .then(function(res) {
+                if (res.status == 200) {
+                    $scope.assignedApps = res.data;
+                } else {
+                    console.log('Unknown error getting assigned applications: ' + res.data);
+                }
+            });
+    }
 
     $scope.handleClearMsg = function() {
         $scope.successMsg = '';
         $scope.errorMsg = '';
+    }
+
+    // load assigned apps
+    if (!uid) {
+        console.log('Error loading assigned applications.');
+    } else {
+        loadAssignedApps();
     }
     
 }]);

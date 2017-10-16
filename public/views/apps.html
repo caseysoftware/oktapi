@@ -30,6 +30,71 @@
 <div class="row"><div class="col col-xs-12"><span>&nbsp;</span></div></div>
 <div class="row"><div class="col col-xs-12"><span>&nbsp;</span></div></div>
 
+<!-- assigned app links from Okta -->
+<div class="panel panel-transparent">
+    <div class="panel-heading"><h2 class="panel-title">Assigned Applications</h2></div>
+    <div class="panel-body">
+        <div ng-repeat="app in assignedApps" ng-if="$index % 4 == 0" class="row" >
+            
+            <div class="col-xs-3" ng-if="assignedApps[index+0]">
+                <a href="{{assignedApps[index+0].linkUrl}}" target="_blank">
+                <div class="panel panel-app">
+                    <div class="panel-heading">
+                        <span class="panel-title-small">{{assignedApps[index+0].label}}</span>
+                    </div>
+                    <div class="panel-body">
+                        <div><img class="panel-icon" src="{{assignedApps[index+0].logoUrl}}"></div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div class="col-xs-3" ng-if="assignedApps[index+1]">
+                <a href="{{assignedApps[index+1].linkUrl}}" target="_blank">
+                <div class="panel panel-app">
+                    <div class="panel-heading">
+                        <span class="panel-title-small">{{assignedApps[index+1].label}}</span>
+                    </div>
+                    <div class="panel-body">
+                        <div><img class="panel-icon" src="{{assignedApps[index+1].logoUrl}}"></div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            
+            <div class="col-xs-3" ng-if="assignedApps[index+2]">
+                <a href="{{assignedApps[index+2].linkUrl}}" target="_blank">
+                <div class="panel panel-app">
+                    <div class="panel-heading">
+                        <span class="panel-title-small">{{assignedApps[index+2].label}}</span>
+                    </div>
+                    <div class="panel-body">
+                        <div><img class="panel-icon" src="{{assignedApps[index+2].logoUrl}}"></div>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <div class="col-xs-3" ng-if="assignedApps[index+3]">
+                <a href="{{assignedApps[index+3].linkUrl}}" target="_blank">
+                <div class="panel panel-app">
+                    <div class="panel-heading">
+                        <span class="panel-title-small">{{assignedApps[index+3].label}}</span>
+                    </div>
+                    <div class="panel-body">
+                        <div><img class="panel-icon" src="{{assignedApps[index+3].logoUrl}}"></div>
+                    </div>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row"><div class="col col-xs-12"><span>&nbsp;</span></div></div>
+
+<!-- Special POC app links -->
 <div class="panel panel-transparent">
 
     <!-- panel heading -->

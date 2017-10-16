@@ -98,6 +98,43 @@ module.exports = function(app) {
 		})
 	});
 
+	// /register
+	app.post('/register', function(req, res) {
+		
+		var requestUrl = oktaApiProxyUrl + '/register';
+		var profile = req.body.profile;
+
+		console.log('/register requestUrl: ' + requestUrl);
+
+		const options = {
+			uri: requestUrl,
+			method: 'POST',
+			json: req.body.profile,
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache'
+			}
+		};
+
+		console.log('/register profile: ' + JSON.stringify(profile));
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/register ' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
+				} else {
+					console.log('/register ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
+	});
+
 	// /updateUser - update the user profile based on form submission by an administrative user
 	app.post('/updateUser', function(req, res) {
 		
@@ -170,6 +207,40 @@ module.exports = function(app) {
 			}
 		})
 		
+	});
+
+	// /myapps - apps assigned to user
+	app.post('/myapps', function(req, res) {
+		
+		var token = req.body.token.accessToken;
+		var uid = req.body.uid;
+		var requestUrl = oktaApiProxyUrl + '/myapps/' + uid;
+
+		const options = {
+			uri: requestUrl,
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache',
+				'Authorization': 'Bearer ' + token
+			}
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/myapps/:id ' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
+				} else {
+					console.log('/myapps/:id ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
 	});
 
 
