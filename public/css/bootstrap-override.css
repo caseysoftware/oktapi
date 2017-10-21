@@ -203,3 +203,37 @@ h6 {
 .modal-backdrop.in {
   opacity: 0.7;
 }
+/* smaller modal */
+.modal-dialog-sm {
+  opacity: .8;
+  background: #c6c6c6;
+  border-radius: 5px;
+  width: 55%;
+  margin: 0 auto;
+  overflow-y: initial !important;
+}
+.modal-content-sm {
+  height: 45%;
+}
+.modal-body-sm {
+  /* 100% = dialog height, 120px = header + footer */
+  height: 500px;
+  overflow-y: auto;
+}
+/* modal form */
+.modal-dialog-form {
+  opacity: .8;
+  background: #51a5dd;
+  border-radius: 5px;
+  width: 55%;
+  margin: 0 auto;
+  overflow-y: initial !important;
+}
+.modal-content-form {
+  height: 45%;
+}
+.modal-body-forms {
+  /* 100% = dialog height, 120px = header + footer */
+  height: 400px;
+  overflow-y: auto;
+}

@@ -1,6 +1,6 @@
 angular.module('userDetailsCtrl', [])
-.controller('UserDetailsController', ['$rootScope', '$scope','$route', '$location', '$http', '$q', 'Inspector', 'OktaAuthService', 'OKTA_CONFIG',
-function($rootScope, $scope, $route, $location, $http, $q, Inspector, OktaAuthService, OKTA_CONFIG) {
+.controller('UserDetailsController', ['$rootScope', '$scope','$route', '$location', '$http', '$q', 'Inspector', 'OktaAuthService', 'OKTA_CONFIG', 'MFAService',
+function($rootScope, $scope, $route, $location, $http, $q, Inspector, OktaAuthService, OKTA_CONFIG, MFAService) {
 
     var token = $rootScope.oktaAuth.tokenManager.get('access-token');
     var urlParams = $location.search();
@@ -9,6 +9,12 @@ function($rootScope, $scope, $route, $location, $http, $q, Inspector, OktaAuthSe
 
     $scope.currentUser = {};
     $scope.disabled = false;
+    $scope.factorList = {};
+    $scope.selectedFactor = {};
+    $scope.userMsg = {
+        type: 'none',
+        text: 'none'
+    };
 
      // Load user
     loadUser = function() {
@@ -27,6 +33,25 @@ function($rootScope, $scope, $route, $location, $http, $q, Inspector, OktaAuthSe
             });
     }
 
+    // Handle MFA factor selector (checkbox) click
+    $scope.handleFactorSelect = function(factor) {
+
+        if (factor.status == 'ACTIVE') {
+            MFAService.resetFactor(factor)
+                .then(function(res) {
+                    console.log(res);
+                });
+        } else {
+            $scope.selectedFactor = factor;
+            /*
+            MFAService.enrollFactor(factor)
+                .then(function(res) {
+                    console.log(res);
+                });
+            */
+        }
+    }
+
     // update the user record based on form input
     $scope.handleUpdate = function() {
 
@@ -38,7 +63,7 @@ function($rootScope, $scope, $route, $location, $http, $q, Inspector, OktaAuthSe
         $http.post('/updateUser', data)
             .then(function(res) {
                 if (res.status == 200) {
-                    console.log('/udateUser: Updated the user...add a nice message area to the page now');
+                    console.log('/updateUser: Updated the user...add a nice message area to the page now');
                 } else {
                     console.log('/updateUser: Uncaught exception trying to update user profile info.')
                 }
@@ -64,11 +89,28 @@ function($rootScope, $scope, $route, $location, $http, $q, Inspector, OktaAuthSe
             });
     }
 
+    // clear the user message alert
+    $scope.clearUserMsg = function() {
+        $scope.userMsg = {
+            type: 'none',
+            text: 'none'
+        };
+    }
+
+    $scope.setSelectedFactor = function(factor) {
+        $scope.selectedFactor = JSON.stringify(factor, undefined, 2);
+    }
+
     // load user details on page load
     if (!uid) {
         console.log('Error loading user details.');
     } else {
         loadUser();
+        // get the Factors list
+         MFAService.getFactorList(uid, token)
+            .then(function(res) {
+                $scope.factorList = res;
+            });
         checkFormEnabled();
     }
 

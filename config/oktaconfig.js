@@ -11,14 +11,14 @@ module.exports = {
     // Login redirect URL
 
     //loginRedirectUri_code: 'http://localhost:8000/authorization-code/callback',       // unused
-    //loginRedirectUri_implicit: 'http://localhost:8000/implicit-callback',               // --> local
+    loginRedirectUri_implicit: 'http://localhost:8000/implicit-callback',               // --> local
     //loginRedirectUri_implicit: 'https://oktapi.herokuapp.com/implicit-callback',      // Heroku no SSL
-    loginRedirectUri_implicit: 'https://oktapi.bgoktademo.com/implicit-callback',     // --> Heroku SSL on bgoktademo.com
+    //loginRedirectUri_implicit: 'https://oktapi.bgoktademo.com/implicit-callback',     // --> Heroku SSL on bgoktademo.com
     
     // okta-api-proxy settings
 
-    oktaApiProxyUrl: 'https://okta-api-proxy.herokuapp.com',                            // --> Heroku no SSL
-    //oktaApiProxyUrl: 'http://localhost:5000',                                             // --> local
+    //oktaApiProxyUrl: 'https://okta-api-proxy.herokuapp.com',                            // --> Heroku no SSL
+    oktaApiProxyUrl: 'http://localhost:5000',                                             // --> local
 
     // OIDC ID Token to SAML Assertion Service
     oidcSamlServiceUrl: 'http://localhost:8080/OktaTokenService/TokenService',

@@ -15,6 +15,8 @@ const oktaOrg = oktaConfig.oktaOrgUrl;
 const oktaApiProxyUrl = oktaConfig.oktaApiProxyUrl;
 const authServerId = oktaConfig.authServerId;
 
+/* TODO - a bunch of these calls are the same template. Make a generic caller and pass the proxy URL as a param */
+
 module.exports = function(app) {
 
 	// server routes ===========================================================
@@ -92,6 +94,114 @@ module.exports = function(app) {
 					res.send(body);
 				} else {
 					console.log('/user/:id ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
+	});
+
+	// availableFactors
+	app.post('/availableFactors', function(req, res) {
+		
+		var token = req.body.token.accessToken;
+		var uid = req.body.uid;
+		var requestUrl = oktaApiProxyUrl + '/availableFactors/' + uid;
+
+		const options = {
+			uri: requestUrl,
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache',
+				'Authorization': 'Bearer ' + token
+			}
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/availableFactors/:id ' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
+				} else {
+					console.log('/availableFactors/:id ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
+	});
+
+	// get enrolled factors
+	app.post('/enrolledFactors', function(req, res) {
+		
+		var token = req.body.token.accessToken;
+		var uid = req.body.uid;
+		var requestUrl = oktaApiProxyUrl + '/enrolledFactors/' + uid;
+
+		const options = {
+			uri: requestUrl,
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache',
+				'Authorization': 'Bearer ' + token
+			}
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/enrolledFactors/:id ' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
+				} else {
+					console.log('/enrolledFactors/:id ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
+	});
+
+	// reset factor using DELETE endpoint
+	app.post('/resetFactor', function(req, res) {
+		
+		var token = req.body.token.accessToken;
+		var uid = req.body.uid;
+		var fid = req.body.fid;
+		var requestUrl = oktaApiProxyUrl + '/resetFactor';
+
+		const options = {
+			uri: requestUrl,
+			method: 'POST',
+			json: {
+				uid: uid,
+				fid: fid,
+				token: token
+			},
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache',
+				'Authorization': 'Bearer ' + token
+			}
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/resetFactor' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 204) {
+					res.send(body);
+				} else {
+					console.log('/resetFactor ' + response.statusCode + ' ' + response.statusMessage);
 					res.send(response.statusCode + ' ' + response.statusMessage);
 				}
 			}

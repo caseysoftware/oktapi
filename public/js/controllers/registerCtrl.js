@@ -4,6 +4,7 @@ angular.module('registerCtrl', [])
     $scope.currentUser = {};
     $scope.currentUser.profile = {};
     $scope.currentUser.profile.secondEmail = '';
+    $scope.enableMFA = false;
     $scope.successMsg = '';
     $scope.errorMsg = '';
 
@@ -29,6 +30,16 @@ angular.module('registerCtrl', [])
     // close the registration form, go back to home
     $scope.handleClose = function() {
         $location.path('/home');
+    }
+
+    // TEMP - test MFA
+    $scope.testMFA = function() {
+
+        var enrolledFactors = {};
+        var availableMFAFactors = {};
+
+        
+        
     }
 
     $scope.currentUser.profile.secondEmail = OKTA_CONFIG.defaultSecondEmail;

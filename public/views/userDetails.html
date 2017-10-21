@@ -2,6 +2,7 @@
     <span class="headerTextSmall">User Details</span>    
 </div>
 
+<!-- panel footer -->
 <div class="panel panel-transparent">
     <div class="panel-heading">
         <div class="row">
@@ -20,45 +21,62 @@
 
     <div class="panel-body">
         <div class="row">
-        <!-- left column filter controls -->
             <div class="col col-xs-2">
-                *action controls go here*
+                <div>Show MFA&nbsp;<a href="#mfaDiv" data-toggle="collapse">[+]</a></div>
             </div>
             <div class="col col-xs-10">
                 <form class="form-horizontal">
                     <fieldset id="formFieldset" name="formFieldset">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="firstName">First Name:</label>
-                            <div class="col-sm-10">
+                            <label class="control-label col-xs-3" for="firstName">First Name:</label>
+                            <div class="col-xs-9">
                             <input type="text" class="form-control" id="firstName" placeholder="FirstName" ng-model="currentUser.profile.firstName">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="lastName">Last Name:</label>
-                            <div class="col-sm-10"> 
+                            <label class="control-label col-xs-3" for="lastName">Last Name:</label>
+                            <div class="col-xs-9"> 
                             <input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="currentUser.profile.lastName">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="primaryEmail">Primary Email:</label>
-                            <div class="col-sm-10"> 
+                            <label class="control-label col-xs-3" for="primaryEmail">Primary Email:</label>
+                            <div class="col-xs-9"> 
                             <input type="email" class="form-control" id="primaryEmail" placeholder="Primary Email" ng-model="currentUser.profile.email">
                             </div>
                         </div>
                         <div class="form-group">
-                                <label class="control-label col-sm-2" for="secondEmail">Secondary Email:</label>
-                                <div class="col-sm-10"> 
+                                <label class="control-label col-xs-3" for="secondEmail">Secondary Email:</label>
+                                <div class="col-xs-9"> 
                                 <input type="email" class="form-control" id="secondEmail" placeholder="Secondary Email" ng-model="currentUser.profile.secondEmail">
                                 </div>
+                        </div>
+                        <div class="row" ng-if="userMsg.type != 'none'"><div class="col col-xs-3"></div><div class="col col-xs-9"><div class="alert {{userMsg.type}}" ng-click='clearUserMsg()'>{{userMsg.text}}</div></div></div>
+                        <div class="collapse" id="mfaDiv">
+                            <div class="row" ng-repeat="factor in factorList">
+                                <div class="col col-xs-3"></div>
+                                <div class="col col-xs-9">
+                                        <span style="width: 10%;">
+                                            <button type="button" class="btn {{factor.status=='ACTIVE' ? 'btn-default' : 'btn-primary'}}" ng-click="handleFactorSelect(factor)" data-toggle="modal" data-target="#factorsForm" data-keyboard="true" data-backdrop="true">{{factor.status=='ACTIVE' ? 'Reset' : 'Enroll'}}</button>
+                                        </span>
+                                        <span style="width: 5%;" class="glyphicon glyphicon-info-sign" ng-click="setSelectedFactor(factor)" data-toggle="modal" data-target="#factorsModal" data-keyboard="true" data-backdrop="true"></span>
+                                        <span style="width: 30%;">{{factor.provider}}</span>
+                                        <span style="width: 30%">{{factor.factorType}}</span>
+                    
+                                        <span>
+                                            <button class="btn btn-default" type="button" ng-disabled="!factor.enrolled">Test</button>
+                                        </span>
+                                </div>
                             </div>
+                        </div>
+                        <div class="row"><div class="col col-xs-12">&nbsp;</div>
                         <div class="form-group"> 
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button ng-if="!disabled" type="submit" class="btn btn-default" ng-click="handleUpdate()">Update</button>
+                            <div class="col-xs-offset-3 col-xs-9">
+                                <button ng-if="!disabled" type="submit" class="btn btn-info" ng-click="handleUpdate()">Update</button>
                             </div>
                         </div>
                     </fieldset>
                 </form>
-
             </div>
         </div>
         <!-- status messages -->
@@ -80,7 +98,6 @@
         </div>
     </div>
 
-    <!-- panel footer -->
 
     <div class="panel-footer">
             <div class="row">
@@ -95,3 +112,34 @@
             </div>
             </div>
     </div>
+
+    <!-- modal popover to display info -->
+    <div class="modal fade" id="factorsModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog-sm">	
+            <!-- Modal content-->
+            <div class="modal-content-sm">
+                <div class="modal-header">
+                    <p class="h1">Factors</p>
+                </div> <!-- end of modal-header -->
+                <div class="modal-body-sm">
+                    <pre>{{selectedFactor}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal popover for registration/enrollment form -->
+    <div class="modal fade" id="factorsForm" role="dialog" tabindex="-1">
+            <div class="modal-dialog-form">	
+                <!-- Modal content-->
+                <div class="modal-content-form">
+                    <div class="modal-header">
+                        <p class="h1">MFA Enrollment</p>
+                    </div> <!-- end of modal-header -->
+                    <div class="modal-body-form>
+                        <pre>{{selectedFactor}}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
