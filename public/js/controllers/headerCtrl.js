@@ -1,5 +1,5 @@
-angular.module('headerCtrl', ['ngSanitize']).controller('HeaderController', ['$rootScope', '$scope', '$sce', '$http', '$location', '$route', '$q', 'ConfigService', 'Inspector', 'OktaAuthService', function($rootScope, $scope, $sce, $http, $location, $route, $q, 
-    ConfigService, Inspector, OktaAuthService) {
+angular.module('headerCtrl', ['ngSanitize']).controller('HeaderController', ['$rootScope', '$scope', '$sce', '$http', '$location', '$route', '$q', 'ConfigService', 'Inspector', 'OktaAuthService', 'OKTA_CONFIG', function($rootScope, $scope, $sce, $http, $location, $route, $q, 
+    ConfigService, Inspector, OktaAuthService, OKTA_CONFIG) {
 
     /* TODO
         - stop using $rootScope, use OktaAuthService instead
@@ -8,6 +8,7 @@ angular.module('headerCtrl', ['ngSanitize']).controller('HeaderController', ['$r
     */
     $scope.navbarElements = {};
     $scope.currentNav = '';
+    $scope.appDisplayName = OKTA_CONFIG.appDisplayName;
 
     $scope.$on('$routeChangeSuccess', function() {
         // not in use but could be handy

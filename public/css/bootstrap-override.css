@@ -29,6 +29,10 @@ body {
 .panel-transparent .panel-body {
   background: rgba(225, 225, 225, 0.9) !important;
 }
+.panel-transparent .panel-body-compact {
+  background: rgba(225, 225, 225, 0.9) !important;
+  padding: 5px!important;
+}
 .panel-transparent .panel-footer {
   background: rgba(35, 35, 35, 0.9) !important;
 }
@@ -36,6 +40,11 @@ body {
   color: #ffffff!important;
   margin-top: 8px;
   font-size: 16px;
+}
+.panel-transparent .panel-title-internal {
+  color: #ffffff!important;
+  margin-top: 4px;
+  font-size: 12px;
 }
 .panel-transparent .panel-title-small {
   color: #ffffff!important;
@@ -188,6 +197,23 @@ h6 {
   margin-left: auto;
   overflow-y: initial !important;
 }
+/* smaller modal */
+.modal-dialog-sm {
+  opacity: .8;
+  background: #c6c6c6;
+  border-radius: 5px;
+  width: 55%;
+  margin: 0 auto;
+  overflow-y: initial !important;
+}
+.modal-dialog-opaque {
+  opacity: .95;
+  background: #c6c6c6;
+  border-radius: 5px;
+  width: 85%;
+  margin-left: auto;
+  overflow-y: initial !important;
+}
 .modal-content {
   height: 95%;
 }
@@ -203,37 +229,31 @@ h6 {
 .modal-backdrop.in {
   opacity: 0.7;
 }
-/* smaller modal */
-.modal-dialog-sm {
-  opacity: .8;
-  background: #c6c6c6;
-  border-radius: 5px;
-  width: 55%;
-  margin: 0 auto;
-  overflow-y: initial !important;
-}
 .modal-content-sm {
   height: 45%;
 }
 .modal-body-sm {
   /* 100% = dialog height, 120px = header + footer */
+  margin: 10px;
   height: 500px;
   overflow-y: auto;
 }
 /* modal form */
 .modal-dialog-form {
-  opacity: .8;
-  background: #51a5dd;
+  opacity: .95;
+  background: #c6c6c6;
   border-radius: 5px;
   width: 55%;
   margin: 0 auto;
   overflow-y: initial !important;
+  display: block;
 }
 .modal-content-form {
   height: 45%;
 }
-.modal-body-forms {
+.modal-body-form {
+  margin: 10px;
   /* 100% = dialog height, 120px = header + footer */
-  height: 400px;
+  height: 300px;
   overflow-y: auto;
 }

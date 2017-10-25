@@ -168,6 +168,41 @@ module.exports = function(app) {
 		})
 	});
 
+	// enroll SMS factor
+	app.post('/enrollSMS', function(req, res) {
+
+		var token = req.body.token.accessToken;
+		var requestUrl = oktaApiProxyUrl + '/enrollSMS';
+
+		const options = {
+			uri: requestUrl,
+			method: 'POST',
+			json: req.body,
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache',
+				'Authorization': 'Bearer ' + token
+			}
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/enrollSMS' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
+				} else {
+					console.log('/enrollSMS ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
+
+	});
+
 	// reset factor using DELETE endpoint
 	app.post('/resetFactor', function(req, res) {
 		
@@ -199,7 +234,7 @@ module.exports = function(app) {
 			}
 			if (response) {
 				if (response.statusCode == 204) {
-					res.send(body);
+					res.send(204);
 				} else {
 					console.log('/resetFactor ' + response.statusCode + ' ' + response.statusMessage);
 					res.send(response.statusCode + ' ' + response.statusMessage);

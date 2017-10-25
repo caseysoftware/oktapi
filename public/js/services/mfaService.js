@@ -91,9 +91,24 @@ angular.module('mfaService', [])
         return $http.post('/resetFactor', JSON.stringify(data));
     }
 
-    //enrollFactor
-    this.enrollFactor = function(factor) {
-        console.log(factor);
+    // enroll SMS
+    this.enrollSMS = function(factor, mobile) {
+
+        var data =  {
+            payload: {
+                "factorType": "sms",
+                "provider": "OKTA",
+                "profile": {
+                    "phoneNumber": mobile
+                }
+            },
+            enrollLink: factor._links.enroll.href,
+            enrollLinkMethod: factor._links.enroll.hints.allow,
+            token: _token,
+            uid: _uid
+        }
+
+        return $http.post('/enrollSMS', data);
     }
 
     this.getFactorList = function(uid, token) {

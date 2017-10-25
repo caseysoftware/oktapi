@@ -11,10 +11,16 @@ function($rootScope, $scope, $route, $location, $http, $q, Inspector, OktaAuthSe
     $scope.disabled = false;
     $scope.factorList = {};
     $scope.selectedFactor = {};
+    $scope.enrollModalMode = '';
     $scope.userMsg = {
         type: 'none',
         text: 'none'
     };
+    $scope.popoverMsg = {
+        type: 'none',
+        text: 'none'
+    }
+    $scope.showMFA = false;
 
      // Load user
     loadUser = function() {
@@ -33,24 +39,56 @@ function($rootScope, $scope, $route, $location, $http, $q, Inspector, OktaAuthSe
             });
     }
 
-    // Handle MFA factor selector (checkbox) click
-    $scope.handleFactorSelect = function(factor) {
+    // Register SMS factor
+    $scope.handleRegisterSMS = function(factor) {
+        
+        if ($scope.currentUser.profile.mobilePhone) {
+            MFAService.enrollSMS($scope.selectedFactor, $scope.currentUser.profile.mobilePhone)
+            .then(function(res) {
+                if (res.status == 200) {
+                    console.log(res);
+                    factor.status=res.data.status;
+                    Inspector.pushGeneralInspector('register-sms-response', JSON.stringify(res.data, undefined, 2));
+                    $scope.popoverMsg = {
+                        type: 'info',
+                        text: 'Enroll: ' + res
+                    }
+                } else {
+                    console.log('Uncaught exception in handleRegisterSMS: ' + JSON.stringify(res));
+                }
 
+            });
+        } else {
+            $scope.popoverMsg = {
+                type: 'alert-warning',
+                text: 'Please enter a valid mobile number.'
+            }
+        }
+    }
+        
+    // Handle MFA factor selector button - either reset factor, or set selected factor for modal form.
+    $scope.handleFactorSelect = function(factor) {
+        $scope.enrollModalMode = 'reset';
         if (factor.status == 'ACTIVE') {
             MFAService.resetFactor(factor)
                 .then(function(res) {
-                    console.log(res);
+                    if (res.status == 204) {
+                        factor.status = "NOT_SETUP";
+                        console.log(res);
+                        $scope.popoverMsg = {
+                            type: 'alert-success',
+                            text: 'Hey ' + factor.provider + ' ' + factor.factorType + ' reset.'
+                        }
+                    } else {
+                        console.log('Uncaught exception in handleFactorSelect: ' + JSON.stringify(res));
+                    }
                 });
         } else {
+            $scope.enrollModalMode = 'enroll';
             $scope.selectedFactor = factor;
-            /*
-            MFAService.enrollFactor(factor)
-                .then(function(res) {
-                    console.log(res);
-                });
-            */
         }
     }
+
 
     // update the user record based on form input
     $scope.handleUpdate = function() {
@@ -97,8 +135,21 @@ function($rootScope, $scope, $route, $location, $http, $q, Inspector, OktaAuthSe
         };
     }
 
+    $scope.clearPopoverMsg = function() {
+        $scope.popoverMsg = {
+            type: 'none',
+            text: 'none'
+        };
+    }
+
     $scope.setSelectedFactor = function(factor) {
         $scope.selectedFactor = JSON.stringify(factor, undefined, 2);
+    }
+
+    $scope.encodeModalTarget = function(factor, type) {
+        var hashed = type + encodeURI(btoa(factor.provider + ' ' + factor.factorType));
+        var encoded = hashed.replace(/=/g, "z");
+        return encoded;
     }
 
     // load user details on page load

@@ -4,9 +4,9 @@
 @primary-font-color:	    #fafafa; // sea blue
 @darker-font-color: 	    darken(@primary-font-color, 10%);
 
-@modal-background-color:    #c6c6c6;
-@modal-form-background-color:    #51a5dd;
-@modal-font-color:          #000;
+@modal-background-color:        #c6c6c6;
+@modal-form-background-color:   #c6c6c6;;
+@modal-font-color:              #000;
 
 body { 
     background-color: @background-color;
@@ -50,6 +50,11 @@ body {
     background: rgba(225, 225, 225, 0.9)!important;
 }
 
+.panel-transparent .panel-body-compact{
+    background: rgba(225, 225, 225, 0.9)!important;
+    padding: 5px!important;
+}
+
 .panel-transparent .panel-footer{
     background: rgba(35, 35, 35, 0.9)!important;
 }
@@ -59,6 +64,13 @@ body {
     //padding: 10px 15px;
     margin-top: 8px;
     font-size: 16px;
+}
+
+.panel-transparent .panel-title-internal{
+    color: #ffffff!important;
+    //padding: 10px 15px;
+    margin-top: 4px;
+    font-size: 12px;
 }
 
 .panel-transparent .panel-title-small{
@@ -237,6 +249,26 @@ h6 {
     overflow-y: initial !important;
 }
 
+/* smaller modal */
+
+.modal-dialog-sm {
+    opacity: .8;
+    background: @modal-background-color;
+    border-radius: 5px;
+    width: 55%;
+    margin: 0 auto; 
+    overflow-y: initial !important;
+}
+
+.modal-dialog-opaque {
+    opacity: .95;
+    background: @modal-background-color;
+    border-radius: 5px;
+    width: 85%;
+    margin-left: auto;
+    overflow-y: initial !important;
+}
+
 .modal-content {
     height: 95%;
 }
@@ -256,16 +288,6 @@ h6 {
     opacity: 0.7;
 }
 
-/* smaller modal */
-
-.modal-dialog-sm {
-    opacity: .8;
-    background: @modal-background-color;
-    border-radius: 5px;
-    width: 55%;
-    margin: 0 auto; 
-    overflow-y: initial !important;
-}
 
 .modal-content-sm {
     height: 45%;
@@ -273,6 +295,7 @@ h6 {
 
 .modal-body-sm {
     /* 100% = dialog height, 120px = header + footer */
+    margin: 10px;
     height: 500px;
     //max-height: calc(80% - 10px);
     overflow-y: auto;
@@ -281,21 +304,23 @@ h6 {
 /* modal form */
 
 .modal-dialog-form {
-    opacity: .8;
+    opacity: .95;
     background: @modal-form-background-color;
     border-radius: 5px;
     width: 55%;
     margin: 0 auto; 
     overflow-y: initial !important;
+    display: block;
 }
 
 .modal-content-form {
     height: 45%;
 }
 
-.modal-body-forms {
+.modal-body-form {
+    margin: 10px;
     /* 100% = dialog height, 120px = header + footer */
-    height: 400px;
+    height: 300px;
     //max-height: calc(80% - 10px);
     overflow-y: auto;
 }
