@@ -49,6 +49,13 @@ module.exports = {
             hideIfSession: false,
             claimsRequired: ['OKTAPI role - portal user']
         },		
+        '/sharing': {
+            visible: true,
+            displayName: 'Sharing',
+            sessionRequired: true,
+            hideIfSession: false,
+            claimsRequired: ['OKTAPI role - portal user']
+        },	
         '/admin': {
             visible: true,
             displayName: 'Admin',

@@ -2,6 +2,13 @@ angular.module('implicitCallbackCtrl', [])
     .controller('ImplicitCallbackController', ['$rootScope','$route', '$routeParams', '$location', 'OktaAuthService', 'Inspector', 'OKTA_CONFIG', function($rootScope, $route, $routeParams, $location, OktaAuthService, Inspector, OKTA_CONFIG) {
 
     $rootScope.$broadcast('refreshInspectors', '');
+    var session = {};
+
+    if ($rootScope.oktaAuth.session) {
+        session = $rootScope.oktaAuth.session;
+    } else {
+        session = $rootScope.session;
+    }
 
     $rootScope.oktaAuth.token.getWithoutPrompt({
         scopes: OKTA_CONFIG.scope,

@@ -2,8 +2,6 @@ angular.module('landingCtrl', [])
     .controller('LandingController', ['$rootScope', '$scope','$route', '$http', 'OktaAuthService', 'Inspector', function($rootScope, $scope, $route, $http, OktaAuthService, Inspector) {
 
 
-    console.log('hello');
-
     // Intialization routines based on newly logged-in user
     /*
     $rootScope.currentUser = {};

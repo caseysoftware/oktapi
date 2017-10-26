@@ -170,6 +170,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 				}]
 			}
 		})
+		.when('/sharing', {
+			templateUrl: 'views/sharing.html',
+			controller: 'SharingController',
+			activeTab: '/sharing',
+			resolve: {
+				routePermitted: ['RouterService', function(RouterService) {
+					return RouterService.checkRoutePermissions().then(function(res) {
+						console.log('Route change to /sharing successful.');
+					})
+					.catch(function(err) {
+						activeTab: '/home';
+						throw(err);
+					})
+				}]
+			}
+		})		
 		.when('/groups', {
 			templateUrl: 'views/groups.html',
 			controller: 'GroupsController',

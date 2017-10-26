@@ -5,7 +5,6 @@ module.exports = {
     */
 
 
-
     /* Run locally vs Heroku ------------------------- */
 
     // || app display name
@@ -68,5 +67,11 @@ module.exports = {
 
     // user page config
     maxUserListSize: 10,
+
+    // ------------------------------------------ //
+    // Box config 
+    // ------------------------------------------ //
+
+    boxApiProxyUrl: 'http://localhost:5001'
 
 };

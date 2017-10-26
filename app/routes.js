@@ -13,6 +13,7 @@ const mode = oktaConfig.mode;
 
 const oktaOrg = oktaConfig.oktaOrgUrl;
 const oktaApiProxyUrl = oktaConfig.oktaApiProxyUrl;
+const boxApiProxyUrl = oktaConfig.boxApiProxyUrl;
 const authServerId = oktaConfig.authServerId;
 
 /* TODO - a bunch of these calls are the same template. Make a generic caller and pass the proxy URL as a param */
@@ -388,6 +389,41 @@ module.exports = function(app) {
 		})
 	});
 
+	// ------------------------------------------ //
+	// Box API calls
+	// ------------------------------------------ //
+	app.post('/box/user', function(req, res) {
+
+		var token = req.body.token.accessToken;
+		var oktaLogin = req.body.oktaLogin;
+		var requestUrl = boxApiProxyUrl + '/users/' + oktaLogin;
+
+		const options = {
+			uri: requestUrl,
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Cache-Control': 'no-cache',
+				'Authorization': 'Bearer ' + token
+			}
+		};
+
+		request(options, function(error, response, body) {
+			if (error) {
+				console.error('/box/user/:oktaLogin ' + error);
+				res.send(error);
+			}
+			if (response) {
+				if (response.statusCode == 200) {
+					res.send(body);
+				} else {
+					console.log('/box/user/:oktaLogin ' + response.statusCode + ' ' + response.statusMessage);
+					res.send(response.statusCode + ' ' + response.statusMessage);
+				}
+			}
+		})
+	});
 
 	// Client app support routes ======================================================
 
