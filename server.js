@@ -1,5 +1,6 @@
 // modules =================================================
 const express           = require('express');
+//const session           = require('express-session');
 const http              = require('http');
 const app               = express();
 const httpServer        = http.createServer(app);
@@ -39,7 +40,14 @@ app.use(express.static(__dirname + '/js'));     // static file location for Java
 app.use(express.static(__dirname + '/public')); // set the static files location /public/images will be /images for users
 app.use(passport.initialize());
 
-
+// Set up sessions
+/*
+app.use(session({
+	secret: 'session secret',
+	resave: false,
+	saveUninitialized: false
+}));
+*/
 
 /*
 var express = require('express');

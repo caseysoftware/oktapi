@@ -32,12 +32,12 @@
 <div class="row"><div class="col col-xs-12"><span>&nbsp;</span></div></div>
 
 <!-- assigned app links from Okta -->
-<div class="panel panel-transparent">
-    <div class="panel-heading"><h2 class="panel-title">Assigned Applications</h2></div>
-    <div class="panel-body">
-        <div ng-repeat="app in assignedApps" ng-if="$index % 4 == 0" class="row" >
+
+ <!--   <div class="container">-->
+        <!-- Loop over assignedApps -->
+        <div ng-repeat="app in assignedApps" ng-if="$index % 5  == 0" class="row" >
             
-            <div class="col-xs-3" ng-if="assignedApps[index+0]">
+            <div class="col col-sm-2" ng-if="assignedApps[index+0]">
                 <a href="{{assignedApps[index+0].linkUrl}}" target="_blank">
                 <div class="panel panel-app">
                     <div class="panel-heading">
@@ -46,11 +46,12 @@
                     <div class="panel-body">
                         <div><img class="panel-icon" src="{{assignedApps[index+0].logoUrl}}"></div>
                     </div>
+                    <div class="panel-footer"></div>
                 </div>
                 </a>
             </div>
             
-            <div class="col-xs-3" ng-if="assignedApps[index+1]">
+            <div class="col col-sm-2" ng-if="assignedApps[index+1]">
                 <a href="{{assignedApps[index+1].linkUrl}}" target="_blank">
                 <div class="panel panel-app">
                     <div class="panel-heading">
@@ -59,12 +60,13 @@
                     <div class="panel-body">
                         <div><img class="panel-icon" src="{{assignedApps[index+1].logoUrl}}"></div>
                     </div>
+                    <div class="panel-footer"></div>
                 </div>
                 </a>
             </div>
             
             
-            <div class="col-xs-3" ng-if="assignedApps[index+2]">
+            <div class="col col-sm-2" ng-if="assignedApps[index+2]">
                 <a href="{{assignedApps[index+2].linkUrl}}" target="_blank">
                 <div class="panel panel-app">
                     <div class="panel-heading">
@@ -73,11 +75,12 @@
                     <div class="panel-body">
                         <div><img class="panel-icon" src="{{assignedApps[index+2].logoUrl}}"></div>
                     </div>
+                    <div class="panel-footer"></div>
                 </div>
                 </a>
             </div>
 
-            <div class="col-xs-3" ng-if="assignedApps[index+3]">
+            <div class="col col-sm-2" ng-if="assignedApps[index+3]">
                 <a href="{{assignedApps[index+3].linkUrl}}" target="_blank">
                 <div class="panel panel-app">
                     <div class="panel-heading">
@@ -86,12 +89,41 @@
                     <div class="panel-body">
                         <div><img class="panel-icon" src="{{assignedApps[index+3].logoUrl}}"></div>
                     </div>
+                    <div class="panel-footer"></div>
                 </div>
                 </a>
             </div>
+
+            <div class="col col-sm-2" ng-if="assignedApps[index+4]">
+                <a href="{{assignedApps[index+4].linkUrl}}" target="_blank">
+                <div class="panel panel-app">
+                    <div class="panel-heading">
+                        <span class="panel-title-small">{{assignedApps[index+4].label}}</span>
+                    </div>
+                    <div class="panel-body">
+                        <div><img class="panel-icon" src="{{assignedApps[index+3].logoUrl}}"></div>
+                    </div>
+                    <div class="panel-footer"></div>
+                </div>
+                </a>
+            </div>
+
+        <div class="col col-sm-2" ng-if="assignedApps[index+5]">
+            <a href="{{assignedApps[index+5].linkUrl}}" target="_blank">
+            <div class="panel panel-app" ng-click="{{assignedApps[index+5].linkUrl}}">
+                <div class="panel-heading">
+                    <span class="panel-title-small">{{assignedApps[index+5].label}}</span>
+                </div>
+                <div class="panel-body">
+                    <div><img class="panel-icon" src="{{assignedApps[index+3].logoUrl}}"></div>
+                </div>
+                <div class="panel-footer"></div>
+            </div>
+            </a>
         </div>
-    </div>
-</div>
+
+        </div> <!-- end of ng-repeat -->
+<!--</div>-->
 
 <div class="row"><div class="col col-xs-12"><span>&nbsp;</span></div></div>
 

@@ -145,7 +145,7 @@ angular.module('headerCtrl', ['ngSanitize']).controller('HeaderController', ['$r
             OktaAuthService.clearSessions();
             $rootScope.oktaAuth.tokenManager.clear();
             $rootScope.oktaSessionToken = {};
-            $rootScope.currentUser = '';
+            $rootScope.currentUser = {};
             Inspector.initInspectors();
             console.log('successfully logged out');
             $rootScope.$broadcast('refreshInspectors', '');

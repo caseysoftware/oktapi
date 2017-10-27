@@ -110,8 +110,7 @@ angular.module('oktaAuthService', [])
         getCurrentUser()
             .then(function(res) {
                 Inspector.pushGeneralInspector('current-user', JSON.stringify(res, undefined, 2));
-                $rootScope.currentUser = res.name;
-                activeSession = true;
+                $rootScope.authenticatedUser = res;
             });
     }); 
 
@@ -119,7 +118,7 @@ angular.module('oktaAuthService', [])
     $rootScope.$on('rootScope:handleNoActiveSession', function(event, data) {
         activeSession = false;
         clearTokenManager();
-        $rootScope.currentUser = '';
+        $rootScope.authenticatedUser = {};
         Inspector.initInspectors();
     })
 
